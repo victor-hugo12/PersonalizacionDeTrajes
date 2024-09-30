@@ -1,6 +1,6 @@
-import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Appbar, Button, TextInput, Card, Title, Paragraph } from 'react-native-paper'
+import { StyleSheet, View } from 'react-native'
+import { Appbar, Button, Card, Paragraph, TextInput, Title } from 'react-native-paper'
+
 import { useThemeColor } from '@/hooks/useThemeColor'
 
 const ExampleScreen = () => {

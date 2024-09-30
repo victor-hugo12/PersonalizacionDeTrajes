@@ -8,11 +8,10 @@ module.exports = {
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
   importOrderCaseInsensitive: true,
+  plugins: ['@trivago/prettier-plugin-sort-imports'],
   importOrder: [
     '<THIRD_PARTY_MODULES>',
-    // '^(.*)/components/(.*)$', // Add any folders you want to be separate
-    '^(.*)/(?!generated)(.*)/(.*)$', // Everything not generated
-    '^(.*)/generated/(.*)$', // Everything generated
+    '^@/(.*)$', // alyases path
     '^[./]', // Absolute path imports
   ],
 }
