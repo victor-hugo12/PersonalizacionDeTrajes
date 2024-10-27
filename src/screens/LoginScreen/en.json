@@ -1,0 +1,16 @@
+{
+  "en": {
+    "Email": "Email",
+    "Password": "Password",
+    "Forgot your password": "Forgot your password",
+    "Sign in": "Sign in",
+    "Sign in with Google": "Sign in with Google",
+    "Don't have an account?": "Don't have an account?",
+    "Sign up": "Sign up",
+    "Email address is required": "Email address is required",
+    "Please enter valid email": "Please enter valid email",
+    "Password is required": "Password is required",
+    "Should confirm the email before logging in": "Should confirm the email before logging in",
+    "auth/user-not-found": "Invalid credentials"
+  }
+}

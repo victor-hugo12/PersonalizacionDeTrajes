@@ -1,37 +1,52 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
-import { Stack } from 'expo-router'
+import { Slot, useRouter } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
 import 'react-native-reanimated'
+import { Provider } from 'react-redux'
 
-import { useColorScheme } from '@/hooks/useColorScheme'
+import '@/config/firebase'
+import { ThemeContextProvider } from '@/context/ThemeContext'
+import { useAuthentication } from '@/hooks/useAuthentication'
+import { store } from '@/redux/store'
+
+export {
+  // Catch any errors thrown by the Layout component.
+  ErrorBoundary,
+} from 'expo-router'
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme()
-  const [loaded] = useFonts({
+  const [loaded, error] = useFonts({
     SpaceMono: require('@/assets/fonts/SpaceMono-Regular.ttf'),
   })
+
+  const { user } = useAuthentication()
+  const router = useRouter()
+
+  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+  useEffect(() => {
+    if (error) throw error
+  }, [error])
 
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync()
+      router.replace(user ? '/(auth)/home' : '/login')
     }
-  }, [loaded])
+  }, [loaded, router, user])
 
   if (!loaded) {
     return null
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeContextProvider>
+        <Slot />
+      </ThemeContextProvider>
+    </Provider>
   )
 }

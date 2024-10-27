@@ -1,0 +1,11 @@
+{
+  "en": {
+    "FORGOT PASSWORD": "FORGOT PASSWORD",
+    "Provide your account's email for which you want to reset the password!": "Provide your account's email for which you want to reset the password!",
+    "Email": "Email",
+    "Send": "Send email",
+    "Email address is required": "Email address is required",
+    "Please enter valid email": "Please enter valid email",
+    "An email was sent, in 5 seconds you will redirect to the login screen": "An email was sent, in 5 seconds you will redirect to the login screen"
+  }
+}

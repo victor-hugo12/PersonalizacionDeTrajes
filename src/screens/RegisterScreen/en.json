@@ -1,0 +1,21 @@
+{
+  "en": {
+    "Name": "Name",
+    "Email": "Email",
+    "Password": "Password",
+    "Confirm password": "Confirm password",
+    "Forgot your password": "Forgot your password",
+    "Sign in": "Sign in",
+    "Sign in with Google": "Sign in with Google",
+    "Sign up": "Sign up",
+    "Already have an account?": "Already have an account?",
+    "Name is required": "Name is required",
+    "Email address is required": "Email address is required",
+    "Please enter valid email": "Please enter valid email",
+    "Password is required": "Password is required",
+    "Please retype your password": "Please retype your password",
+    "Your passwords do not match": "Your passwords do not match",
+    "Password must be at least 8 characters": "Password must be at least 8 characters",
+    "Your account was created, in 5 seconds you will redirect to the login screen": "Your account was created, in 5 seconds you will redirect to the login screen"
+  }
+}
