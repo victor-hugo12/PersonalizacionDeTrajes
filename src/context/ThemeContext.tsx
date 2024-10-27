@@ -3,8 +3,18 @@ import {
   DefaultTheme as NavigationDefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native'
-import { createContext, Dispatch, ReactNode, SetStateAction, useCallback, useContext, useMemo, useState } from 'react'
-import { useColorScheme } from 'react-native'
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
+import { Appearance, useColorScheme } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 import {
   MD3DarkTheme as PaperDarkTheme,
@@ -179,6 +189,13 @@ export const ThemeContextProvider = ({ children }: ThemeContextProviderProps) =>
 
   const isDarkTheme = useMemo(() => themeType === 'dark', [themeType])
   const theme = useMemo(() => (isDarkTheme ? darkTheme : lightTheme), [isDarkTheme])
+
+  useEffect(() => {
+    const listener = Appearance.addChangeListener(({ colorScheme }) => {
+      setThemeType(colorScheme as ThemeType)
+    })
+    return () => listener.remove()
+  }, [])
 
   return (
     <SafeAreaProvider>
