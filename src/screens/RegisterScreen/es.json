@@ -1,0 +1,21 @@
+{
+  "es": {
+    "Name": "Nombre",
+    "Email": "Correo",
+    "Password": "Contraseña",
+    "Confirm password": "Confirmar contraseña",
+    "Forgot your password": "Olvidaste tu contraseña",
+    "Sign in": "Iniciar sesión",
+    "Sign in with Google": "Iniciar sesión con google",
+    "Already have an account?": "Ya tienes una cuenta?",
+    "Sign up": "Registrate",
+    "Name is required": "Nombre es requerido",
+    "Email address is required": "Correo electronico es requerido",
+    "Please enter valid email": "Por favor ingrese un correo valido",
+    "Password is required": "Contraseña es requerido",
+    "Please retype your password": "Por favor repita su contraseña",
+    "Your passwords do not match": "Tus contraseñas no coinciden",
+    "Password must be at least 8 characters": "La contraseña debe tener al menos 8 caracteres",
+    "Your account was created, in 5 seconds you will redirect to the login screen": "Su cuenta fue creada, en 5 segundos será redirigido a la pantalla de inicio de sesión"
+  }
+}

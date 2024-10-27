@@ -1,0 +1,16 @@
+{
+  "es": {
+    "Email": "Correo",
+    "Password": "Contraseña",
+    "Forgot your password": "Olvidaste tu contraseña",
+    "Sign in": "Iniciar sesión",
+    "Sign in with Google": "Iniciar sesión con google",
+    "Don't have an account?": "No tienes una cuenta?",
+    "Sign up": "Registrate",
+    "Email address is required": "Correo electronico es requerido",
+    "Please enter valid email": "Por favor ingrese un correo valido",
+    "Password is required": "Contraseña es requerido",
+    "Should confirm the email before logging in": "Debe confirmar el correo electrónico antes de iniciar sesión",
+    "auth/user-not-found": "credenciales no válidas"
+  }
+}

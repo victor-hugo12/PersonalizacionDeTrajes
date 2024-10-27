@@ -1,0 +1,2 @@
+# .husky/pre-commit
+yarn lint && yarn format-check && yarn check-typescript

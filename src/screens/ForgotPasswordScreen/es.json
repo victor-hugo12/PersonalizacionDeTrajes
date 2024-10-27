@@ -1,0 +1,11 @@
+{
+  "es": {
+    "FORGOT PASSWORD": "OLVIDASTE TU CONTRASEÑA",
+    "Provide your account's email for which you want to reset the password!": "¡Proporcione el correo electrónico de su cuenta para la que desea restablecer la contraseña!",
+    "Email": "Correo",
+    "Send": "Enviar correo",
+    "Email address is required": "Correo electronico es requerido",
+    "Please enter valid email": "Por favor ingrese un correo valido",
+    "An email was sent, in 5 seconds you will redirect to the login screen": "Se envió un correo electrónico, en 5 segundos será redirigido a la pantalla de inicio de sesión"
+  }
+}
