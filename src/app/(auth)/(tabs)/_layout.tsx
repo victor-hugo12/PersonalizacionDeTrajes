@@ -46,6 +46,13 @@ const TabLayout = () => {
           href: null,
         }}
       />
+      <Tabs.Screen
+        name="measurement"
+        options={{
+          title: 'measurement',
+          href: null,
+        }}
+      />
     </Tabs>
   )
 }

@@ -13,7 +13,7 @@ export const HomeScreen = () => {
       <CustomAppBar title="Home" icon="home" backAction={false} />
       <View style={styles.body}>
         <Text>Home Screen</Text>
-        <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/example')}>
+        <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/measurement')}>
           Go to escoger prenda
         </PaperButton>
       </View>

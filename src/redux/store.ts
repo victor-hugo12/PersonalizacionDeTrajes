@@ -1,10 +1,10 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 
-import { counterReducer } from './counter/counter.reducer'
+import { selectionsReducer } from './selections/selections.reducer'
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    selections: selectionsReducer,
   },
 })
 
