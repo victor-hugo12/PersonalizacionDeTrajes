@@ -32,7 +32,7 @@ export const ExampleScreen = () => {
         <View style={{ height: 60 }}>
           <CustomSearch placeholder="search" onChange={() => console.info('onChange')} />
         </View>
-        <View style={{ height: 60, flex: 1, display: 'flex' }}>
+        <View style={{ height: 60 }}>
           <PaperButton
             mode="contained"
             dark
