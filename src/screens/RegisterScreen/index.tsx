@@ -3,8 +3,8 @@ import { useRouter } from 'expo-router'
 import { Formik } from 'formik'
 import React, { useState } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
-import { showMessage } from 'react-native-flash-message'
 import { Button, HelperText, Text, TextInput } from 'react-native-paper'
+import Toast from 'react-native-toast-message'
 import { PaperButton } from 'src/components/PaperButton'
 import { useLoading } from 'src/context/LoaderContext'
 import i18n from 'src/language'
@@ -40,10 +40,10 @@ export const RegisterScreen: React.FC = () => {
       await validateEmail(user)
       loader.setLoading(false)
       await signOutUser()
-      showMessage({
-        message: i18n.t('Your account was created, in 5 seconds you will redirect to the login screen'),
+      Toast.show({
+        text1: i18n.t('Your account was created, in 5 seconds you will redirect to the login screen'),
         type: 'info',
-        duration: 5000,
+        visibilityTime: 5000,
       })
       setTimeout(() => {
         router.replace('/login')
