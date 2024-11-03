@@ -3,6 +3,11 @@
     "Save": "Guardar",
     "Cancel": "Cancelar",
     "Search": "Buscar",
-    "Create": "Crear"
+    "Create": "Crear",
+    "Home": "Inicio",
+    "Orders": "Pedidos",
+    "Settings": "Ajustes",
+    "Profile": "Perfil",
+    "Logout": "Cerrar sesión"
   }
 }

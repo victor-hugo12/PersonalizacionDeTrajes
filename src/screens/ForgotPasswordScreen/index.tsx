@@ -2,8 +2,8 @@ import { useRouter } from 'expo-router'
 import { Formik } from 'formik'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { showMessage } from 'react-native-flash-message'
 import { Avatar, HelperText, IconButton, Text, TextInput } from 'react-native-paper'
+import Toast from 'react-native-toast-message'
 import i18n from 'src/language'
 
 import { PaperButton } from '@/components/PaperButton'
@@ -31,10 +31,10 @@ export const ForgotPasswordScreen: React.FC = () => {
       loader.setLoading(true)
       await sendResetEmail(values.email)
       loader.setLoading(true)
-      showMessage({
-        message: i18n.t('An email was sent, in 5 seconds you will redirect to the login screen'),
+      Toast.show({
+        text1: i18n.t('An email was sent, in 5 seconds you will redirect to the login screen'),
         type: 'info',
-        duration: 5000,
+        visibilityTime: 5000,
       })
       setTimeout(() => {
         router.replace('/login')

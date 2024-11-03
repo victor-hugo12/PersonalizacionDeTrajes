@@ -3,8 +3,8 @@ import { useRouter } from 'expo-router'
 import { Formik } from 'formik'
 import React, { useState } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
-import { showMessage } from 'react-native-flash-message'
 import { Button, HelperText, Text, TextInput } from 'react-native-paper'
+import Toast from 'react-native-toast-message'
 import { useLoading } from 'src/context/LoaderContext'
 import i18n from 'src/language'
 
@@ -49,10 +49,10 @@ export const LoginScreen: React.FC = () => {
         errorMessage = 'auth/user-not-found'
       }
 
-      showMessage({
-        message: i18n.t(errorMessage),
+      Toast.show({
+        text1: i18n.t(errorMessage),
         type: 'info',
-        duration: 5000,
+        visibilityTime: 5000,
       })
     } finally {
       loader.setLoading(false)
