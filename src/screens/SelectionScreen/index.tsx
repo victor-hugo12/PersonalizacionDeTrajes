@@ -7,6 +7,7 @@ import { CustomAppBar } from '@/components/CustomAppBar'
 import { PaperButton } from '@/components/PaperButton'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
+import { WHITE } from '@/constants/colors'
 import { CLOTHES, GarmentType, getGarmentImage } from '@/constants/selections'
 import { setSelectedGarment } from '@/redux/selections/selections.actions'
 import { getSelectedGarment } from '@/redux/selections/selections.selectors'
@@ -31,7 +32,7 @@ export const SelectionScreen = () => {
 
       <View style={styles.body}>
         <View style={styles.imageContainer}>
-          <View style={[styles.imageWrapper, { backgroundColor: 'white' }]}>
+          <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>
             <Image source={getGarmentImage(selectedGarment as GarmentType)} style={styles.image} resizeMode="contain" />
           </View>
         </View>
@@ -43,7 +44,7 @@ export const SelectionScreen = () => {
             selected={selectedGarment}
           />
         </View>
-
+        <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>
           <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/measurement')}>
             {i18n.t('Next')}
@@ -80,6 +81,9 @@ const styles = StyleSheet.create({
   image: {
     width: 400,
     height: 400,
+  },
+  flexGrow: {
+    flexGrow: 1,
   },
   navigationButton: {
     marginTop: 20,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Button, useTheme } from 'react-native-paper'
+import { Button } from 'react-native-paper'
 
 type Props = {
   options: string[]
@@ -10,7 +10,6 @@ type Props = {
 
 export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selected }) => {
   const [selectedOption, setSelectedOption] = useState<string>(selected)
-  const theme = useTheme()
 
   const handleSelect = (value: string) => {
     setSelectedOption(value)
@@ -26,12 +25,6 @@ export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selec
           mode={selectedOption === option ? 'contained' : 'outlined'}
           onPress={() => handleSelect(option)}
           style={styles.button}
-          labelStyle={[
-            styles.label,
-            {
-              color: selectedOption === option ? theme.colors.onPrimary : theme.colors.onSurface,
-            },
-          ]}
         >
           {option}
         </Button>
@@ -47,8 +40,5 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-  },
-  label: {
-    fontWeight: 'bold',
   },
 })

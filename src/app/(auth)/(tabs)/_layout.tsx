@@ -53,13 +53,6 @@ const TabLayout = () => {
           href: null,
         }}
       />
-      <Tabs.Screen
-        name="SelectionScreen"
-        options={{
-          title: 'SelectionScreen',
-          href: null,
-        }}
-      />
     </Tabs>
   )
 }
