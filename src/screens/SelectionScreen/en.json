@@ -1,0 +1,20 @@
+{
+  "en": {
+    "Back": "Back",
+    "Customize Suits": "Customize Suits",
+    "Select_Garment": "Select a Garment",
+    "Choose_garment": "Please choose a garment to customize.",
+    "New": "New",
+    "Garment_not_found": "Garment not found.",
+    "Pantalón": "Pants",
+    "Pantalón_description": "Stylish and comfortable pants.",
+    "Chaleco": "Vest",
+    "Chaleco_description": "A classic vest for formal occasions.",
+    "Saco": "Jacket",
+    "Saco_description": "A tailored jacket for a polished look.",
+    "Next": "Next",
+    "Please_select_a_garment": "Please select a garment before proceeding.",
+    "Successful_logout": "Successfully logged out.",
+    "Logout_problem": "There was a problem logging out. Please try again."
+  }
+}

@@ -1,5 +1,5 @@
+import { router } from 'expo-router'
 import { Image, StyleSheet, View } from 'react-native'
-import { Text } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'src/language'
 
@@ -7,9 +7,9 @@ import { CustomAppBar } from '@/components/CustomAppBar'
 import { PaperButton } from '@/components/PaperButton'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
-import { GarmentType, getGarmentImage, MEASUREMENTS, SIZE_DIMENSIONS, SizeType } from '@/constants/selections'
-import { setSelectedMeasure } from '@/redux/selections/selections.actions'
-import { getSelectedGarment, getSelectedMeasure } from '@/redux/selections/selections.selectors'
+import { CLOTHES, GarmentType, getGarmentImage } from '@/constants/selections'
+import { setSelectedGarment } from '@/redux/selections/selections.actions'
+import { getSelectedGarment } from '@/redux/selections/selections.selectors'
 
 import en from './en.json'
 import es from './es.json'
@@ -17,36 +17,35 @@ import es from './es.json'
 i18n.store(en)
 i18n.store(es)
 
-export const MeasurementScreen = () => {
+export const SelectionScreen = () => {
   const dispatch = useDispatch()
-  const garmentType = useSelector(getSelectedGarment)
-  const size = useSelector(getSelectedMeasure)
-  const { width, height } = SIZE_DIMENSIONS[size as SizeType]
+  const selectedGarment = useSelector(getSelectedGarment)
 
   const handleSelection = (option: string) => {
-    dispatch(setSelectedMeasure(option))
+    dispatch(setSelectedGarment(option))
   }
 
   return (
     <ThemedView style={styles.container}>
-      <CustomAppBar title={i18n.t('Adjust Measurements')} backAction={true} />
+      <CustomAppBar title={i18n.t('Customize Suits')} backAction={false} />
+
       <View style={styles.body}>
         <View style={styles.imageContainer}>
           <View style={[styles.imageWrapper, { backgroundColor: 'white' }]}>
-            <Image
-              source={getGarmentImage(garmentType as GarmentType)}
-              style={{ width, height }}
-              resizeMode="contain"
-            />
+            <Image source={getGarmentImage(selectedGarment as GarmentType)} style={styles.image} resizeMode="contain" />
           </View>
         </View>
-        <View style={styles.titleSelect}>
-          <Text variant="titleLarge">{i18n.t('Select Standard Size')}</Text>
+
+        <View style={styles.selectionContainer}>
+          <SelectionGroupButton
+            options={CLOTHES.map(garment => garment)}
+            onSelect={handleSelection}
+            selected={selectedGarment}
+          />
         </View>
-        <SelectionGroupButton options={MEASUREMENTS} onSelect={handleSelection} selected={size} />
-        <View style={styles.flexGrow} />
+
         <View style={styles.navigationButton}>
-          <PaperButton dark mode="contained">
+          <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/measurement')}>
             {i18n.t('Next')}
           </PaperButton>
         </View>
@@ -63,23 +62,26 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 25,
   },
-  titleSelect: {
-    marginVertical: 8,
+  selectionContainer: {
+    marginVertical: 16,
   },
   imageContainer: {
     alignItems: 'center',
     marginVertical: 16,
   },
   imageWrapper: {
-    width: 300,
-    height: 300,
+    width: 400,
+    height: 400,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
     overflow: 'hidden',
   },
-  flexGrow: {
-    flexGrow: 1,
+  image: {
+    width: 400,
+    height: 400,
   },
-  navigationButton: {},
+  navigationButton: {
+    marginTop: 20,
+  },
 })
