@@ -9,6 +9,13 @@
     "Settings": "Settings",
     "Profile": "Profile",
     "Logout": "Logout",
-    "Next": "Next"
+    "Next": "Next",
+    "Pants": "Pants",
+    "Vest": "Vest",
+    "Coat": "Coat",
+    "S": "S",
+    "M": "M",
+    "L": "L",
+    "XL": "XL"
   }
 }

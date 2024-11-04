@@ -1,3 +1,3 @@
-import { HomeScreen } from '@/screens/HomeScreen'
+import { SelectionScreen } from '@/screens/SelectionScreen'
 
-export default HomeScreen
+export default SelectionScreen
