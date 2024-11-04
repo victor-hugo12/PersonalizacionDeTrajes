@@ -7,6 +7,7 @@ import { CustomAppBar } from '@/components/CustomAppBar'
 import { PaperButton } from '@/components/PaperButton'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
+import { WHITE } from '@/constants/colors'
 import { GarmentType, getGarmentImage, MEASUREMENTS, SIZE_DIMENSIONS, SizeType } from '@/constants/selections'
 import { setSelectedMeasure } from '@/redux/selections/selections.actions'
 import { getSelectedGarment, getSelectedMeasure } from '@/redux/selections/selections.selectors'
@@ -32,7 +33,7 @@ export const MeasurementScreen = () => {
       <CustomAppBar title={i18n.t('Adjust Measurements')} backAction={true} />
       <View style={styles.body}>
         <View style={styles.imageContainer}>
-          <View style={[styles.imageWrapper, { backgroundColor: 'white' }]}>
+          <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>
             <Image
               source={getGarmentImage(garmentType as GarmentType)}
               style={{ width, height }}
@@ -41,7 +42,7 @@ export const MeasurementScreen = () => {
           </View>
         </View>
         <View style={styles.titleSelect}>
-          <Text variant="titleLarge">{i18n.t('Select Standard Size')}</Text>
+          <Text variant="titleLarge">{i18n.t('Select your size')}</Text>
         </View>
         <SelectionGroupButton options={MEASUREMENTS} onSelect={handleSelection} selected={size} />
         <View style={styles.flexGrow} />

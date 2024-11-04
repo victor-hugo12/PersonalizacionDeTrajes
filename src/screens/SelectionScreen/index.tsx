@@ -1,5 +1,6 @@
 import { router } from 'expo-router'
 import { Image, StyleSheet, View } from 'react-native'
+import { Text } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'src/language'
 
@@ -28,13 +29,17 @@ export const SelectionScreen = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <CustomAppBar title={i18n.t('Select Garment')} backAction={false} />
+      <CustomAppBar title={i18n.t('Choice of garment')} backAction={false} />
 
       <View style={styles.body}>
         <View style={styles.imageContainer}>
           <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>
             <Image source={getGarmentImage(selectedGarment as GarmentType)} style={styles.image} resizeMode="contain" />
           </View>
+        </View>
+
+        <View style={styles.titleSelect}>
+          <Text variant="titleLarge">{i18n.t('Select your garment')}</Text>
         </View>
 
         <View style={styles.selectionContainer}>
@@ -87,5 +92,8 @@ const styles = StyleSheet.create({
   },
   navigationButton: {
     marginTop: 20,
+  },
+  titleSelect: {
+    marginVertical: 8,
   },
 })

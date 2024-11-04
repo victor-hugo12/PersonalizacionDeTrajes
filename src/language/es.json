@@ -9,6 +9,13 @@
     "Settings": "Ajustes",
     "Profile": "Perfil",
     "Logout": "Cerrar sesión",
-    "Next": "Siguiente"
+    "Next": "Siguiente",
+    "Pants": "Pantalón",
+    "Vest": "Chaleco",
+    "Coat": "Saco",
+    "S": "S",
+    "M": "M",
+    "L": "L",
+    "XL": "XL"
   }
 }

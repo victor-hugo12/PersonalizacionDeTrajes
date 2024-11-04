@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button } from 'react-native-paper'
 
+import i18n from '@/language'
+
 type Props = {
   options: string[]
   onSelect: (value: string) => void
@@ -27,7 +29,7 @@ export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selec
           onPress={() => handleSelect(option)}
           style={styles.button}
         >
-          {option}
+          {i18n.t(option)}
         </Button>
       ))}
     </View>

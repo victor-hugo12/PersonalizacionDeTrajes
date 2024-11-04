@@ -1,10 +1,6 @@
 {
   "es": {
-    "Back": "Atrás",
-    "Select Garment": "Selecciona una prenda",
-    "pants": "Pantalón",
-    "vest": "Chaleco",
-    "coat": "Saco",
-    "Next": "Siguiente"
+    "Choice of garment": "Eleccion de prenda",
+    "Select your garment": "Seleccione su prenda"
   }
 }
