@@ -1,20 +1,10 @@
 {
   "es": {
     "Back": "Atrás",
-    "Customize Suits": "Personaliza tus trajes",
     "Select Garment": "Selecciona una prenda",
-    "Choose garment": "Por favor, elige una prenda para personalizar.",
-    "New": "Nuevo",
-    "Garment not found": "Prenda no encontrada.",
-    "Pantalón": "Pantalón",
-    "Pantalón description": "Pantalones elegantes y cómodos.",
-    "Chaleco": "Chaleco",
-    "Chaleco description": "Un chaleco clásico para ocasiones formales.",
-    "Saco": "Saco",
-    "Saco description": "Un saco ajustado para un look pulido.",
-    "Next": "Siguiente",
-    "Please select a garment": "Por favor, selecciona una prenda antes de continuar.",
-    "Successful logout": "Cierre de sesión exitoso.",
-    "Logout problem": "Hubo un problema al cerrar sesión. Por favor, inténtalo de nuevo."
+    "pants": "Pantalón",
+    "vest": "Chaleco",
+    "coat": "Saco",
+    "Next": "Siguiente"
   }
 }

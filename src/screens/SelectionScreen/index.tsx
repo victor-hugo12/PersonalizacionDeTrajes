@@ -28,7 +28,7 @@ export const SelectionScreen = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <CustomAppBar title={i18n.t('Customize Suits')} backAction={false} />
+      <CustomAppBar title={i18n.t('Select Garment')} backAction={false} />
 
       <View style={styles.body}>
         <View style={styles.imageContainer}>

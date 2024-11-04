@@ -21,6 +21,7 @@ export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selec
       {options.map(option => (
         <Button
           key={option}
+          dark
           theme={{ roundness: 1 }}
           mode={selectedOption === option ? 'contained' : 'outlined'}
           onPress={() => handleSelect(option)}
