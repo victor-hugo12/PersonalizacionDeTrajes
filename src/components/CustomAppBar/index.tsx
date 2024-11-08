@@ -32,15 +32,11 @@ export const CustomAppBar: React.FC<Props> = ({ title, icon, backAction = true }
   }
 
   return (
-    <Appbar.Header dark statusBarHeight={0} style={{ backgroundColor: theme.colors.primary, height: 50 }}>
+    <Appbar.Header statusBarHeight={0} style={{ backgroundColor: theme.colors.surface, height: 50 }}>
       {backAction && <Appbar.BackAction onPress={() => router.back()} />}
       {icon !== undefined && <Appbar.Action icon={icon} />}
       <Appbar.Content title={title} />
-      <Menu
-        visible={visible}
-        onDismiss={hideMenu}
-        anchor={<Appbar.Action icon="dots-vertical" onPress={handleMore} color="white" />}
-      >
+      <Menu visible={visible} onDismiss={hideMenu} anchor={<Appbar.Action icon="dots-vertical" onPress={handleMore} />}>
         <Menu.Item onPress={handleProfile} title={i18n.t('Profile')} />
         <Menu.Item onPress={handleLogout} title={i18n.t('Logout')} />
       </Menu>
