@@ -10,7 +10,9 @@ import { PaperButton } from '@/components/PaperButton'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
 import { WHITE } from '@/constants/colors'
+import { darkenColor } from '@/constants/colorUtils'
 import {
+  COLOR_VALUES,
   GARMENT_MEASUREMENTS,
   GarmentProps,
   GarmentType,
@@ -18,14 +20,14 @@ import {
   MEASUREMENTS,
 } from '@/constants/selections'
 import { setSelectedMeasure, updateCustomMeasurements } from '@/redux/selections/selections.actions'
-import { getCustomMeasurements, getSelectedGarment, getSelectedMeasure } from '@/redux/selections/selections.selectors'
+import {
+  getCustomMeasurements,
+  getSelectedColor,
+  getSelectedGarment,
+  getSelectedMeasure,
+} from '@/redux/selections/selections.selectors'
 import { RootState } from '@/redux/store'
 
-import en from './en.json'
-import es from './es.json'
-
-i18n.store(en)
-i18n.store(es)
 const convertToRecord = (props: GarmentProps): Record<string, number> => {
   return Object.fromEntries(Object.entries(props).filter(([_, value]) => typeof value === 'number'))
 }
@@ -46,6 +48,10 @@ export const MeasurementScreen = () => {
   const selectedGarment = useSelector(getSelectedGarment) as GarmentType
   const size = useSelector(getSelectedMeasure)
   const customMeasurements = useSelector(state => getCustomMeasurements(state as RootState, selectedGarment))
+  const selectedColor = useSelector(getSelectedColor)
+
+  const fillColor = selectedColor ? COLOR_VALUES[selectedColor as keyof typeof COLOR_VALUES] : WHITE
+  const strokeColor = darkenColor(fillColor, 0.4)
 
   const initialMeasurements = useMemo(() => {
     return sanitizeMeasurements(selectedGarment, customMeasurements || {})
@@ -80,15 +86,21 @@ export const MeasurementScreen = () => {
 
   const handleSelection = (option: string) => {
     dispatch(setSelectedMeasure(option))
+
     const rawMeasurements =
       GARMENT_MEASUREMENTS[selectedGarment]?.measures[
         option as keyof (typeof GARMENT_MEASUREMENTS)[GarmentType]['measures']
       ] || {}
+
     const sanitized = sanitizeMeasurements(selectedGarment, rawMeasurements)
+
     const sanitizedRecord = convertToRecord(sanitized)
     setMeasurements(sanitized)
+
     const newInputValues = Object.fromEntries(Object.entries(sanitized).map(([key, value]) => [key, value.toString()]))
+
     setInputValues(newInputValues)
+
     dispatch(updateCustomMeasurements({ garmentType: selectedGarment, measurements: sanitizedRecord }))
   }
 
@@ -105,7 +117,16 @@ export const MeasurementScreen = () => {
 
   const renderSVGComponent = () => {
     const sanitized = sanitizeMeasurements(selectedGarment, measurements)
-    return SelectedGarmentComponent ? <SelectedGarmentComponent {...sanitized} width={300} height={300} /> : null
+
+    return SelectedGarmentComponent ? (
+      <SelectedGarmentComponent
+        {...sanitized}
+        fillColor={fillColor}
+        strokeColor={strokeColor}
+        width={300}
+        height={300}
+      />
+    ) : null
   }
 
   return (
@@ -115,14 +136,13 @@ export const MeasurementScreen = () => {
         <View style={styles.imageContainer}>
           <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>{renderSVGComponent()}</View>
         </View>
+        <SelectionGroupButton options={[...MEASUREMENTS]} onSelect={handleSelection} selected={size} />
         <View style={styles.titleSelect}>
           <Text variant="titleLarge">{i18n.t('Select your size')}</Text>
           <PaperButton mode="contained" dark onPress={handleApplyChanges}>
             {i18n.t('Apply')}
           </PaperButton>
         </View>
-
-        <SelectionGroupButton options={[...MEASUREMENTS]} onSelect={handleSelection} selected={size} />
         <ScrollView style={styles.inputsContainer}>
           {Object.entries(measurements).map(([key]) => (
             <View key={key} style={styles.inputWrapper}>
