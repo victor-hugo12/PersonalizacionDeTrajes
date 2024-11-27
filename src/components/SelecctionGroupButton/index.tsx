@@ -8,9 +8,11 @@ type Props = {
   options: string[]
   onSelect: (value: string) => void
   selected: string
+  icons?: { [key: string]: string }
+  colors?: { [key: string]: string }
 }
 
-export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selected }) => {
+export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selected, icons, colors }) => {
   const [selectedOption, setSelectedOption] = useState<string>(selected)
 
   const handleSelect = (value: string) => {
@@ -28,6 +30,9 @@ export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selec
           mode={selectedOption === option ? 'contained' : 'outlined'}
           onPress={() => handleSelect(option)}
           style={styles.button}
+          icon={icons && icons[option] ? icons[option] : undefined}
+          contentStyle={{ flexDirection: 'row-reverse' }}
+          textColor={colors && colors[option]}
         >
           {i18n.t(option)}
         </Button>

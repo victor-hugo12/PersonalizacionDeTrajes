@@ -10,18 +10,23 @@ import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
 import { WHITE } from '@/constants/colors'
 import { darkenColor } from '@/constants/colorUtils'
-import { COLOR_VALUES } from '@/constants/selections'
 import {
-  CLOTHES,
-  CoatProps,
-  GARMENT_MEASUREMENTS,
+  COLOR_ICONS,
+  COLOR_VALUES,
+  COLORS,
+  FABRIC_ICONS,
+  FABRICS,
+  GarmentProps,
   GarmentType,
   getGarmentComponent,
-  PantsProps,
-  VestProps,
 } from '@/constants/selections'
-import { setSelectedGarment } from '@/redux/selections/selections.actions'
-import { getCustomMeasurements, getSelectedColor, getSelectedGarment } from '@/redux/selections/selections.selectors'
+import { resetColor, setSelectedColor, setSelectedFabric } from '@/redux/selections/selections.actions'
+import {
+  getCustomMeasurements,
+  getSelectedColor,
+  getSelectedFabric,
+  getSelectedGarment,
+} from '@/redux/selections/selections.selectors'
 import { RootState } from '@/redux/store'
 
 import en from './en.json'
@@ -29,49 +34,42 @@ import es from './es.json'
 
 i18n.store(en)
 i18n.store(es)
-const getCompleteGarmentProps = (
-  garmentType: GarmentType,
-  measurements: Record<string, number> | Record<string, string>, // Aceptamos strings para colores
-): PantsProps | VestProps | CoatProps => {
-  const defaultMeasurements = GARMENT_MEASUREMENTS[garmentType]?.measures.M || {}
 
-  const completeProps = {
-    ...defaultMeasurements,
-    ...measurements,
-    width: 400,
-    height: 400,
-  }
-
-  return completeProps as PantsProps | VestProps | CoatProps
-}
-
-export const SelectionScreen = () => {
+export const FabricScreen = () => {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  const selectedGarment = useSelector(getSelectedGarment) as GarmentType
-  const customMeasurements = useSelector((state: RootState) => getCustomMeasurements(state, selectedGarment))
   const selectedColor = useSelector(getSelectedColor)
+  const selectedFabric = useSelector(getSelectedFabric)
+  const garmentType = useSelector(getSelectedGarment) as GarmentType
+  const garmentMeasurements = useSelector(state => getCustomMeasurements(state as RootState, garmentType))
+
+  const SelectedGarmentComponent = getGarmentComponent(garmentType)
 
   const fillColor = selectedColor ? COLOR_VALUES[selectedColor as keyof typeof COLOR_VALUES] : WHITE
   const strokeColor = darkenColor(fillColor, 0.4)
 
-  const garmentProps =
-    Object.keys(customMeasurements).length > 0
-      ? getCompleteGarmentProps(selectedGarment, { ...customMeasurements, fillColor, strokeColor })
-      : getCompleteGarmentProps(selectedGarment, { fillColor, strokeColor })
-
-  const handleSelection = (option: string) => {
-    const garmentType = option as GarmentType
-
-    dispatch(setSelectedGarment(garmentType))
+  // Combinar propiedades específicas y comunes
+  const garmentProps: GarmentProps = {
+    ...(garmentMeasurements as unknown as GarmentProps), // Aseguramos que tenga las propiedades necesarias
+    width: 300,
+    height: 300,
+    fillColor,
+    strokeColor,
   }
-  const SelectedGarmentComponent = getGarmentComponent(selectedGarment)
+
+  const handleColorSelection = (option: string) => {
+    dispatch(setSelectedColor(option))
+  }
+
+  const handleFabricSelection = (option: string) => {
+    dispatch(setSelectedFabric(option))
+    dispatch(resetColor())
+  }
 
   return (
     <ThemedView style={styles.container}>
-      <CustomAppBar title={i18n.t('Choice of garment')} backAction={false} />
-
+      <CustomAppBar title={i18n.t('Fabric and Color Selection')} backAction={true} />
       <View style={styles.body}>
         <View style={styles.imageContainer}>
           <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>
@@ -80,20 +78,32 @@ export const SelectionScreen = () => {
         </View>
 
         <View style={styles.titleSelect}>
-          <Text variant="titleLarge">{i18n.t('Select your garment')}</Text>
+          <Text variant="titleLarge">{i18n.t('Select your color')}</Text>
         </View>
-
         <View style={styles.selectionContainer}>
           <SelectionGroupButton
-            options={CLOTHES.map(garment => garment)}
-            onSelect={handleSelection}
-            selected={selectedGarment}
+            key={`color-${selectedColor}`}
+            options={COLORS}
+            onSelect={handleColorSelection}
+            selected={selectedColor}
+            icons={COLOR_ICONS}
+            colors={COLOR_VALUES}
           />
         </View>
-
+        <View style={styles.titleSelect}>
+          <Text variant="titleLarge">{i18n.t('Select your fabric')}</Text>
+        </View>
+        <View style={styles.selectionContainer}>
+          <SelectionGroupButton
+            options={FABRICS}
+            onSelect={handleFabricSelection}
+            selected={selectedFabric}
+            icons={FABRIC_ICONS}
+          />
+        </View>
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>
-          <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/measurement')}>
+          <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/home')}>
             {i18n.t('Next')}
           </PaperButton>
         </View>
@@ -116,10 +126,11 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     marginVertical: 16,
+    width: '100%',
+    aspectRatio: 1,
   },
   imageWrapper: {
-    width: 400,
-    height: 400,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,

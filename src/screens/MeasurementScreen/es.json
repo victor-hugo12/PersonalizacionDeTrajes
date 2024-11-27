@@ -1,6 +1,16 @@
 {
   "es": {
     "Adjust Measurements": "Ajuste de Medidas",
-    "Select your size": "Seleccione su talla"
+    "Select your size": "Seleccione su talla",
+    "Apply": "Aplicar",
+    "length": "Largo",
+    "shoulder": "Hombro",
+    "chest": "Pecho",
+    "hem": "Bajo",
+    "knee": "Rodilla",
+    "thigh": "Muslo",
+    "waist": "Cintura",
+    "inseam": "Entrepierna",
+    "arm": "Brazo"
   }
 }

@@ -1,22 +1,21 @@
 import { Tabs } from 'expo-router'
 
 import { TabBarIcon } from '@/components/TabBarIcon'
-import { ACTIVE, IN_ACTIVE } from '@/constants/colors'
 import { useTheme } from '@/context/ThemeContext'
 import i18n from '@/language'
 
 const TabLayout = () => {
   const { theme } = useTheme()
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: theme.colors.primary,
+          backgroundColor: theme.colors.surface,
         },
-        tabBarActiveTintColor: ACTIVE,
-        tabBarInactiveTintColor: IN_ACTIVE,
       }}
+      backBehavior="history"
     >
       <Tabs.Screen
         name="home"
@@ -40,9 +39,9 @@ const TabLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="example"
+        name="fabric"
         options={{
-          title: 'example',
+          title: 'fabric',
           href: null,
         }}
       />
