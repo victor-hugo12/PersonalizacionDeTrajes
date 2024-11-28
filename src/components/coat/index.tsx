@@ -7,27 +7,26 @@ import { WHITE } from '@/constants/colors'
 import { calculateCoat } from './calculateCoat'
 
 interface CoatProps {
-  width?: number // Propiedad opcional para ancho
-  height?: number // Propiedad opcional para altura
+  width?: number
+  height?: number
   length: number
   shoulder: number
   chest: number
   arm: number
-  fillColor?: string // Nuevo: color de relleno dinámico
-  strokeColor?: string // Nuevo: color del borde dinámico
+  fillColor?: string
+  strokeColor?: string
 }
 
 const Coat: React.FC<CoatProps> = ({
-  width = 400, // Valor predeterminado para el ancho
-  height = 400, // Valor predeterminado para la altura
+  width = 400,
+  height = 400,
   length,
   shoulder,
   chest,
   arm,
-  fillColor = 'gray', // Valor predeterminado para el color de relleno
-  strokeColor = 'black', // Valor predeterminado para el color del borde
+  fillColor = 'gray',
+  strokeColor = 'black',
 }) => {
-  // Llamada a calculateCoat con las dimensiones del contenedor
   const {
     original,
     reflejado,
@@ -39,16 +38,11 @@ const Coat: React.FC<CoatProps> = ({
     cuello1Reflejado,
     brazo1,
     brazo1Reflejado,
-  } = calculateCoat(
-    { length, shoulder, chest, arm },
-    width, // Ancho del contenedor
-    height, // Altura del contenedor
-  )
+  } = calculateCoat({ length, shoulder, chest, arm }, width, height)
 
   return (
     <View style={[styles.imageWrapper, { width, height }]}>
       <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-        {/* Dibujando las partes del abrigo */}
         <Path d={brazo1} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
         <Path d={brazo1Reflejado} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
         <Path d={Cuello} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
@@ -59,7 +53,6 @@ const Coat: React.FC<CoatProps> = ({
         <Path d={bolsillo} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
         <Path d={bolsilloReflejado} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
 
-        {/* Dibujando los botones */}
         {botones.map((boton, index) => (
           <Circle key={index} cx={boton.cx} cy={boton.cy} r={boton.r} fill={strokeColor} />
         ))}
