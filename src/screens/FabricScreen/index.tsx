@@ -9,8 +9,8 @@ import { PaperButton } from '@/components/PaperButton'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
 import { WHITE } from '@/constants/colors'
-import { darkenColor } from '@/constants/colorUtils'
 import {
+  BORDER_COLORS,
   COLOR_ICONS,
   COLOR_VALUES,
   COLORS,
@@ -47,8 +47,7 @@ export const FabricScreen = () => {
   const SelectedGarmentComponent = getGarmentComponent(garmentType)
 
   const fillColor = selectedColor ? COLOR_VALUES[selectedColor as keyof typeof COLOR_VALUES] : WHITE
-  const strokeColor = darkenColor(fillColor, 0.4)
-
+  const strokeColor = selectedColor ? BORDER_COLORS[selectedColor as keyof typeof BORDER_COLORS] : WHITE
   // Combinar propiedades específicas y comunes
   const garmentProps: GarmentProps = {
     ...(garmentMeasurements as unknown as GarmentProps), // Aseguramos que tenga las propiedades necesarias

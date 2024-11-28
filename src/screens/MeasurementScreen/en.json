@@ -11,6 +11,11 @@
     "thigh": "Thigh",
     "waist": "Waist",
     "inseam": "Inseam",
-    "arm": "Arm"
+    "arm": "Arm",
+    "must be at least": "must be at least",
+    "must be at most": "must be at most",
+    "is required": "is required",
+    "must not be greater than Knee": "must not be greater than Knee",
+    "must not be greater than thigh": "must not be greater than thigh"
   }
 }

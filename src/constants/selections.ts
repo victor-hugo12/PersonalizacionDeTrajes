@@ -101,7 +101,7 @@ export const COLOR_ICONS = COLORS.reduce(
 )
 
 export const COLOR_VALUES = {
-  Black: '#333333',
+  Black: '#000000',
   Blue: '#0000FF',
   Gray: '#808080',
 } as const
@@ -110,3 +110,8 @@ export const FABRIC_ICONS = {
   Polyester: 'texture',
   Linen: 'leaf-maple',
 }
+export const BORDER_COLORS = {
+  Black: '#444444',
+  Blue: '#000080',
+  Gray: '#A9A9A9',
+} as const

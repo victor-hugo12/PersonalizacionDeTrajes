@@ -1,17 +1,18 @@
 import { useRouter } from 'expo-router'
 import { useEffect, useMemo, useState } from 'react'
 import { ScrollView, StyleSheet, TextInput, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'src/language'
+import * as yup from 'yup'
 
 import { CustomAppBar } from '@/components/CustomAppBar'
 import { PaperButton } from '@/components/PaperButton'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
 import { WHITE } from '@/constants/colors'
-import { darkenColor } from '@/constants/colorUtils'
 import {
+  BORDER_COLORS,
   COLOR_VALUES,
   GARMENT_MEASUREMENTS,
   GarmentProps,
@@ -28,13 +29,14 @@ import {
 } from '@/redux/selections/selections.selectors'
 import { RootState } from '@/redux/store'
 
+import { getValidationSchema } from './schema'
+
 const convertToRecord = (props: GarmentProps): Record<string, number> => {
   return Object.fromEntries(Object.entries(props).filter(([_, value]) => typeof value === 'number'))
 }
 
 const sanitizeMeasurements = (garmentType: GarmentType, measurements: Partial<GarmentProps>): GarmentProps => {
   const defaultMeasurements = GARMENT_MEASUREMENTS[garmentType]?.measures.M as GarmentProps
-
   return {
     ...defaultMeasurements,
     ...measurements,
@@ -42,6 +44,8 @@ const sanitizeMeasurements = (garmentType: GarmentType, measurements: Partial<Ga
 }
 
 export const MeasurementScreen = () => {
+  const theme = useTheme()
+
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -51,8 +55,7 @@ export const MeasurementScreen = () => {
   const selectedColor = useSelector(getSelectedColor)
 
   const fillColor = selectedColor ? COLOR_VALUES[selectedColor as keyof typeof COLOR_VALUES] : WHITE
-  const strokeColor = darkenColor(fillColor, 0.4)
-
+  const strokeColor = selectedColor ? BORDER_COLORS[selectedColor as keyof typeof BORDER_COLORS] : WHITE
   const initialMeasurements = useMemo(() => {
     return sanitizeMeasurements(selectedGarment, customMeasurements || {})
   }, [selectedGarment, customMeasurements])
@@ -61,10 +64,12 @@ export const MeasurementScreen = () => {
   const [inputValues, setInputValues] = useState<Record<string, string>>(
     Object.fromEntries(Object.entries(initialMeasurements).map(([key, value]) => [key, value.toString()])),
   )
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const SelectedGarmentComponent = getGarmentComponent(selectedGarment)
 
   useEffect(() => {
+    setErrors({})
     const garmentMeasurements = customMeasurements || {}
     setMeasurements(sanitizeMeasurements(selectedGarment, garmentMeasurements))
     setInputValues(
@@ -73,15 +78,35 @@ export const MeasurementScreen = () => {
   }, [selectedGarment, customMeasurements])
 
   const handleInputChange = (key: string, value: string) => {
-    const numericValue = parseFloat(value.replace(/[^0-9.]/g, ''))
+    const validValue = value.replace(/[^0-9.]/g, '') // Solo permitir números y punto decimal
+    setInputValues(prev => ({ ...prev, [key]: validValue }))
 
-    if (!isNaN(numericValue)) {
-      setInputValues(prev => ({ ...prev, [key]: value }))
-      setMeasurements(prev => ({ ...prev, [key]: numericValue }))
-    } else {
-      setInputValues(prev => ({ ...prev, [key]: value }))
-      setMeasurements(prev => ({ ...prev, [key]: 0 }))
+    const updatedMeasurements = {
+      ...measurements,
+      [key]: parseFloat(validValue) || 0,
     }
+
+    const schema = getValidationSchema(selectedGarment)
+
+    schema
+      .validateAt(key, updatedMeasurements) // Valida el campo en el contexto completo
+      .then(() => {
+        // Limpia errores si la validación es exitosa
+        setErrors(prev => {
+          const newErrors = { ...prev }
+          delete newErrors[key]
+          return newErrors
+        })
+
+        // Actualiza las mediciones
+        setMeasurements(updatedMeasurements)
+      })
+      .catch((validationError: yup.ValidationError) => {
+        setErrors(prev => ({
+          ...prev,
+          [key]: validationError.message,
+        }))
+      })
   }
 
   const handleSelection = (option: string) => {
@@ -93,31 +118,46 @@ export const MeasurementScreen = () => {
       ] || {}
 
     const sanitized = sanitizeMeasurements(selectedGarment, rawMeasurements)
-
     const sanitizedRecord = convertToRecord(sanitized)
+
     setMeasurements(sanitized)
-
     const newInputValues = Object.fromEntries(Object.entries(sanitized).map(([key, value]) => [key, value.toString()]))
-
     setInputValues(newInputValues)
 
     dispatch(updateCustomMeasurements({ garmentType: selectedGarment, measurements: sanitizedRecord }))
   }
 
+  const validateMeasurements = () => {
+    const schema = getValidationSchema(selectedGarment)
+    try {
+      schema.validateSync(measurements, { abortEarly: false })
+      return true
+    } catch (error) {
+      return false
+    }
+  }
+
   const handleApplyChanges = () => {
-    const sanitizedRecord = convertToRecord(measurements)
-    dispatch(updateCustomMeasurements({ garmentType: selectedGarment, measurements: sanitizedRecord }))
+    if (validateMeasurements()) {
+      const sanitizedRecord = convertToRecord(measurements)
+      dispatch(updateCustomMeasurements({ garmentType: selectedGarment, measurements: sanitizedRecord }))
+    } else {
+      console.log('Invalid measurements, no changes applied.')
+    }
   }
 
   const handleNext = () => {
-    const sanitizedRecord = convertToRecord(measurements)
-    dispatch(updateCustomMeasurements({ garmentType: selectedGarment, measurements: sanitizedRecord }))
-    router.push('/(auth)/(tabs)/fabric')
+    if (validateMeasurements()) {
+      const sanitizedRecord = convertToRecord(measurements)
+      dispatch(updateCustomMeasurements({ garmentType: selectedGarment, measurements: sanitizedRecord }))
+      router.push('/(auth)/(tabs)/fabric')
+    } else {
+      console.log('Invalid measurements, cannot proceed.')
+    }
   }
 
   const renderSVGComponent = () => {
     const sanitized = sanitizeMeasurements(selectedGarment, measurements)
-
     return SelectedGarmentComponent ? (
       <SelectedGarmentComponent
         {...sanitized}
@@ -146,15 +186,23 @@ export const MeasurementScreen = () => {
         <ScrollView style={styles.inputsContainer}>
           {Object.entries(measurements).map(([key]) => (
             <View key={key} style={styles.inputWrapper}>
-              <Text>{i18n.t(key)}</Text>
+              <Text style={styles.inputLabel}>{i18n.t(key)}</Text>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  {
+                    backgroundColor: theme.colors.background,
+                    color: theme.dark ? 'white' : 'black',
+                  },
+                ]}
                 keyboardType="numeric"
                 value={inputValues[key] || ''}
                 onChangeText={val => handleInputChange(key, val)}
               />
+              {errors[key] && <Text style={styles.errorText}>{errors[key]}</Text>}
             </View>
           ))}
+
           <View style={styles.navigationButton}>
             <PaperButton mode="contained" dark onPress={handleNext}>
               {i18n.t('Next')}
@@ -165,6 +213,7 @@ export const MeasurementScreen = () => {
     </ThemedView>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -188,26 +237,32 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   inputsContainer: {
-    flex: 1,
     marginTop: 5,
   },
   inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 16, // Espacio entre grupos de inputs
+  },
+  inputRow: {
+    flexDirection: 'row', // Alinea el label y el input en una fila
+    alignItems: 'center', // Alinea verticalmente el label con el input
   },
   inputLabel: {
-    flex: 1,
-    textAlign: 'right',
+    flex: 1, // El label ocupa solo el espacio necesario
+    marginRight: 10, // Espacio entre el label y el input
+    textAlign: 'left', // Alinea el texto del label a la izquierda
   },
   input: {
-    flex: 2,
-    marginLeft: 10,
+    flex: 2, // El input ocupa el espacio restante
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 8,
-    textAlign: 'right',
+    textAlign: 'right', // Alinea el texto dentro del input a la derecha
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: 5, // Espacio entre el input y el mensaje de error
   },
   navigationButton: {
     marginTop: 20,

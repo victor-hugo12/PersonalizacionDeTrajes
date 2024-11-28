@@ -11,6 +11,11 @@
     "thigh": "Muslo",
     "waist": "Cintura",
     "inseam": "Entrepierna",
-    "arm": "Brazo"
+    "arm": "Brazo",
+    "must be at least": "debe ser al menos",
+    "must be at most": "debe ser como máximo",
+    "is required": "es obligatorio",
+    "must not be greater than Knee": "no debe ser mayor que la rodilla",
+    "must not be greater than thigh": "no debe ser mayor que el muslo"
   }
 }

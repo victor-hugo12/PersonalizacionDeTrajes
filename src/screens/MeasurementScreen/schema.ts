@@ -1,7 +1,13 @@
 import * as yup from 'yup'
 
 import { GarmentType } from '@/constants/selections'
+import i18n from '@/language'
 
+import en from './en.json'
+import es from './es.json'
+
+i18n.store(en)
+i18n.store(es)
 // Definir máximos y mínimos dinámicos para cada campo dependiendo de la prenda
 const FIELD_MINIMUMS_BY_GARMENT: Record<string, Record<string, number>> = {
   Vest: {
@@ -63,83 +69,123 @@ export const getValidationSchema = (garmentType: GarmentType) => {
     schemaShape = {
       length: yup
         .number()
-        .min(garmentMinimums.length, `Length must be at least ${garmentMinimums.length} cm`)
-        .max(garmentMaximums.length, `Length must be at most ${garmentMaximums.length} cm`)
-        .required('Length is required'),
+        .min(
+          garmentMinimums.length,
+          i18n.t('length') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.length} cm`,
+        )
+        .max(
+          garmentMaximums.length,
+          i18n.t('length') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.length} cm`,
+        )
+        .required(i18n.t('length') + ' ' + i18n.t('is required')),
       shoulder: yup
         .number()
-        .min(garmentMinimums.shoulder, `Shoulder must be at least ${garmentMinimums.shoulder} cm`)
-        .max(garmentMaximums.shoulder, `Shoulder must be at most ${garmentMaximums.shoulder} cm`)
-        .required('Shoulder is required'),
+        .min(
+          garmentMinimums.shoulder,
+          i18n.t('shoulder') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.shoulder} cm`,
+        )
+        .max(
+          garmentMaximums.shoulder,
+          i18n.t('shoulder') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.shoulder} cm`,
+        )
+        .required(i18n.t('shoulder') + ' ' + i18n.t('is required')),
       chest: yup
         .number()
-        .min(garmentMinimums.chest, `Chest must be at least ${garmentMinimums.chest} cm`)
-        .max(garmentMaximums.chest, `Chest must be at most ${garmentMaximums.chest} cm`)
-        .required('Chest is required'),
+        .min(garmentMinimums.chest, i18n.t('chest') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.chest} cm`)
+        .max(garmentMaximums.chest, i18n.t('chest') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.chest} cm`)
+        .required(i18n.t('chest') + ' ' + i18n.t('is required')),
     }
   } else if (garmentType === 'Pants') {
     schemaShape = {
       length: yup
         .number()
-        .min(garmentMinimums.length, `Length must be at least ${garmentMinimums.length} cm`)
-        .max(garmentMaximums.length, `Length must be at most ${garmentMaximums.length} cm`)
-        .required('Length is required'),
+        .min(
+          garmentMinimums.length,
+          i18n.t('length') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.length} cm`,
+        )
+        .max(
+          garmentMaximums.length,
+          i18n.t('length') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.length} cm`,
+        )
+        .required(i18n.t('length') + ' ' + i18n.t('is required')),
       hem: yup
         .number()
-        .min(garmentMinimums.hem, `Hem must be at least ${garmentMinimums.hem} cm`)
-        .max(garmentMaximums.hem, `Hem must be at most ${garmentMaximums.hem} cm`)
-        .test('hem-less-than-knee', 'Hem must not be greater than Knee', function (value) {
+        .min(garmentMinimums.hem, i18n.t('hem') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.hem} cm`)
+        .max(garmentMaximums.hem, i18n.t('hem') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.hem} cm`)
+        .test('hem-less-than-knee', i18n.t('hem') + ' ' + i18n.t('must not be greater than Knee'), function (value) {
           const { knee } = this.parent
           return value !== undefined && knee !== undefined ? value <= knee : true
         })
-        .required('Hem is required'),
+        .required(i18n.t('hem') + ' ' + i18n.t('is required')),
       knee: yup
         .number()
-        .min(garmentMinimums.knee, `Knee must be at least ${garmentMinimums.knee} cm`)
-        .max(garmentMaximums.knee, `Knee must be at most ${garmentMaximums.knee} cm`)
-        .test('knee-less-than-thigh', 'Knee must not be greater than thigh', function (value) {
-          const { thigh } = this.parent
-          return value !== undefined && thigh !== undefined ? value <= thigh : true
-        })
-        .required('Knee is required'),
+        .min(garmentMinimums.knee, i18n.t('knee') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.knee} cm`)
+        .max(garmentMaximums.knee, i18n.t('knee') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.knee} cm`)
+        .test(
+          'knee-less-than-thigh',
+          i18n.t('knee') + ' ' + i18n.t('must not be greater than thigh'),
+          function (value) {
+            const { thigh } = this.parent
+            return value !== undefined && thigh !== undefined ? value <= thigh : true
+          },
+        )
+        .required(i18n.t('knee') + ' ' + i18n.t('is required')),
       thigh: yup
         .number()
-        .min(garmentMinimums.thigh, `Thigh must be at least ${garmentMinimums.thigh} cm`)
-        .max(garmentMaximums.thigh, `Thigh must be at most ${garmentMaximums.thigh} cm`)
-        .required('Thigh is required'),
+        .min(garmentMinimums.thigh, i18n.t('thigh') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.thigh} cm`)
+        .max(garmentMaximums.thigh, i18n.t('thigh') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.thigh} cm`)
+        .required(i18n.t('thigh') + ' ' + i18n.t('is required')),
       waist: yup
         .number()
-        .min(garmentMinimums.waist, `Waist must be at least ${garmentMinimums.waist} cm`)
-        .max(garmentMaximums.waist, `Waist must be at most ${garmentMaximums.waist} cm`)
-        .required('Waist is required'),
+        .min(garmentMinimums.waist, i18n.t('waist') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.waist} cm`)
+        .max(garmentMaximums.waist, i18n.t('waist') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.waist} cm`)
+        .required(i18n.t('waist') + ' ' + i18n.t('is required')),
       inseam: yup
         .number()
-        .min(garmentMinimums.inseam, `Inseam must be at least ${garmentMinimums.inseam} cm`)
-        .max(garmentMaximums.inseam, `Inseam must be at most ${garmentMaximums.inseam} cm`)
-        .required('Inseam is required'),
+        .min(
+          garmentMinimums.inseam,
+          i18n.t('inseam') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.inseam} cm`,
+        )
+        .max(
+          garmentMaximums.inseam,
+          i18n.t('inseam') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.inseam} cm`,
+        )
+        .required(i18n.t('inseam') + ' ' + i18n.t('is required')),
     }
   } else if (garmentType === 'Coat') {
     schemaShape = {
       length: yup
         .number()
-        .min(garmentMinimums.length, `Length must be at least ${garmentMinimums.length} cm`)
-        .max(garmentMaximums.length, `Length must be at most ${garmentMaximums.length} cm`)
-        .required('Length is required'),
+        .min(
+          garmentMinimums.length,
+          i18n.t('length') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.length} cm`,
+        )
+        .max(
+          garmentMaximums.length,
+          i18n.t('length') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.length} cm`,
+        )
+        .required(i18n.t('length') + ' ' + i18n.t('is required')),
       shoulder: yup
         .number()
-        .min(garmentMinimums.shoulder, `Shoulder must be at least ${garmentMinimums.shoulder} cm`)
-        .max(garmentMaximums.shoulder, `Shoulder must be at most ${garmentMaximums.shoulder} cm`)
-        .required('Shoulder is required'),
+        .min(
+          garmentMinimums.shoulder,
+          i18n.t('shoulder') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.shoulder} cm`,
+        )
+        .max(
+          garmentMaximums.shoulder,
+          i18n.t('shoulder') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.shoulder} cm`,
+        )
+        .required(i18n.t('shoulder') + ' ' + i18n.t('is required')),
       chest: yup
         .number()
-        .min(garmentMinimums.chest, `Chest must be at least ${garmentMinimums.chest} cm`)
-        .max(garmentMaximums.chest, `Chest must be at most ${garmentMaximums.chest} cm`)
-        .required('Chest is required'),
+        .min(garmentMinimums.chest, i18n.t('chest') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.chest} cm`)
+        .max(garmentMaximums.chest, i18n.t('chest') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.chest} cm`)
+        .required(i18n.t('chest') + ' ' + i18n.t('is required')),
       arm: yup
         .number()
-        .min(garmentMinimums.arm, `Arm must be at least ${garmentMinimums.arm} cm`)
-        .max(garmentMaximums.arm, `Arm must be at most ${garmentMaximums.arm} cm`)
-        .required('Arm is required'),
+        .min(garmentMinimums.arm, i18n.t('arm') + ' ' + i18n.t('must be at least') + ` ${garmentMinimums.arm} cm`)
+        .max(garmentMaximums.arm, i18n.t('arm') + ' ' + i18n.t('must be at most') + ` ${garmentMaximums.arm} cm`)
+        .required(i18n.t('arm') + ' ' + i18n.t('is required')),
     }
   }
 
