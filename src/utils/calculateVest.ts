@@ -23,7 +23,7 @@ export const calculateVest = (
   const y7 = y3 + 1 * escalaX
   const x8 = x6 + 9 * escalaX
   const y8 = y6 - 4 * escalaX
-  const d = `M ${x1},${y1} L ${x2},${y2}
+  const original = `M ${x1},${y1} L ${x2},${y2}
       C ${x2 - (x3 - x2) / 1.875},${y3 - (y3 - y2) / 4.5} ${x2 - (x3 - x2) / 1.25},${y3 - (y3 - y2) / 27} ${x3},${y3}
       C ${x4 - (x3 - x4) / 0.5},${y3 + (y4 - y3) / 6.2} ${x4 + (x3 - x4) / 4},${y3 + (y4 - y3) / 1.4} ${x4},${y4}
       L ${x5},${y5}
@@ -33,7 +33,7 @@ export const calculateVest = (
     `
 
   const xRef = x6 + 2 * escalaX
-  const dReflejado = `M ${2 * xRef - x1},${y1} L ${2 * xRef - x2},${y2}
+  const reflected = `M ${2 * xRef - x1},${y1} L ${2 * xRef - x2},${y2}
         C ${2 * xRef - (x2 - (x3 - x2) / 1.875)},${y3 - (y3 - y2) / 4.5}
           ${2 * xRef - (x2 - (x3 - x2) / 1.25)},${y3 - (y3 - y2) / 27}
           ${2 * xRef - x3},${y3}
@@ -45,37 +45,37 @@ export const calculateVest = (
         L ${2 * xRef - x6},${y7}
         L ${2 * xRef - x1},${y1}`
 
-  const dbolsillo = `M ${x8},${y8}
+  const pocket = `M ${x8},${y8}
       L ${x8 + 13 * escalaX},${y8 - 1.5 * escalaY}
       L ${x8 + 13 * escalaX},${y8 - 3 * escalaY}
       L ${x8},${y8 - 1.5 * escalaY}
       Z`
 
-  const dBolsilloReflejado = `M ${2 * xRef - x8},${y8}
+  const mirroredPocket = `M ${2 * xRef - x8},${y8}
       L ${2 * xRef - (x8 + 13 * escalaX)},${y8 - 1.5 * escalaY}
       L ${2 * xRef - (x8 + 13 * escalaX)},${y8 - 3 * escalaY}
       L ${2 * xRef - x8},${y8 - 1.5 * escalaY}
       Z`
   // Cálculo de botones
-  const botones = []
+  const buttons = []
   const numBotones = 4
   const primerBoton = y6 - 1 * escalaY
   const ultimoBoton = y7 + 1 * escalaY
   const espacioEntreBotones = (ultimoBoton - primerBoton) / (numBotones - 1)
   for (let i = 0; i <= numBotones - 1; i++) {
     const yBoton = primerBoton + i * espacioEntreBotones
-    botones.push({ cx: x6 + 1.5 * escalaX, cy: yBoton, r: 1 * escalaX })
+    buttons.push({ cx: x6 + 1.5 * escalaX, cy: yBoton, r: 1 * escalaX })
   }
   const x1Reflejado = x1 - 2 * (x1 - x6) + 4 * escalaX
   const curvaControl1X = (x1 + x1Reflejado) / 2
   const curvaControl1Y = y1 + 6 * escalaY
-  const Cuello = `M ${x1},${y1} Q ${curvaControl1X},${curvaControl1Y} ${x1Reflejado},${y1} L${x6},${y7}`
+  const neck = `M ${x1},${y1} Q ${curvaControl1X},${curvaControl1Y} ${x1Reflejado},${y1} L${x6},${y7}`
   return {
-    original: d,
-    reflejado: dReflejado,
-    bolsillo: dbolsillo,
-    bolsilloReflejado: dBolsilloReflejado,
-    botones,
-    Cuello,
+    original,
+    reflected,
+    pocket,
+    mirroredPocket,
+    buttons,
+    neck,
   }
 }

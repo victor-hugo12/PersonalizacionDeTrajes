@@ -31,13 +31,13 @@ const Pants: React.FC<PantsProps> = ({
   fillColor = 'gray',
   strokeColor = 'black',
 }) => {
-  const { original, reflejado } = calculatePants({ hem, knee, thigh, waist, length, inseam }, width, height)
+  const { original, reflected } = calculatePants({ hem, knee, thigh, waist, length, inseam }, width, height)
 
   return (
     <View style={[styles.imageWrapper, { width, height }]}>
       <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
         <Path d={original} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
-        <Path d={reflejado} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
+        <Path d={reflected} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
       </Svg>
     </View>
   )

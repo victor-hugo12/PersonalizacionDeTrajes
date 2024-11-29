@@ -61,7 +61,7 @@ export const calculatePants = (
     t += precision
   } while (calcularDistancia(x9, y1, x10, y5) < bolsillo && t <= 1.0)
 
-  const dOriginal = `M ${x1},${y1}
+  const original = `M ${x1},${y1}
       C ${x2 - (x2 - x1) / 2.5},${y2 - (y2 - y1) / 1.25} ${x2},${y2 - (y2 - y1) / 2.75} ${x2},${y2}
       C ${x3 + (x2 - x3) / 1.15},${y2 - (y2 - y3) / 5} ${x3 + (x2 - x3) / 2.2},${y2 - (y2 - y3) / 2.5} ${x3},${y3}
       L ${x4},${y4}
@@ -75,7 +75,7 @@ export const calculatePants = (
             M ${x1 - 11 * escalaX},${y1} L${x1 - 12.5 * escalaX},${y1} L${x1 - 12.5 * escalaX},${y1 - 4 * escalaX} L${x1 - 11 * escalaX},${y1 - 4 * escalaX} z
             `
 
-  const dReflejado = `M ${2 * x8 - x1},${y1}
+  const reflected = `M ${2 * x8 - x1},${y1}
             C ${2 * x8 - (x2 - (x2 - x1) / 2.5)},${y2 - (y2 - y1) / 1.25} ${2 * x8 - x2},${y2 - (y2 - y1) / 2.75} ${2 * x8 - x2},${y2}
             C ${2 * x8 - (x3 + (x2 - x3) / 1.15)},${y2 - (y2 - y3) / 5} ${2 * x8 - (x3 + (x2 - x3) / 2.2)},${y2 - (y2 - y3) / 2.5} ${2 * x8 - x3},${y3}
             L ${2 * x8 - x4},${y4}
@@ -88,5 +88,5 @@ export const calculatePants = (
                   M ${2 * x8 - (x1 - 1 * escalaX)},${y1} L${2 * x8 - (x1 - 2.5 * escalaX)},${y1} L${2 * x8 - (x1 - 2.5 * escalaX)},${y1 - 4 * escalaX} L${2 * x8 - (x1 - 1 * escalaX)},${y1 - 4 * escalaX} z
                   M ${2 * x8 - (x1 - 11 * escalaX)},${y1} L${2 * x8 - (x1 - 12.5 * escalaX)},${y1} L${2 * x8 - (x1 - 12.5 * escalaX)},${y1 - 4 * escalaX} L${2 * x8 - (x1 - 11 * escalaX)},${y1 - 4 * escalaX} z`
 
-  return { original: dOriginal, reflejado: dReflejado }
+  return { original, reflected }
 }
