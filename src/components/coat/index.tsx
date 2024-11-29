@@ -3,8 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import Svg, { Circle, Path } from 'react-native-svg'
 
 import { WHITE } from '@/constants/colors'
-
-import { calculateCoat } from './calculateCoat'
+import { calculateCoat } from '@/utils/calculateCoat'
 
 interface CoatProps {
   width?: number
