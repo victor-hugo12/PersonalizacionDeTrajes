@@ -1,4 +1,3 @@
-// src/components/Trapecio/index.tsx
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import Svg, { Path } from 'react-native-svg'
