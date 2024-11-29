@@ -5,12 +5,12 @@ import React, { useState } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import { Button, HelperText, Text, TextInput } from 'react-native-paper'
 import Toast from 'react-native-toast-message'
-import { PaperButton } from 'src/components/PaperButton'
 import { useLoading } from 'src/context/LoaderContext'
 import i18n from 'src/language'
 
+import { PaperButton } from '@/components/PaperButton'
 import { ThemedView } from '@/components/ThemedView'
-import { signOutUser, signUp, validateEmail } from '@/services/firebaseAuth'
+import { signUp, validateEmail } from '@/services/firebaseAuth'
 import { addUser } from '@/services/firestoreUser'
 
 import en from './en.json'
@@ -39,17 +39,18 @@ export const RegisterScreen: React.FC = () => {
       await addUser(user.uid, { name: values.name })
       await validateEmail(user)
       loader.setLoading(false)
-      await signOutUser()
+    } catch (ex) {
+      const error = ex as Error
+      let errorMessage = error.message
+      if (error.message.includes('auth/email-already-in-use')) {
+        errorMessage = 'The email address is already in use by another account'
+      }
       Toast.show({
-        text1: i18n.t('Your account was created, in 5 seconds you will redirect to the login screen'),
-        type: 'info',
+        text1: i18n.t('Error'),
+        text2: i18n.t(errorMessage),
+        type: 'error',
         visibilityTime: 5000,
       })
-      setTimeout(() => {
-        router.replace('/login')
-      }, 5000)
-    } catch (ex) {
-      console.info('error ', ex)
     } finally {
       loader.setLoading(false)
     }

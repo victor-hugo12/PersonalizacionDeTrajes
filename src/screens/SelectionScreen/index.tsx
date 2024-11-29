@@ -9,7 +9,8 @@ import { PaperButton } from '@/components/PaperButton'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
 import { WHITE } from '@/constants/colors'
-import { CLOTHES, GarmentType, getGarmentImage } from '@/constants/selections'
+import { CLOTHES_OPTIONS, GarmentType, getGarmentImage } from '@/constants/selections'
+import { useLanguage } from '@/context/LanguageContext'
 import { setSelectedGarment } from '@/redux/selections/selections.actions'
 import { getSelectedGarment } from '@/redux/selections/selections.selectors'
 
@@ -20,6 +21,7 @@ i18n.store(en)
 i18n.store(es)
 
 export const SelectionScreen = () => {
+  const { language } = useLanguage()
   const dispatch = useDispatch()
   const selectedGarment = useSelector(getSelectedGarment)
 
@@ -28,8 +30,8 @@ export const SelectionScreen = () => {
   }
 
   return (
-    <ThemedView style={styles.container}>
-      <CustomAppBar title={i18n.t('Choice of garment')} backAction={false} />
+    <ThemedView key={language} style={styles.container}>
+      <CustomAppBar title={'Choice of garment'} backAction={false} />
 
       <View style={styles.body}>
         <View style={styles.imageContainer}>
@@ -43,11 +45,7 @@ export const SelectionScreen = () => {
         </View>
 
         <View style={styles.selectionContainer}>
-          <SelectionGroupButton
-            options={CLOTHES.map(garment => garment)}
-            onSelect={handleSelection}
-            selected={selectedGarment}
-          />
+          <SelectionGroupButton options={CLOTHES_OPTIONS} onSelect={handleSelection} selected={selectedGarment} />
         </View>
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>
