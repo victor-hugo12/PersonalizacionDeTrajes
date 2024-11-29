@@ -8,7 +8,6 @@ import es from './es.json'
 
 i18n.store(en)
 i18n.store(es)
-// Definir máximos y mínimos dinámicos para cada campo dependiendo de la prenda
 const FIELD_MINIMUMS_BY_GARMENT: Record<string, Record<string, number>> = {
   Vest: {
     length: 60,
@@ -61,10 +60,8 @@ export const getValidationSchema = (garmentType: GarmentType) => {
     throw new Error(`No minimum or maximum values found for garment type: ${garmentType}`)
   }
 
-  // Construcción del esquema según la prenda seleccionada
   let schemaShape: Record<string, yup.Schema> = {}
 
-  // Validaciones específicas para cada tipo de prenda
   if (garmentType === 'Vest') {
     schemaShape = {
       length: yup
