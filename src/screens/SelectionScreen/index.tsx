@@ -30,7 +30,7 @@ i18n.store(en)
 i18n.store(es)
 const getCompleteGarmentProps = (
   garmentType: GarmentType,
-  measurements: Record<string, number> | Record<string, string>, // Aceptamos strings para colores
+  measurements: Record<string, number> | Record<string, string>,
 ): PantsProps | VestProps | CoatProps => {
   const defaultMeasurements = GARMENT_MEASUREMENTS[garmentType]?.measures.M || {}
 

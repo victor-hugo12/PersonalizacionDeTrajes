@@ -10,10 +10,10 @@ export interface VestProps {
   length: number
   shoulder: number
   chest: number
-  width?: number // Now optional
+  width?: number
   height?: number
-  fillColor?: string // New: dynamic fill color
-  strokeColor?: string // Now optional
+  fillColor?: string
+  strokeColor?: string
 }
 
 export interface PantsProps {
@@ -25,7 +25,7 @@ export interface PantsProps {
   inseam: number
   width?: number
   height?: number
-  fillColor?: string // New: dynamic fill color
+  fillColor?: string
   strokeColor?: string
 }
 
@@ -36,7 +36,7 @@ export interface CoatProps {
   arm: number
   width?: number
   height?: number
-  fillColor?: string // New: dynamic fill color
+  fillColor?: string
   strokeColor?: string
 }
 export type GarmentProps = VestProps | PantsProps | CoatProps

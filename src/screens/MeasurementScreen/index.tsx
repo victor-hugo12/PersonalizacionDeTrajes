@@ -78,7 +78,7 @@ export const MeasurementScreen = () => {
   }, [selectedGarment, customMeasurements])
 
   const handleInputChange = (key: string, value: string) => {
-    const validValue = value.replace(/[^0-9.]/g, '') // Solo permitir números y punto decimal
+    const validValue = value.replace(/[^0-9.]/g, '')
     setInputValues(prev => ({ ...prev, [key]: validValue }))
 
     const updatedMeasurements = {
@@ -89,16 +89,14 @@ export const MeasurementScreen = () => {
     const schema = getValidationSchema(selectedGarment)
 
     schema
-      .validateAt(key, updatedMeasurements) // Valida el campo en el contexto completo
+      .validateAt(key, updatedMeasurements)
       .then(() => {
-        // Limpia errores si la validación es exitosa
         setErrors(prev => {
           const newErrors = { ...prev }
           delete newErrors[key]
           return newErrors
         })
 
-        // Actualiza las mediciones
         setMeasurements(updatedMeasurements)
       })
       .catch((validationError: yup.ValidationError) => {
@@ -240,29 +238,29 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   inputWrapper: {
-    marginBottom: 16, // Espacio entre grupos de inputs
+    marginBottom: 16,
   },
   inputRow: {
-    flexDirection: 'row', // Alinea el label y el input en una fila
-    alignItems: 'center', // Alinea verticalmente el label con el input
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   inputLabel: {
-    flex: 1, // El label ocupa solo el espacio necesario
-    marginRight: 10, // Espacio entre el label y el input
-    textAlign: 'left', // Alinea el texto del label a la izquierda
+    flex: 1,
+    marginRight: 10,
+    textAlign: 'left',
   },
   input: {
-    flex: 2, // El input ocupa el espacio restante
+    flex: 2,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 8,
-    textAlign: 'right', // Alinea el texto dentro del input a la derecha
+    textAlign: 'right',
   },
   errorText: {
     color: 'red',
     fontSize: 12,
-    marginTop: 5, // Espacio entre el input y el mensaje de error
+    marginTop: 5,
   },
   navigationButton: {
     marginTop: 20,

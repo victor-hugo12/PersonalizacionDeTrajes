@@ -48,9 +48,8 @@ export const FabricScreen = () => {
 
   const fillColor = selectedColor ? COLOR_VALUES[selectedColor as keyof typeof COLOR_VALUES] : WHITE
   const strokeColor = selectedColor ? BORDER_COLORS[selectedColor as keyof typeof BORDER_COLORS] : WHITE
-  // Combinar propiedades específicas y comunes
   const garmentProps: GarmentProps = {
-    ...(garmentMeasurements as unknown as GarmentProps), // Aseguramos que tenga las propiedades necesarias
+    ...(garmentMeasurements as unknown as GarmentProps),
     width: 300,
     height: 300,
     fillColor,
