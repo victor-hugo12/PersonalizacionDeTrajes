@@ -174,7 +174,15 @@ export const MeasurementScreen = () => {
         <View style={styles.imageContainer}>
           <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>{renderSVGComponent()}</View>
         </View>
-        <SelectionGroupButton options={[...MEASUREMENTS]} onSelect={handleSelection} selected={size} />
+        <SelectionGroupButton
+          options={MEASUREMENTS.map(measurement => ({
+            value: measurement,
+            icon: undefined,
+            color: undefined,
+          }))}
+          onSelect={handleSelection}
+          selected={size}
+        />
         <View style={styles.titleSelect}>
           <Text variant="titleLarge">{i18n.t('Select your size')}</Text>
           <PaperButton mode="contained" dark onPress={handleApplyChanges}>

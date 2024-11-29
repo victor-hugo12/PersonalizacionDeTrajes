@@ -4,6 +4,7 @@ import Vest from '@/components/vest'
 
 export const MEASUREMENTS = ['S', 'M', 'L', 'XL'] as const
 
+export const CLOTHES_OPTIONS = [{ value: 'Pants' }, { value: 'Vest' }, { value: 'Coat' }]
 export const CLOTHES = ['Pants', 'Vest', 'Coat'] as const
 export type GarmentType = (typeof CLOTHES)[number]
 export interface VestProps {

@@ -1,18 +1,21 @@
 import { Tabs } from 'expo-router'
 
 import { TabBarIcon } from '@/components/TabBarIcon'
+import { useLanguage } from '@/context/LanguageContext'
 import { useTheme } from '@/context/ThemeContext'
 import i18n from '@/language'
 
 const TabLayout = () => {
-  const { theme } = useTheme()
+  const { isDarkTheme, theme } = useTheme()
+  const { language } = useLanguage()
 
   return (
     <Tabs
+      key={language}
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: theme.colors.surface,
+          backgroundColor: isDarkTheme ? theme.colors.surface : theme.colors.primaryContainer,
         },
       }}
       backBehavior="history"

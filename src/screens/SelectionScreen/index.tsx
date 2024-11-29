@@ -61,9 +61,9 @@ export const SelectionScreen = () => {
 
   const handleSelection = (option: string) => {
     const garmentType = option as GarmentType
-
     dispatch(setSelectedGarment(garmentType))
   }
+
   const SelectedGarmentComponent = getGarmentComponent(selectedGarment)
 
   return (
@@ -83,7 +83,9 @@ export const SelectionScreen = () => {
 
         <View style={styles.selectionContainer}>
           <SelectionGroupButton
-            options={CLOTHES.map(garment => garment)}
+            options={CLOTHES.map(garment => ({
+              value: garment,
+            }))}
             onSelect={handleSelection}
             selected={selectedGarment}
           />

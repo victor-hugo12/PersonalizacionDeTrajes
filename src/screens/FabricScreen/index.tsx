@@ -81,11 +81,13 @@ export const FabricScreen = () => {
         <View style={styles.selectionContainer}>
           <SelectionGroupButton
             key={`color-${selectedColor}`}
-            options={COLORS}
+            options={COLORS.map(color => ({
+              value: color,
+              icon: COLOR_ICONS[color as keyof typeof COLOR_ICONS],
+              color: COLOR_VALUES[color as keyof typeof COLOR_VALUES],
+            }))}
             onSelect={handleColorSelection}
             selected={selectedColor}
-            icons={COLOR_ICONS}
-            colors={COLOR_VALUES}
           />
         </View>
         <View style={styles.titleSelect}>
@@ -93,10 +95,12 @@ export const FabricScreen = () => {
         </View>
         <View style={styles.selectionContainer}>
           <SelectionGroupButton
-            options={FABRICS}
+            options={FABRICS.map(fabric => ({
+              value: fabric,
+              icon: FABRIC_ICONS[fabric as keyof typeof FABRIC_ICONS],
+            }))}
             onSelect={handleFabricSelection}
             selected={selectedFabric}
-            icons={FABRIC_ICONS}
           />
         </View>
         <View style={styles.flexGrow} />
