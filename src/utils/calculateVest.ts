@@ -3,26 +3,23 @@ export const calculateVest = (
   containerWidth: number,
   containerHeight: number,
 ) => {
-  const SVG_WIDTH = containerWidth
-  const SVG_HEIGHT = containerHeight
-
-  const escalaX = SVG_WIDTH / 120
-  const escalaY = SVG_HEIGHT / 120
-  const x1 = 70 * escalaX
-  const y1 = 10 * escalaY
-  const x2 = x1 + shoulder * escalaX
-  const y2 = y1 + 4 * escalaX
-  const x3 = x1 + (chest * escalaX * 1) / 6 + (chest * escalaX * 1) / 8 + 2 * escalaX
-  const y3 = y1 + length * escalaX - 35 * escalaX
-  const x4 = x3 - escalaX
-  const y4 = y1 + length * escalaX - 4 * escalaY
-  const x5 = x4 - (escalaX * chest) / 2
-  const y5 = y1 + length * escalaX
-  const x6 = x5 - 4 * escalaX
-  const y6 = y1 + length * escalaX - 10 * escalaY
-  const y7 = y3 + 1 * escalaX
-  const x8 = x6 + 9 * escalaX
-  const y8 = y6 - 4 * escalaX
+  const scaleX = containerWidth / 120
+  const scaleY = containerHeight / 120
+  const x1 = 70 * scaleX
+  const y1 = 10 * scaleY
+  const x2 = x1 + shoulder * scaleX
+  const y2 = y1 + 4 * scaleX
+  const x3 = x1 + (chest * scaleX * 1) / 6 + (chest * scaleX * 1) / 8 + 2 * scaleX
+  const y3 = y1 + length * scaleX - 35 * scaleX
+  const x4 = x3 - scaleX
+  const y4 = y1 + length * scaleX - 4 * scaleY
+  const x5 = x4 - (scaleX * chest) / 2
+  const y5 = y1 + length * scaleX
+  const x6 = x5 - 4 * scaleX
+  const y6 = y1 + length * scaleX - 10 * scaleY
+  const y7 = y3 + 1 * scaleX
+  const x8 = x6 + 9 * scaleX
+  const y8 = y6 - 4 * scaleX
   const original = `M ${x1},${y1} L ${x2},${y2}
       C ${x2 - (x3 - x2) / 1.875},${y3 - (y3 - y2) / 4.5} ${x2 - (x3 - x2) / 1.25},${y3 - (y3 - y2) / 27} ${x3},${y3}
       C ${x4 - (x3 - x4) / 0.5},${y3 + (y4 - y3) / 6.2} ${x4 + (x3 - x4) / 4},${y3 + (y4 - y3) / 1.4} ${x4},${y4}
@@ -32,7 +29,7 @@ export const calculateVest = (
       L ${x1},${y1}
     `
 
-  const xRef = x6 + 2 * escalaX
+  const xRef = x6 + 2 * scaleX
   const reflected = `M ${2 * xRef - x1},${y1} L ${2 * xRef - x2},${y2}
         C ${2 * xRef - (x2 - (x3 - x2) / 1.875)},${y3 - (y3 - y2) / 4.5}
           ${2 * xRef - (x2 - (x3 - x2) / 1.25)},${y3 - (y3 - y2) / 27}
@@ -46,30 +43,30 @@ export const calculateVest = (
         L ${2 * xRef - x1},${y1}`
 
   const pocket = `M ${x8},${y8}
-      L ${x8 + 13 * escalaX},${y8 - 1.5 * escalaY}
-      L ${x8 + 13 * escalaX},${y8 - 3 * escalaY}
-      L ${x8},${y8 - 1.5 * escalaY}
+      L ${x8 + 13 * scaleX},${y8 - 1.5 * scaleY}
+      L ${x8 + 13 * scaleX},${y8 - 3 * scaleY}
+      L ${x8},${y8 - 1.5 * scaleY}
       Z`
 
   const mirroredPocket = `M ${2 * xRef - x8},${y8}
-      L ${2 * xRef - (x8 + 13 * escalaX)},${y8 - 1.5 * escalaY}
-      L ${2 * xRef - (x8 + 13 * escalaX)},${y8 - 3 * escalaY}
-      L ${2 * xRef - x8},${y8 - 1.5 * escalaY}
+      L ${2 * xRef - (x8 + 13 * scaleX)},${y8 - 1.5 * scaleY}
+      L ${2 * xRef - (x8 + 13 * scaleX)},${y8 - 3 * scaleY}
+      L ${2 * xRef - x8},${y8 - 1.5 * scaleY}
       Z`
-  // Cálculo de botones
+
   const buttons = []
-  const numBotones = 4
-  const primerBoton = y6 - 1 * escalaY
-  const ultimoBoton = y7 + 1 * escalaY
-  const espacioEntreBotones = (ultimoBoton - primerBoton) / (numBotones - 1)
-  for (let i = 0; i <= numBotones - 1; i++) {
-    const yBoton = primerBoton + i * espacioEntreBotones
-    buttons.push({ cx: x6 + 1.5 * escalaX, cy: yBoton, r: 1 * escalaX })
+  const numButtons = 4
+  const firstButton = y6 - 1 * scaleY
+  const lastButton = y7 + 1 * scaleY
+  const spacebetweenButtons = (lastButton - firstButton) / (numButtons - 1)
+  for (let i = 0; i <= numButtons - 1; i++) {
+    const yBoton = firstButton + i * spacebetweenButtons
+    buttons.push({ cx: x6 + 1.5 * scaleX, cy: yBoton, r: 1 * scaleX })
   }
-  const x1Reflejado = x1 - 2 * (x1 - x6) + 4 * escalaX
-  const curvaControl1X = (x1 + x1Reflejado) / 2
-  const curvaControl1Y = y1 + 6 * escalaY
-  const neck = `M ${x1},${y1} Q ${curvaControl1X},${curvaControl1Y} ${x1Reflejado},${y1} L${x6},${y7}`
+  const x1reflected = x1 - 2 * (x1 - x6) + 4 * scaleX
+  const curveControl1X = (x1 + x1reflected) / 2
+  const curveControl1Y = y1 + 6 * scaleY
+  const neck = `M ${x1},${y1} Q ${curveControl1X},${curveControl1Y} ${x1reflected},${y1} L${x6},${y7}`
   return {
     original,
     reflected,
