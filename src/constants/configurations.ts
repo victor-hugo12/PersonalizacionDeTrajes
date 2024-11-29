@@ -1,0 +1,5 @@
+export const SYSTEM = 'System'
+export type LanguageType = 'English' | 'Spanish'
+export const ENGLISH: LanguageType = 'English'
+export const EN = 'en'
+export const ES = 'es'

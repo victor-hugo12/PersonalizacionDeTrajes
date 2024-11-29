@@ -1,5 +1,7 @@
 export const MEASUREMENTS = ['S', 'M', 'L', 'XL']
+export const MEASUREMENTS_OPTIONS = [{ value: 'S' }, { value: 'M' }, { value: 'L' }, { value: 'XL' }]
 
+export const CLOTHES_OPTIONS = [{ value: 'Pants' }, { value: 'Vest' }, { value: 'Coat' }]
 export const CLOTHES = ['Pants', 'Vest', 'Coat'] as const
 export type GarmentType = (typeof CLOTHES)[number]
 

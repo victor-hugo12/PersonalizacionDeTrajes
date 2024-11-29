@@ -109,3 +109,4 @@ export const darkColors = {
 export const ACTIVE = '#f9f871'
 export const IN_ACTIVE = 'rgb(255,255,255)'
 export const WHITE = 'rgb(255,255,255)'
+export const BLACK = '#000000'

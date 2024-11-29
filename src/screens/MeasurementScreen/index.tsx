@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router'
 import { Image, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,7 +9,7 @@ import { PaperButton } from '@/components/PaperButton'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
 import { WHITE } from '@/constants/colors'
-import { GarmentType, getGarmentImage, MEASUREMENTS, SIZE_DIMENSIONS, SizeType } from '@/constants/selections'
+import { GarmentType, getGarmentImage, MEASUREMENTS_OPTIONS, SIZE_DIMENSIONS, SizeType } from '@/constants/selections'
 import { setSelectedMeasure } from '@/redux/selections/selections.actions'
 import { getSelectedGarment, getSelectedMeasure } from '@/redux/selections/selections.selectors'
 
@@ -19,6 +20,7 @@ i18n.store(en)
 i18n.store(es)
 
 export const MeasurementScreen = () => {
+  const router = useRouter()
   const dispatch = useDispatch()
   const garmentType = useSelector(getSelectedGarment)
   const size = useSelector(getSelectedMeasure)
@@ -30,7 +32,7 @@ export const MeasurementScreen = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <CustomAppBar title={i18n.t('Adjust Measurements')} backAction={true} />
+      <CustomAppBar title={'Adjust Measurements'} backAction={true} />
       <View style={styles.body}>
         <View style={styles.imageContainer}>
           <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>
@@ -44,10 +46,10 @@ export const MeasurementScreen = () => {
         <View style={styles.titleSelect}>
           <Text variant="titleLarge">{i18n.t('Select your size')}</Text>
         </View>
-        <SelectionGroupButton options={MEASUREMENTS} onSelect={handleSelection} selected={size} />
+        <SelectionGroupButton options={MEASUREMENTS_OPTIONS} onSelect={handleSelection} selected={size} />
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>
-          <PaperButton dark mode="contained">
+          <PaperButton dark mode="contained" onPress={() => router.push('/(auth)/(tabs)/example')}>
             {i18n.t('Next')}
           </PaperButton>
         </View>

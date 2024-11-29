@@ -34,14 +34,6 @@ export const LoginScreen: React.FC = () => {
     try {
       loader.setLoading(true)
       await signInUser(values.email, values.password)
-      /* if (!user?.emailVerified) {
-        await signOutUser()
-        showMessage({
-          message: i18n.t('Should confirm the email before logging in'),
-          type: 'info',
-          duration: 5000,
-        })
-      } */
     } catch (ex: unknown) {
       const error = ex as Error
       let errorMessage = error.message
@@ -50,8 +42,9 @@ export const LoginScreen: React.FC = () => {
       }
 
       Toast.show({
-        text1: i18n.t(errorMessage),
-        type: 'info',
+        text1: i18n.t('Error'),
+        text2: i18n.t(errorMessage),
+        type: 'error',
         visibilityTime: 5000,
       })
     } finally {
