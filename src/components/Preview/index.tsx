@@ -14,9 +14,9 @@ import {
 import { getCustomMeasurements, getSelectedColor, getSelectedGarment } from '@/redux/selections/selections.selectors'
 import { RootState } from '@/redux/store'
 
-import Coat from '../Coat'
-import Pants from '../Pants'
-import Vest from '../Vest'
+import { Coat } from '../Coat'
+import { Pants } from '../Pants'
+import { Vest } from '../Vest'
 
 const getCompleteGarmentProps = (
   garmentType: CLOTHES,

@@ -16,7 +16,7 @@ interface CoatProps {
   strokeColor?: string
 }
 
-const Coat: React.FC<CoatProps> = ({
+export const Coat: React.FC<CoatProps> = ({
   width = 400,
   height = 400,
   length,
@@ -59,5 +59,3 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
 })
-
-export default Coat

@@ -18,7 +18,7 @@ interface PantsProps {
   strokeColor?: string
 }
 
-const Pants: React.FC<PantsProps> = ({
+export const Pants: React.FC<PantsProps> = ({
   width = 400,
   height = 400,
   hem,
@@ -51,5 +51,3 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
 })
-
-export default Pants

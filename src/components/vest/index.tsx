@@ -15,7 +15,7 @@ interface VestProps {
   strokeColor?: string
 }
 
-const Vest: React.FC<VestProps> = ({
+export const Vest: React.FC<VestProps> = ({
   length,
   shoulder,
   chest,
@@ -55,5 +55,3 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
 })
-
-export default Vest

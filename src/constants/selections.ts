@@ -1,6 +1,6 @@
-import Coat from '@/components/Coat'
-import Pants from '@/components/Pants'
-import Vest from '@/components/Vest'
+import { Coat } from '@/components/Coat'
+import { Pants } from '@/components/Pants'
+import { Vest } from '@/components/Vest'
 
 export enum MEASUREMENTS {
   S = 'S',
