@@ -1,12 +1,31 @@
-import Coat from '@/components/coat'
+import Coat from '@/components/Coat'
 import Pants from '@/components/Pants'
-import Vest from '@/components/vest'
+import Vest from '@/components/Vest'
 
-export const MEASUREMENTS = ['S', 'M', 'L', 'XL'] as const
+export enum MEASUREMENTS {
+  S = 'S',
+  M = 'M',
+  L = 'L',
+  XL = 'XL',
+}
 
-export const CLOTHES_OPTIONS = [{ value: 'Pants' }, { value: 'Vest' }, { value: 'Coat' }]
-export const CLOTHES = ['Pants', 'Vest', 'Coat'] as const
-export type GarmentType = (typeof CLOTHES)[number]
+export const MEASUREMENTS_OPTIONS = [
+  { value: MEASUREMENTS.S },
+  { value: MEASUREMENTS.M },
+  { value: MEASUREMENTS.L },
+  { value: MEASUREMENTS.XL },
+]
+
+export enum CLOTHES {
+  Pants = 'Pants',
+  Vest = 'Vest',
+  Coat = 'Coat',
+}
+
+export const CLOTHES_OPTIONS = [{ value: CLOTHES.Pants }, { value: CLOTHES.Vest }, { value: CLOTHES.Coat }]
+
+export type GarmentType = `${CLOTHES}`
+
 export interface VestProps {
   length: number
   shoulder: number

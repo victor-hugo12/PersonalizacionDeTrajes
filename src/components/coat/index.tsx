@@ -30,8 +30,8 @@ const Coat: React.FC<CoatProps> = ({
     calculateCoat({ length, shoulder, chest, arm }, width, height)
 
   return (
-    <View style={[styles.imageWrapper, { width, height }]}>
-      <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+    <View style={styles.imageWrapper}>
+      <Svg width={300} height={300} viewBox={`0 0 ${400} ${350}`}>
         <Path d={arm1} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
         <Path d={arm1Mirrored} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
         <Path d={neck} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
@@ -52,6 +52,8 @@ const Coat: React.FC<CoatProps> = ({
 
 const styles = StyleSheet.create({
   imageWrapper: {
+    flex: 1,
+    width: 300,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: WHITE,

@@ -18,7 +18,7 @@ import {
   GarmentProps,
   GarmentType,
   getGarmentComponent,
-  MEASUREMENTS,
+  MEASUREMENTS_OPTIONS,
 } from '@/constants/selections'
 import { setSelectedMeasure, updateCustomMeasurements } from '@/redux/selections/selections.actions'
 import {
@@ -169,20 +169,12 @@ export const MeasurementScreen = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <CustomAppBar title={i18n.t('Adjust Measurements')} backAction />
+      <CustomAppBar title={'Adjust Measurements'} backAction />
       <View style={styles.body}>
-        <View style={styles.imageContainer}>
-          <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>{renderSVGComponent()}</View>
+        <View style={styles.previewContainer}>{renderSVGComponent()}</View>
+        <View style={styles.selectionContainer}>
+          <SelectionGroupButton options={MEASUREMENTS_OPTIONS} onSelect={handleSelection} selected={size} />
         </View>
-        <SelectionGroupButton
-          options={MEASUREMENTS.map(measurement => ({
-            value: measurement,
-            icon: undefined,
-            color: undefined,
-          }))}
-          onSelect={handleSelection}
-          selected={size}
-        />
         <View style={styles.titleSelect}>
           <Text variant="titleLarge">{i18n.t('Select your size')}</Text>
           <PaperButton mode="contained" dark onPress={handleApplyChanges}>
@@ -228,19 +220,14 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 25,
   },
-  imageContainer: {
-    alignItems: 'center',
-    marginVertical: 5,
-    width: 300,
+  previewContainer: {
     height: 300,
-    aspectRatio: 1,
-  },
-  imageWrapper: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 8,
-    overflow: 'hidden',
+    borderWidth: 1,
+  },
+  selectionContainer: {
+    marginVertical: 16,
   },
   inputsContainer: {
     marginTop: 5,

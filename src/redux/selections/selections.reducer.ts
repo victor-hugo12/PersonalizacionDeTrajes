@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { CLOTHES, COLORS, FABRICS, GarmentType, MEASUREMENTS } from '@/constants/selections'
+import { CLOTHES_OPTIONS, COLORS, FABRICS, GarmentType, MEASUREMENTS_OPTIONS } from '@/constants/selections'
 
 import {
   resetColor,
@@ -19,16 +19,16 @@ interface SelectionState {
   measure: string
   color: string
   fabric: string
-  customMeasurements: Record<GarmentType, Record<string, number>> // Nuevo campo
+  customMeasurements: Record<GarmentType, Record<string, number>>
 }
 
 const initialState: SelectionState = {
-  garment: CLOTHES[0],
-  measure: MEASUREMENTS[0],
+  garment: CLOTHES_OPTIONS[0].value,
+  measure: MEASUREMENTS_OPTIONS[0].value,
   color: COLORS[0],
   fabric: FABRICS[0],
   customMeasurements: {
-    Pants: { hem: 18, knee: 24, thigh: 32, waist: 24, length: 92, inseam: 70 }, // Inicia vacío
+    Pants: { hem: 18, knee: 24, thigh: 32, waist: 24, length: 92, inseam: 70 },
     Vest: { length: 70, shoulder: 13, chest: 50 },
     Coat: { length: 70, shoulder: 13, chest: 50, arm: 50 },
   },
@@ -40,13 +40,13 @@ export const selectionsReducer = createReducer(initialState, builder => {
       state.garment = action.payload
     })
     .addCase(resetGarment, state => {
-      state.garment = CLOTHES[0]
+      state.garment = CLOTHES_OPTIONS[0].value
     })
     .addCase(setSelectedMeasure, (state, action) => {
       state.measure = action.payload
     })
     .addCase(resetMeasure, state => {
-      state.measure = MEASUREMENTS[0]
+      state.measure = MEASUREMENTS_OPTIONS[0].value
     })
     .addCase(setSelectedColor, (state, action) => {
       state.color = action.payload
@@ -62,6 +62,6 @@ export const selectionsReducer = createReducer(initialState, builder => {
     })
     .addCase(updateCustomMeasurements, (state, action) => {
       const { garmentType, measurements } = action.payload
-      state.customMeasurements[garmentType] = measurements // Guardar medidas personalizadas
+      state.customMeasurements[garmentType] = measurements
     })
 })

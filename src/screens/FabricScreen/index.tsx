@@ -67,12 +67,10 @@ export const FabricScreen = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <CustomAppBar title={i18n.t('Fabric and Color Selection')} backAction={true} />
+      <CustomAppBar title={'Fabric and Color Selection'} backAction={true} />
       <View style={styles.body}>
-        <View style={styles.imageContainer}>
-          <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>
-            {SelectedGarmentComponent ? <SelectedGarmentComponent {...garmentProps} /> : null}
-          </View>
+        <View style={styles.previewContainer}>
+          {SelectedGarmentComponent ? <SelectedGarmentComponent {...garmentProps} /> : null}
         </View>
 
         <View style={styles.titleSelect}>
@@ -125,18 +123,11 @@ const styles = StyleSheet.create({
   selectionContainer: {
     marginVertical: 16,
   },
-  imageContainer: {
-    alignItems: 'center',
-    marginVertical: 16,
-    width: '100%',
-    aspectRatio: 1,
-  },
-  imageWrapper: {
-    flex: 1,
+  previewContainer: {
+    height: 300,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 8,
-    overflow: 'hidden',
+    borderWidth: 1,
   },
   flexGrow: {
     flexGrow: 1,

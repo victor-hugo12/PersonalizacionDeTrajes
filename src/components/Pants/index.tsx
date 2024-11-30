@@ -33,8 +33,8 @@ const Pants: React.FC<PantsProps> = ({
   const { original, reflected } = calculatePants({ hem, knee, thigh, waist, length, inseam }, width, height)
 
   return (
-    <View style={[styles.imageWrapper, { width, height }]}>
-      <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+    <View style={styles.imageWrapper}>
+      <Svg width={300} height={300} viewBox={`0 0 ${350} ${350}`}>
         <Path d={original} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
         <Path d={reflected} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
       </Svg>
@@ -44,6 +44,8 @@ const Pants: React.FC<PantsProps> = ({
 
 const styles = StyleSheet.create({
   imageWrapper: {
+    flex: 1,
+    width: 300,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: WHITE,
