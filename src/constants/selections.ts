@@ -106,7 +106,7 @@ export const getGarmentComponent = <T extends GarmentType>(
 ): React.FC<GarmentComponentProps<T>> | undefined => {
   const garment = GARMENT_MEASUREMENTS[garmentType]
   if (!garment) return undefined
-  return garment.component as React.FC<GarmentComponentProps<T>>
+  return garment.component as unknown as React.FC<GarmentComponentProps<T>>
 }
 
 export const COLORS = ['Black', 'Blue', 'Gray']

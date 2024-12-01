@@ -15,117 +15,117 @@ export const calculateCoat = (
 ) => {
   const scaleX = containerWidth / 120
   const scaleY = containerHeight / 120
-  const x1 = 70 * scaleX
-  const y1 = 20 * scaleY
-  const x2 = x1 + shoulder * scaleX
-  const y2 = y1 + 4 * scaleX
-  const x3 = x1 + (chest * scaleX) / 6 + (chest * scaleX) / 8 + 6 * scaleX
-  const y3 = y1 + (scaleY * length) / 3
-  const x4 = x3 - scaleX
-  const y4 = y1 + length * scaleY
-  const x5 = x4 - (scaleX * chest) / 2 + 4 * scaleX
-  const y5 = y1 + length * scaleY
-  const x6 = x5 - 9 * scaleX
-  const y6 = y1 + length * scaleY - 10 * scaleX
-  const y7 = y1 + (scaleY * length) / 2
-  const x8 = x4
-  const y8 = y6 - 4 * scaleY
+  const startX = 70 * scaleX
+  const startY = 20 * scaleY
+  const shoulderendX = startX + shoulder * scaleX
+  const shoulderendY = startY + 4 * scaleX
+  const sideCurveStartX = startX + (chest * scaleX) / 6 + (chest * scaleX) / 8 + 6 * scaleX
+  const sideCurveStartY = startY + (scaleY * length) / 3
+  const sideCurveEndX = sideCurveStartX - scaleX
+  const sideCurveEndY = startY + length * scaleY
+  const bottomEdgeX = sideCurveEndX - (scaleX * chest) / 2 + 4 * scaleX
+  const bottomEdgeY = startY + length * scaleY
+  const innerEdgeX = bottomEdgeX - 9 * scaleX
+  const bottomInnerEdgeY = startY + length * scaleY - 10 * scaleX
+  const topInnerEdgeY = startY + (scaleY * length) / 2
 
-  const original = `M ${x1},${y1} L ${x2},${y2}
-      Q ${x2 + (x3 - x2) / 1.75},${y2 + (y3 - y2) / 1.2}  ${x3},${y3}
-      C ${x4 - (x3 - x4) / 0.5},${y3 + (y4 - y3) / 6.2} ${x4 + (x3 - x4) / 4},${y3 + (y4 - y3) / 1.4} ${x4},${y4}
-      L ${x5},${y5}
-      Q ${x5 - (x5 - x6) / 1.3},${y5 - (y5 - y6) / 5} ${x6},${y6}
-      L ${x6},${y7}
-      L ${x1},${y1}
+  const rightCoatPath = `M ${startX},${startY} L ${shoulderendX},${shoulderendY}
+      Q ${shoulderendX + (sideCurveStartX - shoulderendX) / 1.75},${shoulderendY + (sideCurveStartY - shoulderendY) / 1.2}  ${sideCurveStartX},${sideCurveStartY}
+      C ${sideCurveEndX - (sideCurveStartX - sideCurveEndX) / 0.5},${sideCurveStartY + (sideCurveEndY - sideCurveStartY) / 6.2} ${sideCurveEndX + (sideCurveStartX - sideCurveEndX) / 4},${sideCurveStartY + (sideCurveEndY - sideCurveStartY) / 1.4} ${sideCurveEndX},${sideCurveEndY}
+      L ${bottomEdgeX},${bottomEdgeY}
+      Q ${bottomEdgeX - (bottomEdgeX - innerEdgeX) / 1.3},${bottomEdgeY - (bottomEdgeY - bottomInnerEdgeY) / 5} ${innerEdgeX},${bottomInnerEdgeY}
+      L ${innerEdgeX},${topInnerEdgeY}
+      L ${startX},${startY}
       `
-  const xRef = x6 + 2 * scaleX
-  const reflected = `
-        M ${2 * xRef - x1},${y1}
-        L ${2 * xRef - x2},${y2}
-        Q ${2 * xRef - (x2 + (x3 - x2) / 1.75)},${y2 + (y3 - y2) / 1.2}
-          ${2 * xRef - x3},${y3}
-        C ${2 * xRef - (x4 - (x3 - x4) / 0.5)},${y3 + (y4 - y3) / 6.2}
-          ${2 * xRef - (x4 + (x3 - x4) / 4)},${y3 + (y4 - y3) / 1.4}
-          ${2 * xRef - x4},${y4}
-        L ${2 * xRef - x5},${y5}
-        Q ${2 * xRef - (x5 - (x5 - x6) / 1.3)},${y5 - (y5 - y6) / 5}
-          ${2 * xRef - x6},${y6}
-        L ${2 * xRef - x6},${y7}
-        L ${2 * xRef - x1},${y1}
+  const xRef = innerEdgeX + 2 * scaleX
+  const leftCoatPath = `
+        M ${2 * xRef - startX},${startY}
+        L ${2 * xRef - shoulderendX},${shoulderendY}
+        Q ${2 * xRef - (shoulderendX + (sideCurveStartX - shoulderendX) / 1.75)},${shoulderendY + (sideCurveStartY - shoulderendY) / 1.2}
+          ${2 * xRef - sideCurveStartX},${sideCurveStartY}
+        C ${2 * xRef - (sideCurveEndX - (sideCurveStartX - sideCurveEndX) / 0.5)},${sideCurveStartY + (sideCurveEndY - sideCurveStartY) / 6.2}
+          ${2 * xRef - (sideCurveEndX + (sideCurveStartX - sideCurveEndX) / 4)},${sideCurveStartY + (sideCurveEndY - sideCurveStartY) / 1.4}
+          ${2 * xRef - sideCurveEndX},${sideCurveEndY}
+        L ${2 * xRef - bottomEdgeX},${bottomEdgeY}
+        Q ${2 * xRef - (bottomEdgeX - (bottomEdgeX - innerEdgeX) / 1.3)},${bottomEdgeY - (bottomEdgeY - bottomInnerEdgeY) / 5}
+          ${2 * xRef - innerEdgeX},${bottomInnerEdgeY}
+        L ${2 * xRef - innerEdgeX},${topInnerEdgeY}
+        L ${2 * xRef - startX},${startY}
       `
+  const sidepocketX = sideCurveEndX
+  const sidepocketY = bottomInnerEdgeY - 4 * scaleY
 
-  const pocket = `M ${x8},${y8}
-      L ${x8 - 13 * scaleX},${y8 - 1.5 * scaleY}
-      L ${x8 - 13 * scaleX},${y8 - 6 * scaleY}
-      L ${x8},${y8 - 4.5 * scaleY}
+  const rightPocket = `M ${sidepocketX},${sidepocketY}
+      L ${sidepocketX - 13 * scaleX},${sidepocketY - 1.5 * scaleY}
+      L ${sidepocketX - 13 * scaleX},${sidepocketY - 6 * scaleY}
+      L ${sidepocketX},${sidepocketY - 4.5 * scaleY}
       Z`
-  const mirroredPocket = `M ${2 * xRef - x8},${y8}
-  L ${2 * xRef - (x8 - 13 * scaleX)},${y8 - 1.5 * scaleY}
-  L ${2 * xRef - (x8 - 13 * scaleX)},${y8 - 6 * scaleY}
-  L ${2 * xRef - x8},${y8 - 4.5 * scaleY}
+  const leftPocket = `M ${2 * xRef - sidepocketX},${sidepocketY}
+  L ${2 * xRef - (sidepocketX - 13 * scaleX)},${sidepocketY - 1.5 * scaleY}
+  L ${2 * xRef - (sidepocketX - 13 * scaleX)},${sidepocketY - 6 * scaleY}
+  L ${2 * xRef - sidepocketX},${sidepocketY - 4.5 * scaleY}
   Z
 `
   const buttons = []
   const numButtons = 2
-  const firstButton = y6 - 4 * scaleY
-  const lastButton = y7 + 4 * scaleY
+  const firstButton = bottomInnerEdgeY - 4 * scaleY
+  const lastButton = topInnerEdgeY + 4 * scaleY
   const spacebetweenButtons = (lastButton - firstButton) / (numButtons - 1)
   for (let i = 0; i <= numButtons - 1; i++) {
     const yBoton = firstButton + i * spacebetweenButtons
-    buttons.push({ cx: x6 + 1.5 * scaleX, cy: yBoton, r: 1 * scaleX })
+    buttons.push({ cx: innerEdgeX + 1.5 * scaleX, cy: yBoton, r: 1 * scaleX })
   }
-  const x1reflected = x1 - 2 * (x1 - x6) + 4 * scaleX
-  const curveControl1X = (x1 + x1reflected) / 2
-  const curveControl1Y = y1 - 2 * scaleY
-  const neck = `M ${x1},${y1} Q ${curveControl1X},${curveControl1Y} ${x1reflected},${y1}
-                      L ${x1reflected},${y1 - 4 * scaleY} Q ${curveControl1X},${curveControl1Y - 4 * scaleY} ${x1},${y1 - 4 * scaleY}
-                      M ${x1},${y1} Q ${curveControl1X},${curveControl1Y} ${x1reflected},${y1} L ${x6} ${y7}
+  const startXreflected = startX - 2 * (startX - innerEdgeX) + 4 * scaleX
+  const curveControl1X = (startX + startXreflected) / 2
+  const curveControl1Y = startY - 2 * scaleY
+  const neck = `M ${startX},${startY} Q ${curveControl1X},${curveControl1Y} ${startXreflected},${startY}
+                      L ${startXreflected},${startY - 4 * scaleY} Q ${curveControl1X},${curveControl1Y - 4 * scaleY} ${startX},${startY - 4 * scaleY}
+                      M ${startX},${startY} Q ${curveControl1X},${curveControl1Y} ${startXreflected},${startY} L ${innerEdgeX} ${topInnerEdgeY}
                       `
-  const neckx1 = x6 + (5 / 6) * (x1 - x6)
-  const necky1 = y7 + (5 / 6) * (y1 - y7)
-  const neck1 = `M ${x6},${y7} L ${neckx1 + 3 * scaleX},${necky1 + 3 * scaleY}
+  const neckx1 = innerEdgeX + (5 / 6) * (startX - innerEdgeX)
+  const necky1 = topInnerEdgeY + (5 / 6) * (startY - topInnerEdgeY)
+  const rightRoundNeck = `M ${innerEdgeX},${topInnerEdgeY} L ${neckx1 + 3 * scaleX},${necky1 + 3 * scaleY}
       L ${neckx1},${necky1} z
          M ${neckx1},${necky1} L ${neckx1 + 4 * scaleX},${necky1}
-         L ${x1},${y1 - 4 * scaleY} z
+         L ${startX},${startY - 4 * scaleY} z
       `
-  const neck1Mirrored = `
-  M ${2 * xRef - x6},${y7}
+  const leftRoundNeck = `
+  M ${2 * xRef - innerEdgeX},${topInnerEdgeY}
   L ${2 * xRef - (neckx1 + 3 * scaleY)},${necky1 + 3 * scaleY}
   L ${2 * xRef - neckx1},${necky1} z
   M ${2 * xRef - neckx1},${necky1}
   L ${2 * xRef - (neckx1 + 4 * scaleY)},${necky1}
-  L ${2 * xRef - x1},${y1 - 4 * scaleY} z
+  L ${2 * xRef - startX},${startY - 4 * scaleY} z
 `
-  const x9 = x3 + 14 * scaleX
-  const y9 = y2 + arm * scaleX
-  const x10 = x9 - 12 * scaleX
-  const y10 = y2 + arm * scaleX + 4 * scaleX
-  const x11 = x2 - 12 * scaleX
-  const y11 = y2 + 4 * scaleX
-  const arm1 = `M ${x2},${y2} Q ${x2 + (x9 - x2) / 1.2},${y2 + (y9 - y2) / 2.25} ${x9},${y9}
-          L ${x10},${y10}
-          Q ${x11 + (x10 - x11) / 1.2},${y11 + (y10 - y11) / 2.25} ${x11},${y11}
+  const endArmX1 = sideCurveStartX + 14 * scaleX
+  const endArmY1 = shoulderendY + arm * scaleX
+  const endArmX2 = endArmX1 - 12 * scaleX
+  const endArmY2 = shoulderendY + arm * scaleX + 4 * scaleX
+  const armBaseX = shoulderendX - 12 * scaleX
+  const armBaseY = shoulderendY + 4 * scaleX
+  const rightArm = `M ${shoulderendX},${shoulderendY} Q ${shoulderendX + (endArmX1 - shoulderendX) / 1.2},${shoulderendY + (endArmY1 - shoulderendY) / 2.25} ${endArmX1},${endArmY1}
+          L ${endArmX2},${endArmY2}
+          Q ${armBaseX + (endArmX2 - armBaseX) / 1.2},${armBaseY + (endArmY2 - armBaseY) / 2.25} ${armBaseX},${armBaseY}
       `
-  const arm1Mirrored = `
-  M ${2 * xRef - x2},${y2}
-  Q ${2 * xRef - (x2 + (x9 - x2) / 1.2)},${y2 + (y9 - y2) / 2.25}
-    ${2 * xRef - x9},${y9}
-  L ${2 * xRef - x10},${y10}
-  Q ${2 * xRef - (x11 + (x10 - x11) / 1.2)},${y11 + (y10 - y11) / 2.25}
-    ${2 * xRef - x11},${y11}
+  const leftArmMirrored = `
+  M ${2 * xRef - shoulderendX},${shoulderendY}
+  Q ${2 * xRef - (shoulderendX + (endArmX1 - shoulderendX) / 1.2)},${shoulderendY + (endArmY1 - shoulderendY) / 2.25}
+    ${2 * xRef - endArmX1},${endArmY1}
+  L ${2 * xRef - endArmX2},${endArmY2}
+  Q ${2 * xRef - (armBaseX + (endArmX2 - armBaseX) / 1.2)},${armBaseY + (endArmY2 - armBaseY) / 2.25}
+    ${2 * xRef - armBaseX},${armBaseY}
 `
 
   return {
-    original,
-    reflected,
-    pocket,
-    mirroredPocket,
+    rightCoatPath,
+    leftCoatPath,
+    rightPocket,
+    leftPocket,
     buttons,
     neck,
-    neck1,
-    neck1Mirrored,
-    arm1,
-    arm1Mirrored,
+    rightRoundNeck,
+    leftRoundNeck,
+    rightArm,
+    leftArmMirrored,
   }
 }

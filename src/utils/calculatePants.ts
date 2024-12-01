@@ -1,4 +1,4 @@
-import { calculateDistance } from './mathutils'
+import { calculateDistance } from './utils'
 
 export const calculatePants = (
   {
@@ -28,60 +28,64 @@ export const calculatePants = (
     pocket = length * scaleY - inseam * scaleY - 4 * scaleY
   }
 
-  const x1 = 80 * scaleX
-  const x8 = x1 - waist * scaleX
-  const y1 = 10 * scaleY
-  const x7 = x8 - 1 * scaleX
-  const x2 = x7 + thigh * scaleX
-  const y2 = y1 + length * scaleY - inseam * scaleY
-  const x3 = x2 - ((thigh - knee) / 2) * scaleX
-  const x6 = x7 + ((thigh - knee) / 2) * scaleX
-  const y3 = y2 + (inseam / 2 - 5) * scaleY
-  const x4 = x3 - ((knee - hem) / 2) * scaleX
-  const x5 = x6 + ((knee - hem) / 2) * scaleX
-  const y4 = y3 + (inseam / 2 + 5) * scaleY
+  const startX = 80 * scaleX
+  const innerWaist = startX - waist * scaleX
+  const startY = 10 * scaleY
+  const innerThigh = innerWaist - 1 * scaleX
+  const sideThigh = innerThigh + thigh * scaleX
+  const thighY = startY + length * scaleY - inseam * scaleY
+  const sideknee = sideThigh - ((thigh - knee) / 2) * scaleX
+  const innerknee = innerThigh + ((thigh - knee) / 2) * scaleX
+  const kneeY = thighY + (inseam / 2 - 5) * scaleY
+  const sideHem = sideknee - ((knee - hem) / 2) * scaleX
+  const innerHem = innerknee + ((knee - hem) / 2) * scaleX
+  const hemY = kneeY + (inseam / 2 + 5) * scaleY
 
-  const x9 = x1 - 4 * scaleX
+  const x9 = startX - 4 * scaleX
   let t = 0.0
-  let x10, y5
+  let pocketX, pocketY
   const precision = 0.001
 
   do {
-    x10 = (1 - t) ** 3 * x1 + 3 * (1 - t) ** 2 * t * (x2 - (x2 - x1) / 2.5) + 3 * (1 - t) * t ** 2 * x2 + t ** 3 * x2
-    y5 =
-      (1 - t) ** 3 * y1 +
-      3 * (1 - t) ** 2 * t * (y2 - (y2 - y1) / 1.25) +
-      3 * (1 - t) * t ** 2 * (y2 - (y2 - y1) / 2.75) +
-      t ** 3 * y2
+    pocketX =
+      (1 - t) ** 3 * startX +
+      3 * (1 - t) ** 2 * t * (sideThigh - (sideThigh - startX) / 2.5) +
+      3 * (1 - t) * t ** 2 * sideThigh +
+      t ** 3 * sideThigh
+    pocketY =
+      (1 - t) ** 3 * startY +
+      3 * (1 - t) ** 2 * t * (thighY - (thighY - startY) / 1.25) +
+      3 * (1 - t) * t ** 2 * (thighY - (thighY - startY) / 2.75) +
+      t ** 3 * thighY
     t += precision
-  } while (calculateDistance(x9, y1, x10, y5) < pocket && t <= 1.0)
+  } while (calculateDistance(x9, startY, pocketX, pocketY) < pocket && t <= 1.0)
 
-  const original = `M ${x1},${y1}
-      C ${x2 - (x2 - x1) / 2.5},${y2 - (y2 - y1) / 1.25} ${x2},${y2 - (y2 - y1) / 2.75} ${x2},${y2}
-      C ${x3 + (x2 - x3) / 1.15},${y2 - (y2 - y3) / 5} ${x3 + (x2 - x3) / 2.2},${y2 - (y2 - y3) / 2.5} ${x3},${y3}
-      L ${x4},${y4}
-      L ${x5},${y4}
-      L ${x6},${y3}
-      C ${x6 - (x6 - x7) / 1.15},${y2 - (y2 - y3) / 5} ${x6 - (x6 - x7) / 2.2},${y2 - (y2 - y3) / 2.5} ${x7},${y2}
-      L ${x8},${y1}
-      M ${x9},${y1}  ${x10},${y5}
-            M ${x1},${y1} L${x8},${y1} L${x8},${y1 - 4 * scaleX} L${x1},${y1 - 4 * scaleX} z
-            M ${x1 - 1 * scaleX},${y1} L${x1 - 2.5 * scaleX},${y1} L${x1 - 2.5 * scaleX},${y1 - 4 * scaleX} L${x1 - 1 * scaleX},${y1 - 4 * scaleX} z
-            M ${x1 - 11 * scaleX},${y1} L${x1 - 12.5 * scaleX},${y1} L${x1 - 12.5 * scaleX},${y1 - 4 * scaleX} L${x1 - 11 * scaleX},${y1 - 4 * scaleX} z
+  const rigthPantsPath = `M ${startX},${startY}
+      C ${sideThigh - (sideThigh - startX) / 2.5},${thighY - (thighY - startY) / 1.25} ${sideThigh},${thighY - (thighY - startY) / 2.75} ${sideThigh},${thighY}
+      C ${sideknee + (sideThigh - sideknee) / 1.15},${thighY - (thighY - kneeY) / 5} ${sideknee + (sideThigh - sideknee) / 2.2},${thighY - (thighY - kneeY) / 2.5} ${sideknee},${kneeY}
+      L ${sideHem},${hemY}
+      L ${innerHem},${hemY}
+      L ${innerknee},${kneeY}
+      C ${innerknee - (innerknee - innerThigh) / 1.15},${thighY - (thighY - kneeY) / 5} ${innerknee - (innerknee - innerThigh) / 2.2},${thighY - (thighY - kneeY) / 2.5} ${innerThigh},${thighY}
+      L ${innerWaist},${startY}
+      M ${x9},${startY}  ${pocketX},${pocketY}
+            M ${startX},${startY} L${innerWaist},${startY} L${innerWaist},${startY - 4 * scaleX} L${startX},${startY - 4 * scaleX} z
+            M ${startX - 1 * scaleX},${startY} L${startX - 2.5 * scaleX},${startY} L${startX - 2.5 * scaleX},${startY - 4 * scaleX} L${startX - 1 * scaleX},${startY - 4 * scaleX} z
+            M ${startX - 11 * scaleX},${startY} L${startX - 12.5 * scaleX},${startY} L${startX - 12.5 * scaleX},${startY - 4 * scaleX} L${startX - 11 * scaleX},${startY - 4 * scaleX} z
             `
 
-  const reflected = `M ${2 * x8 - x1},${y1}
-            C ${2 * x8 - (x2 - (x2 - x1) / 2.5)},${y2 - (y2 - y1) / 1.25} ${2 * x8 - x2},${y2 - (y2 - y1) / 2.75} ${2 * x8 - x2},${y2}
-            C ${2 * x8 - (x3 + (x2 - x3) / 1.15)},${y2 - (y2 - y3) / 5} ${2 * x8 - (x3 + (x2 - x3) / 2.2)},${y2 - (y2 - y3) / 2.5} ${2 * x8 - x3},${y3}
-            L ${2 * x8 - x4},${y4}
-            L ${2 * x8 - x5},${y4}
-            L ${2 * x8 - x6},${y3}
-            C ${2 * x8 - (x6 - (x6 - x7) / 1.15)},${y2 - (y2 - y3) / 5} ${2 * x8 - (x6 - (x6 - x7) / 2.2)},${y2 - (y2 - y3) / 2.5} ${2 * x8 - x7},${y2}
-            L ${2 * x8 - x8},${y1}
-            M ${2 * x8 - x9},${y1} ${2 * x8 - x10},${y5}
-                  M ${2 * x8 - x1},${y1} L${2 * x8 - x8},${y1} L${2 * x8 - x8},${y1 - 4 * scaleX} L${2 * x8 - x1},${y1 - 4 * scaleX} z
-                  M ${2 * x8 - (x1 - 1 * scaleX)},${y1} L${2 * x8 - (x1 - 2.5 * scaleX)},${y1} L${2 * x8 - (x1 - 2.5 * scaleX)},${y1 - 4 * scaleX} L${2 * x8 - (x1 - 1 * scaleX)},${y1 - 4 * scaleX} z
-                  M ${2 * x8 - (x1 - 11 * scaleX)},${y1} L${2 * x8 - (x1 - 12.5 * scaleX)},${y1} L${2 * x8 - (x1 - 12.5 * scaleX)},${y1 - 4 * scaleX} L${2 * x8 - (x1 - 11 * scaleX)},${y1 - 4 * scaleX} z`
+  const leftPantsPath = `M ${2 * innerWaist - startX},${startY}
+            C ${2 * innerWaist - (sideThigh - (sideThigh - startX) / 2.5)},${thighY - (thighY - startY) / 1.25} ${2 * innerWaist - sideThigh},${thighY - (thighY - startY) / 2.75} ${2 * innerWaist - sideThigh},${thighY}
+            C ${2 * innerWaist - (sideknee + (sideThigh - sideknee) / 1.15)},${thighY - (thighY - kneeY) / 5} ${2 * innerWaist - (sideknee + (sideThigh - sideknee) / 2.2)},${thighY - (thighY - kneeY) / 2.5} ${2 * innerWaist - sideknee},${kneeY}
+            L ${2 * innerWaist - sideHem},${hemY}
+            L ${2 * innerWaist - innerHem},${hemY}
+            L ${2 * innerWaist - innerknee},${kneeY}
+            C ${2 * innerWaist - (innerknee - (innerknee - innerThigh) / 1.15)},${thighY - (thighY - kneeY) / 5} ${2 * innerWaist - (innerknee - (innerknee - innerThigh) / 2.2)},${thighY - (thighY - kneeY) / 2.5} ${2 * innerWaist - innerThigh},${thighY}
+            L ${2 * innerWaist - innerWaist},${startY}
+            M ${2 * innerWaist - x9},${startY} ${2 * innerWaist - pocketX},${pocketY}
+                  M ${2 * innerWaist - startX},${startY} L${2 * innerWaist - innerWaist},${startY} L${2 * innerWaist - innerWaist},${startY - 4 * scaleX} L${2 * innerWaist - startX},${startY - 4 * scaleX} z
+                  M ${2 * innerWaist - (startX - 1 * scaleX)},${startY} L${2 * innerWaist - (startX - 2.5 * scaleX)},${startY} L${2 * innerWaist - (startX - 2.5 * scaleX)},${startY - 4 * scaleX} L${2 * innerWaist - (startX - 1 * scaleX)},${startY - 4 * scaleX} z
+                  M ${2 * innerWaist - (startX - 11 * scaleX)},${startY} L${2 * innerWaist - (startX - 12.5 * scaleX)},${startY} L${2 * innerWaist - (startX - 12.5 * scaleX)},${startY - 4 * scaleX} L${2 * innerWaist - (startX - 11 * scaleX)},${startY - 4 * scaleX} z`
 
-  return { original, reflected }
+  return { rigthPantsPath, leftPantsPath }
 }

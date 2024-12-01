@@ -2,42 +2,27 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import Svg, { Circle, Path } from 'react-native-svg'
 
+import { VestProps } from '@/components/Preview'
 import { WHITE } from '@/constants/colors'
-import { calculateVest } from '@/utils/calculateVest'
-
-interface VestProps {
-  width?: number
-  height?: number
-  length: number
-  shoulder: number
-  chest: number
-  fillColor?: string
-  strokeColor?: string
-}
 
 export const Vest: React.FC<VestProps> = ({
-  length,
-  shoulder,
-  chest,
-  width = 500,
-  height = 500,
   fillColor = 'gray',
   strokeColor = 'black',
+  leftVestPath,
+  rightVestPath,
+  rightVestPocket,
+  leftVestPocket,
+  buttons,
+  neck,
 }) => {
-  const { original, reflected, pocket, mirroredPocket, buttons, neck } = calculateVest(
-    { length, shoulder, chest },
-    width,
-    height,
-  )
-
   return (
     <View style={styles.imageWrapper}>
-      <Svg width={300} height={300} viewBox={`0 0 ${400} ${300}`}>
+      <Svg width={300} height={300} viewBox={`0 0 ${350} ${350}`}>
         <Path d={neck} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
-        <Path d={reflected} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
-        <Path d={original} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
-        <Path d={pocket} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
-        <Path d={mirroredPocket} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
+        <Path d={leftVestPath} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
+        <Path d={rightVestPath} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
+        <Path d={rightVestPocket} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
+        <Path d={leftVestPocket} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
         {buttons.map((button, index) => (
           <Circle key={index} cx={button.cx} cy={button.cy} r={button.r} fill="black" />
         ))}

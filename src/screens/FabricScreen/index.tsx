@@ -6,28 +6,12 @@ import i18n from 'src/language'
 
 import { CustomAppBar } from '@/components/CustomAppBar'
 import { PaperButton } from '@/components/PaperButton'
+import { Preview } from '@/components/Preview'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
-import { WHITE } from '@/constants/colors'
-import {
-  BORDER_COLORS,
-  COLOR_ICONS,
-  COLOR_VALUES,
-  COLORS,
-  FABRIC_ICONS,
-  FABRICS,
-  GarmentProps,
-  GarmentType,
-  getGarmentComponent,
-} from '@/constants/selections'
+import { COLOR_ICONS, COLOR_VALUES, COLORS, FABRIC_ICONS, FABRICS } from '@/constants/selections'
 import { resetColor, setSelectedColor, setSelectedFabric } from '@/redux/selections/selections.actions'
-import {
-  getCustomMeasurements,
-  getSelectedColor,
-  getSelectedFabric,
-  getSelectedGarment,
-} from '@/redux/selections/selections.selectors'
-import { RootState } from '@/redux/store'
+import { getSelectedColor, getSelectedFabric } from '@/redux/selections/selections.selectors'
 
 import en from './en.json'
 import es from './es.json'
@@ -41,20 +25,6 @@ export const FabricScreen = () => {
 
   const selectedColor = useSelector(getSelectedColor)
   const selectedFabric = useSelector(getSelectedFabric)
-  const garmentType = useSelector(getSelectedGarment) as GarmentType
-  const garmentMeasurements = useSelector(state => getCustomMeasurements(state as RootState, garmentType))
-
-  const SelectedGarmentComponent = getGarmentComponent(garmentType)
-
-  const fillColor = selectedColor ? COLOR_VALUES[selectedColor as keyof typeof COLOR_VALUES] : WHITE
-  const strokeColor = selectedColor ? BORDER_COLORS[selectedColor as keyof typeof BORDER_COLORS] : WHITE
-  const garmentProps: GarmentProps = {
-    ...(garmentMeasurements as unknown as GarmentProps),
-    width: 300,
-    height: 300,
-    fillColor,
-    strokeColor,
-  }
 
   const handleColorSelection = (option: string) => {
     dispatch(setSelectedColor(option))
@@ -69,9 +39,7 @@ export const FabricScreen = () => {
     <ThemedView style={styles.container}>
       <CustomAppBar title={'Fabric and Color Selection'} backAction={true} />
       <View style={styles.body}>
-        <View style={styles.previewContainer}>
-          {SelectedGarmentComponent ? <SelectedGarmentComponent {...garmentProps} /> : null}
-        </View>
+        <Preview />
 
         <View style={styles.titleSelect}>
           <Text variant="titleLarge">{i18n.t('Select your color')}</Text>

@@ -8,25 +8,12 @@ import * as yup from 'yup'
 
 import { CustomAppBar } from '@/components/CustomAppBar'
 import { PaperButton } from '@/components/PaperButton'
+import { Preview } from '@/components/Preview'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
-import { WHITE } from '@/constants/colors'
-import {
-  BORDER_COLORS,
-  COLOR_VALUES,
-  GARMENT_MEASUREMENTS,
-  GarmentProps,
-  GarmentType,
-  getGarmentComponent,
-  MEASUREMENTS_OPTIONS,
-} from '@/constants/selections'
+import { GARMENT_MEASUREMENTS, GarmentProps, GarmentType, MEASUREMENTS_OPTIONS } from '@/constants/selections'
 import { setSelectedMeasure, updateCustomMeasurements } from '@/redux/selections/selections.actions'
-import {
-  getCustomMeasurements,
-  getSelectedColor,
-  getSelectedGarment,
-  getSelectedMeasure,
-} from '@/redux/selections/selections.selectors'
+import { getCustomMeasurements, getSelectedGarment, getSelectedMeasure } from '@/redux/selections/selections.selectors'
 import { RootState } from '@/redux/store'
 
 import { getValidationSchema } from './schema'
@@ -52,10 +39,7 @@ export const MeasurementScreen = () => {
   const selectedGarment = useSelector(getSelectedGarment) as GarmentType
   const size = useSelector(getSelectedMeasure)
   const customMeasurements = useSelector(state => getCustomMeasurements(state as RootState, selectedGarment))
-  const selectedColor = useSelector(getSelectedColor)
 
-  const fillColor = selectedColor ? COLOR_VALUES[selectedColor as keyof typeof COLOR_VALUES] : WHITE
-  const strokeColor = selectedColor ? BORDER_COLORS[selectedColor as keyof typeof BORDER_COLORS] : WHITE
   const initialMeasurements = useMemo(() => {
     return sanitizeMeasurements(selectedGarment, customMeasurements || {})
   }, [selectedGarment, customMeasurements])
@@ -65,8 +49,6 @@ export const MeasurementScreen = () => {
     Object.fromEntries(Object.entries(initialMeasurements).map(([key, value]) => [key, value.toString()])),
   )
   const [errors, setErrors] = useState<Record<string, string>>({})
-
-  const SelectedGarmentComponent = getGarmentComponent(selectedGarment)
 
   useEffect(() => {
     setErrors({})
@@ -154,24 +136,11 @@ export const MeasurementScreen = () => {
     }
   }
 
-  const renderSVGComponent = () => {
-    const sanitized = sanitizeMeasurements(selectedGarment, measurements)
-    return SelectedGarmentComponent ? (
-      <SelectedGarmentComponent
-        {...sanitized}
-        fillColor={fillColor}
-        strokeColor={strokeColor}
-        width={300}
-        height={300}
-      />
-    ) : null
-  }
-
   return (
     <ThemedView style={styles.container}>
       <CustomAppBar title={'Adjust Measurements'} backAction />
       <View style={styles.body}>
-        <View style={styles.previewContainer}>{renderSVGComponent()}</View>
+        <Preview />
         <View style={styles.selectionContainer}>
           <SelectionGroupButton options={MEASUREMENTS_OPTIONS} onSelect={handleSelection} selected={size} />
         </View>
