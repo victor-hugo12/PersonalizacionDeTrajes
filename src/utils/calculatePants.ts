@@ -28,7 +28,7 @@ export const calculatePants = (
     pocket = length * scaleY - inseam * scaleY - 4 * scaleY
   }
 
-  const startX = 80 * scaleX
+  const startX = 90 * scaleX
   const innerWaist = startX - waist * scaleX
   const startY = 10 * scaleY
   const innerThigh = innerWaist - 1 * scaleX
