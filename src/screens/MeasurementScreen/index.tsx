@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Switch, Text } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
@@ -61,6 +61,13 @@ export const MeasurementScreen = () => {
       dispatch(resetCustomMeasurements())
     }
   }
+
+  useEffect(() => {
+    const newState = Object.keys(customMeasurements).length > 0
+    if (isCustom !== newState) {
+      setIsCustom(newState)
+    }
+  }, [customMeasurements, isCustom])
 
   return (
     <ThemedView style={styles.container}>
