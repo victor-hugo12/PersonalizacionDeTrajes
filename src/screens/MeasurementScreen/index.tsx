@@ -40,7 +40,7 @@ export const MeasurementScreen = () => {
   const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
   const size = useSelector(getSelectedMeasure) as MEASUREMENTS
   const customMeasurements = useSelector(getCustomMeasurements)
-  const [isCustom, setIsCustom] = useState(Boolean(customMeasurements))
+  const [isCustom, setIsCustom] = useState(Object.keys(customMeasurements).length > 0)
 
   const initialMeasurements = getInitialMeasurements(selectedGarment, size, customMeasurements)
   const handleSelection = (option: string) => {
