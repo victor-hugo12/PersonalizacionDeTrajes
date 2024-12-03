@@ -42,9 +42,9 @@ const TabLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="example"
+        name="fabric"
         options={{
-          title: 'example',
+          title: 'fabric',
           href: null,
         }}
       />

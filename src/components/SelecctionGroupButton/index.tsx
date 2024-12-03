@@ -14,9 +14,10 @@ interface Props {
   options: Option[]
   onSelect: (value: string) => void
   selected: string
+  disabled?: boolean
 }
 
-export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selected }) => {
+export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selected, disabled = false }) => {
   const [selectedOption, setSelectedOption] = useState<string>(selected)
 
   const handleSelect = (value: string) => {
@@ -37,6 +38,7 @@ export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selec
           icon={icon}
           contentStyle={{ flexDirection: 'row-reverse' }}
           textColor={color}
+          disabled={disabled}
         >
           {i18n.t(value)}
         </Button>

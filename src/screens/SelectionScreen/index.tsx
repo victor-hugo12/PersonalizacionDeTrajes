@@ -1,17 +1,17 @@
-import { router } from 'expo-router'
-import { Image, StyleSheet, View } from 'react-native'
+import { useRouter } from 'expo-router'
+import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'src/language'
 
 import { CustomAppBar } from '@/components/CustomAppBar'
 import { PaperButton } from '@/components/PaperButton'
+import { Preview } from '@/components/Preview'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
-import { WHITE } from '@/constants/colors'
-import { CLOTHES_OPTIONS, GarmentType, getGarmentImage } from '@/constants/selections'
+import { CLOTHES, CLOTHES_OPTIONS } from '@/constants/selections'
 import { useLanguage } from '@/context/LanguageContext'
-import { setSelectedGarment } from '@/redux/selections/selections.actions'
+import { resetCustomMeasurements, setSelectedGarment } from '@/redux/selections/selections.actions'
 import { getSelectedGarment } from '@/redux/selections/selections.selectors'
 
 import en from './en.json'
@@ -21,12 +21,16 @@ i18n.store(en)
 i18n.store(es)
 
 export const SelectionScreen = () => {
-  const { language } = useLanguage()
+  const router = useRouter()
   const dispatch = useDispatch()
-  const selectedGarment = useSelector(getSelectedGarment)
+  const { language } = useLanguage()
+
+  const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
 
   const handleSelection = (option: string) => {
-    dispatch(setSelectedGarment(option))
+    const garmentType = option as CLOTHES
+    dispatch(setSelectedGarment(garmentType))
+    dispatch(resetCustomMeasurements())
   }
 
   return (
@@ -34,19 +38,14 @@ export const SelectionScreen = () => {
       <CustomAppBar title={'Choice of garment'} backAction={false} />
 
       <View style={styles.body}>
-        <View style={styles.imageContainer}>
-          <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>
-            <Image source={getGarmentImage(selectedGarment as GarmentType)} style={styles.image} resizeMode="contain" />
-          </View>
-        </View>
-
+        <Preview />
         <View style={styles.titleSelect}>
           <Text variant="titleLarge">{i18n.t('Select your garment')}</Text>
         </View>
-
         <View style={styles.selectionContainer}>
           <SelectionGroupButton options={CLOTHES_OPTIONS} onSelect={handleSelection} selected={selectedGarment} />
         </View>
+
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>
           <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/measurement')}>
@@ -67,23 +66,7 @@ const styles = StyleSheet.create({
     padding: 25,
   },
   selectionContainer: {
-    marginVertical: 16,
-  },
-  imageContainer: {
-    alignItems: 'center',
-    marginVertical: 16,
-  },
-  imageWrapper: {
-    width: 400,
-    height: 400,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
-  image: {
-    width: 400,
-    height: 400,
+    marginVertical: 8,
   },
   flexGrow: {
     flexGrow: 1,

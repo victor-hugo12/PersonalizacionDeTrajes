@@ -1,6 +1,16 @@
 {
   "en": {
     "Adjust Measurements": "Adjust Measurements",
-    "Select your size": "Select your size"
+    "Customize your size": "Customize your size",
+    "Apply": "Apply",
+    "length": "Length",
+    "shoulder": "Shoulder",
+    "chest": "Chest",
+    "hem": "Hem",
+    "knee": "Knee",
+    "thigh": "Thigh",
+    "waist": "Waist",
+    "inseam": "Inseam",
+    "arm": "Arm"
   }
 }

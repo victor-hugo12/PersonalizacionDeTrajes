@@ -15,7 +15,7 @@ import { addUser } from '@/services/firestoreUser'
 
 import en from './en.json'
 import es from './es.json'
-import { LoginSchema } from './schema'
+import { RegisterSchema } from './schema'
 
 i18n.store(en)
 i18n.store(es)
@@ -62,7 +62,7 @@ export const RegisterScreen: React.FC = () => {
         <Image source={require('@/assets/images/login.png')} style={styles.imageStyle} />
       </View>
       <Formik
-        validationSchema={LoginSchema}
+        validationSchema={RegisterSchema}
         initialValues={{ name: '', email: '', password: '', passwordConfirmation: '' }}
         onSubmit={onSubmit}
       >

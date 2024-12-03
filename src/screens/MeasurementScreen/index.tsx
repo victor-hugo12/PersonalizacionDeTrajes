@@ -1,17 +1,25 @@
 import { useRouter } from 'expo-router'
-import { Image, StyleSheet, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { useEffect, useState } from 'react'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { Switch, Text } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'src/language'
 
+import { CoatMeasurementValues, CoatMeausurement } from '@/components/CoatMeausurement'
 import { CustomAppBar } from '@/components/CustomAppBar'
+import { PantsMeasurementValues, PantsMeausurement } from '@/components/PantsMeausurement'
 import { PaperButton } from '@/components/PaperButton'
+import { Preview } from '@/components/Preview'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
-import { WHITE } from '@/constants/colors'
-import { GarmentType, getGarmentImage, MEASUREMENTS_OPTIONS, SIZE_DIMENSIONS, SizeType } from '@/constants/selections'
-import { setSelectedMeasure } from '@/redux/selections/selections.actions'
-import { getSelectedGarment, getSelectedMeasure } from '@/redux/selections/selections.selectors'
+import { VestMeasurementValues, VestMeausurement } from '@/components/VestMeausurement'
+import { CLOTHES, GARMENT_MEASUREMENTS, MEASUREMENTS, MEASUREMENTS_OPTIONS } from '@/constants/selections'
+import {
+  initializeCustomMeasurements,
+  resetCustomMeasurements,
+  setSelectedMeasure,
+} from '@/redux/selections/selections.actions'
+import { getCustomMeasurements, getSelectedGarment, getSelectedMeasure } from '@/redux/selections/selections.selectors'
 
 import en from './en.json'
 import es from './es.json'
@@ -19,41 +27,82 @@ import es from './es.json'
 i18n.store(en)
 i18n.store(es)
 
-export const MeasurementScreen = () => {
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const garmentType = useSelector(getSelectedGarment)
-  const size = useSelector(getSelectedMeasure)
-  const { width, height } = SIZE_DIMENSIONS[size as SizeType]
+const getInitialMeasurements = (garmentType: CLOTHES, size: MEASUREMENTS, measurements: Record<string, number>) => {
+  if (measurements && Object.keys(measurements).length) {
+    return measurements
+  }
+  return GARMENT_MEASUREMENTS[garmentType][size]
+}
 
+export const MeasurementScreen = () => {
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
+  const size = useSelector(getSelectedMeasure) as MEASUREMENTS
+  const customMeasurements = useSelector(getCustomMeasurements)
+  const [isCustom, setIsCustom] = useState(Object.keys(customMeasurements).length > 0)
+
+  const initialMeasurements = getInitialMeasurements(selectedGarment, size, customMeasurements)
   const handleSelection = (option: string) => {
     dispatch(setSelectedMeasure(option))
+    dispatch(resetCustomMeasurements())
   }
+
+  const handleNext = () => {
+    router.push('/(auth)/(tabs)/fabric')
+  }
+
+  const handleSetIsCustom = (value: boolean) => {
+    setIsCustom(value)
+    if (value) {
+      const defaultMeasurements = GARMENT_MEASUREMENTS[selectedGarment][size]
+      dispatch(initializeCustomMeasurements(defaultMeasurements))
+    } else {
+      dispatch(resetCustomMeasurements())
+    }
+  }
+
+  useEffect(() => {
+    const newState = Object.keys(customMeasurements).length > 0
+    if (isCustom !== newState) {
+      setIsCustom(newState)
+    }
+  }, [customMeasurements, isCustom])
 
   return (
     <ThemedView style={styles.container}>
-      <CustomAppBar title={'Adjust Measurements'} backAction={true} />
-      <View style={styles.body}>
-        <View style={styles.imageContainer}>
-          <View style={[styles.imageWrapper, { backgroundColor: WHITE }]}>
-            <Image
-              source={getGarmentImage(garmentType as GarmentType)}
-              style={{ width, height }}
-              resizeMode="contain"
-            />
-          </View>
+      <CustomAppBar title={'Adjust Measurements'} backAction />
+      <ScrollView style={styles.body}>
+        <Preview />
+        <View style={styles.selectionContainer}>
+          <SelectionGroupButton
+            options={MEASUREMENTS_OPTIONS}
+            onSelect={handleSelection}
+            selected={size}
+            disabled={isCustom}
+          />
         </View>
-        <View style={styles.titleSelect}>
-          <Text variant="titleLarge">{i18n.t('Select your size')}</Text>
+        <View style={styles.customizeTitle}>
+          <Text variant="titleLarge">{i18n.t('Customize your size')}</Text>
+          <Switch value={isCustom} onValueChange={handleSetIsCustom} />
         </View>
-        <SelectionGroupButton options={MEASUREMENTS_OPTIONS} onSelect={handleSelection} selected={size} />
-        <View style={styles.flexGrow} />
+        <View>
+          {selectedGarment === CLOTHES.Pants && (
+            <PantsMeausurement isEditable={isCustom} values={initialMeasurements as PantsMeasurementValues} />
+          )}
+          {selectedGarment === CLOTHES.Vest && (
+            <VestMeausurement isEditable={isCustom} values={initialMeasurements as VestMeasurementValues} />
+          )}
+          {selectedGarment === CLOTHES.Coat && (
+            <CoatMeausurement isEditable={isCustom} values={initialMeasurements as CoatMeasurementValues} />
+          )}
+        </View>
         <View style={styles.navigationButton}>
-          <PaperButton dark mode="contained" onPress={() => router.push('/(auth)/(tabs)/example')}>
+          <PaperButton mode="contained" dark onPress={handleNext}>
             {i18n.t('Next')}
           </PaperButton>
         </View>
-      </View>
+      </ScrollView>
     </ThemedView>
   )
 }
@@ -66,23 +115,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 25,
   },
-  titleSelect: {
-    marginVertical: 8,
-  },
-  imageContainer: {
-    alignItems: 'center',
+  selectionContainer: {
     marginVertical: 16,
   },
-  imageWrapper: {
-    width: 300,
-    height: 300,
-    justifyContent: 'center',
+  navigationButton: {
+    marginTop: 20,
+    marginBottom: 60,
+  },
+  customizeTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    borderRadius: 8,
-    overflow: 'hidden',
+    marginBottom: 8,
   },
-  flexGrow: {
-    flexGrow: 1,
-  },
-  navigationButton: {},
 })
