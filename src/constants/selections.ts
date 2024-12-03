@@ -44,29 +44,49 @@ export const GARMENT_MEASUREMENTS = {
   },
 }
 
-export const COLORS = ['Black', 'Blue', 'Gray']
-
-export const FABRICS = ['Cotton', 'Polyester', 'Linen']
-export const COLOR_ICONS = COLORS.reduce(
-  (acc, color) => {
-    acc[color] = 'ellipse'
-    return acc
-  },
-  {} as Record<string, string>,
-)
-
-export const COLOR_VALUES = {
-  Black: '#000000',
-  Blue: '#0000FF',
-  Gray: '#808080',
-} as const
-export const FABRIC_ICONS = {
-  Cotton: 'leaf',
-  Polyester: 'texture',
-  Linen: 'leaf-maple',
+export enum COLORS {
+  Black = 'Black',
+  Blue = 'Blue',
+  Gray = 'Gray',
 }
-export const BORDER_COLORS = {
-  Black: '#444444',
-  Blue: '#000080',
-  Gray: '#A9A9A9',
-} as const
+
+export const COLORS_OPTIONS = [
+  {
+    value: COLORS.Black,
+    icon: 'circle',
+    color: '#000000',
+    borderColor: '#444444',
+  },
+  {
+    value: COLORS.Blue,
+    icon: 'circle',
+    color: '#0000FF',
+    borderColor: '#000080',
+  },
+  {
+    value: COLORS.Gray,
+    icon: 'circle',
+    color: '#808080',
+    borderColor: '#A9A9A9',
+  },
+]
+export enum FABRICS {
+  Cotton = 'Cotton',
+  Polyester = 'Polyester',
+  Linen = 'Linen',
+}
+
+export const FABRICS_OPTIONS = [
+  {
+    value: FABRICS.Cotton,
+    icon: 'leaf',
+  },
+  {
+    value: FABRICS.Polyester,
+    icon: 'texture',
+  },
+  {
+    value: FABRICS.Linen,
+    icon: 'leaf-maple',
+  },
+]

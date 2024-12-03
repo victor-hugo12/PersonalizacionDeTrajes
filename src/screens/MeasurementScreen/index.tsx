@@ -57,6 +57,8 @@ export const MeasurementScreen = () => {
     if (value) {
       const defaultMeasurements = GARMENT_MEASUREMENTS[selectedGarment][size]
       dispatch(initializeCustomMeasurements(defaultMeasurements))
+    } else {
+      dispatch(resetCustomMeasurements())
     }
   }
 

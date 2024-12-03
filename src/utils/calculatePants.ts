@@ -30,7 +30,7 @@ export const calculatePants = (
 
   const startX = 90 * scaleX
   const innerWaist = startX - waist * scaleX
-  const startY = 10 * scaleY
+  const startY = 20 * scaleY
   const innerThigh = innerWaist - 1 * scaleX
   const sideThigh = innerThigh + thigh * scaleX
   const thighY = startY + length * scaleY - inseam * scaleY

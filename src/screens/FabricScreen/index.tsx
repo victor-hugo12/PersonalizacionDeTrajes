@@ -9,7 +9,7 @@ import { PaperButton } from '@/components/PaperButton'
 import { Preview } from '@/components/Preview'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
-import { COLOR_ICONS, COLOR_VALUES, COLORS, FABRIC_ICONS, FABRICS } from '@/constants/selections'
+import { COLORS_OPTIONS, FABRICS_OPTIONS } from '@/constants/selections'
 import { resetColor, setSelectedColor, setSelectedFabric } from '@/redux/selections/selections.actions'
 import { getSelectedColor, getSelectedFabric } from '@/redux/selections/selections.selectors'
 
@@ -44,29 +44,13 @@ export const FabricScreen = () => {
           <Text variant="titleLarge">{i18n.t('Select your fabric')}</Text>
         </View>
         <View style={styles.selectionContainer}>
-          <SelectionGroupButton
-            options={FABRICS.map(fabric => ({
-              value: fabric,
-              icon: FABRIC_ICONS[fabric as keyof typeof FABRIC_ICONS],
-            }))}
-            onSelect={handleFabricSelection}
-            selected={selectedFabric}
-          />
+          <SelectionGroupButton options={FABRICS_OPTIONS} onSelect={handleFabricSelection} selected={selectedFabric} />
         </View>
         <View style={styles.titleSelect}>
           <Text variant="titleLarge">{i18n.t('Select your color')}</Text>
         </View>
         <View style={styles.selectionContainer}>
-          <SelectionGroupButton
-            key={`color-${selectedColor}`}
-            options={COLORS.map(color => ({
-              value: color,
-              icon: COLOR_ICONS[color as keyof typeof COLOR_ICONS],
-              color: COLOR_VALUES[color as keyof typeof COLOR_VALUES],
-            }))}
-            onSelect={handleColorSelection}
-            selected={selectedColor}
-          />
+          <SelectionGroupButton options={COLORS_OPTIONS} onSelect={handleColorSelection} selected={selectedColor} />
         </View>
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>

@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { CLOTHES_OPTIONS, COLORS, FABRICS, MEASUREMENTS_OPTIONS } from '@/constants/selections'
+import { CLOTHES_OPTIONS, COLORS_OPTIONS, FABRICS_OPTIONS, MEASUREMENTS_OPTIONS } from '@/constants/selections'
 
 import {
   initializeCustomMeasurements,
@@ -27,8 +27,8 @@ interface SelectionState {
 const initialState: SelectionState = {
   garment: CLOTHES_OPTIONS[0].value,
   measure: MEASUREMENTS_OPTIONS[0].value,
-  color: COLORS[0],
-  fabric: FABRICS[0],
+  color: COLORS_OPTIONS[0].value,
+  fabric: FABRICS_OPTIONS[0].value,
   customMeasurements: {},
 }
 
@@ -50,13 +50,13 @@ export const selectionsReducer = createReducer(initialState, builder => {
       state.color = action.payload
     })
     .addCase(resetColor, state => {
-      state.color = COLORS[0]
+      state.color = COLORS_OPTIONS[0].value
     })
     .addCase(setSelectedFabric, (state, action) => {
       state.fabric = action.payload
     })
     .addCase(resetFabric, state => {
-      state.fabric = FABRICS[0]
+      state.fabric = FABRICS_OPTIONS[0].value
     })
     .addCase(initializeCustomMeasurements, (state, action) => {
       state.customMeasurements = { ...action.payload }

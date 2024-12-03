@@ -1,8 +1,9 @@
 import { StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
-import { WHITE } from '@/constants/colors'
-import { BORDER_COLORS, CLOTHES, COLOR_VALUES, GARMENT_MEASUREMENTS, MEASUREMENTS } from '@/constants/selections'
+import { BLACK, WHITE } from '@/constants/colors'
+import { CLOTHES, GARMENT_MEASUREMENTS, MEASUREMENTS } from '@/constants/selections'
+import { COLORS_OPTIONS } from '@/constants/selections'
 import {
   getCustomMeasurements,
   getSelectedColor,
@@ -20,10 +21,14 @@ import { PantsMeasurementValues } from '../PantsMeausurement'
 import { Vest, VestProps } from '../Vest'
 import { VestMeasurementValues } from '../VestMeausurement'
 
-const getColors = (selectedColor: string) => ({
-  fillColor: selectedColor ? COLOR_VALUES[selectedColor as keyof typeof COLOR_VALUES] : WHITE,
-  strokeColor: selectedColor ? BORDER_COLORS[selectedColor as keyof typeof BORDER_COLORS] : WHITE,
-})
+const getColors = (selectedColor: string) => {
+  const selectedOption = COLORS_OPTIONS.find(option => option.value === selectedColor)
+
+  return {
+    fillColor: selectedOption?.color || WHITE,
+    strokeColor: selectedOption?.borderColor || BLACK,
+  }
+}
 
 const getDataCoat = (measurements: CoatMeasurementValues, selectedColor: string): CoatProps => {
   const { fillColor, strokeColor } = getColors(selectedColor)

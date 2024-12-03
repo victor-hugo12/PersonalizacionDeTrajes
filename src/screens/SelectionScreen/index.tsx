@@ -11,7 +11,7 @@ import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
 import { CLOTHES, CLOTHES_OPTIONS } from '@/constants/selections'
 import { useLanguage } from '@/context/LanguageContext'
-import { setSelectedGarment } from '@/redux/selections/selections.actions'
+import { resetCustomMeasurements, setSelectedGarment } from '@/redux/selections/selections.actions'
 import { getSelectedGarment } from '@/redux/selections/selections.selectors'
 
 import en from './en.json'
@@ -30,6 +30,7 @@ export const SelectionScreen = () => {
   const handleSelection = (option: string) => {
     const garmentType = option as CLOTHES
     dispatch(setSelectedGarment(garmentType))
+    dispatch(resetCustomMeasurements())
   }
 
   return (
