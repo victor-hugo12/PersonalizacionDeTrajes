@@ -80,8 +80,8 @@ const getDataVest = (
   return { fillColor, strokeColor, rightVestPath, leftVestPath, rightVestPocket, leftVestPocket, buttons, neck }
 }
 
-const getMeasurements = (garmentType: CLOTHES, size: MEASUREMENTS, measurements: Record<string, number> | null) => {
-  if (measurements && Object.keys(measurements).length) {
+const getMeasurements = (garmentType: CLOTHES, size: MEASUREMENTS, measurements: Record<string, number>) => {
+  if (Object.keys(measurements).length) {
     return measurements
   }
   return GARMENT_MEASUREMENTS[garmentType][size]
