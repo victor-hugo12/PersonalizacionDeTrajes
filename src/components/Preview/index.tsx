@@ -23,7 +23,6 @@ import { VestMeasurementValues } from '../VestMeausurement'
 
 const getColors = (selectedColor: string) => {
   const selectedOption = COLORS_OPTIONS.find(option => option.value === selectedColor)
-
   return {
     fillColor: selectedOption?.color || WHITE,
     strokeColor: selectedOption?.borderColor || BLACK,
