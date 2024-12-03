@@ -2,8 +2,24 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import Svg, { Circle, Path } from 'react-native-svg'
 
-import { VestProps } from '@/components/Preview'
 import { WHITE } from '@/constants/colors'
+
+interface ButtonProp {
+  cx: number
+  cy: number
+  r: number
+}
+
+export interface VestProps {
+  fillColor?: string
+  strokeColor?: string
+  rightVestPath: string
+  leftVestPath: string
+  rightVestPocket: string
+  leftVestPocket: string
+  buttons: ButtonProp[]
+  neck: string
+}
 
 export const Vest: React.FC<VestProps> = ({
   fillColor = 'gray',

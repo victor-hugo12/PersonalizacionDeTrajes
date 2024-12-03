@@ -21,6 +21,9 @@
     "S": "S",
     "M": "M",
     "L": "L",
-    "XL": "XL"
+    "XL": "XL",
+    "is required": "ess requerido",
+    "at least %{value} cm": "al menos %{value} cm",
+    "max %{value} cm": "maximo %{value} cm"
   }
 }

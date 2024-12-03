@@ -40,7 +40,19 @@ export const FabricScreen = () => {
       <CustomAppBar title={'Fabric and Color Selection'} backAction={true} />
       <View style={styles.body}>
         <Preview />
-
+        <View style={styles.titleSelect}>
+          <Text variant="titleLarge">{i18n.t('Select your fabric')}</Text>
+        </View>
+        <View style={styles.selectionContainer}>
+          <SelectionGroupButton
+            options={FABRICS.map(fabric => ({
+              value: fabric,
+              icon: FABRIC_ICONS[fabric as keyof typeof FABRIC_ICONS],
+            }))}
+            onSelect={handleFabricSelection}
+            selected={selectedFabric}
+          />
+        </View>
         <View style={styles.titleSelect}>
           <Text variant="titleLarge">{i18n.t('Select your color')}</Text>
         </View>
@@ -54,19 +66,6 @@ export const FabricScreen = () => {
             }))}
             onSelect={handleColorSelection}
             selected={selectedColor}
-          />
-        </View>
-        <View style={styles.titleSelect}>
-          <Text variant="titleLarge">{i18n.t('Select your fabric')}</Text>
-        </View>
-        <View style={styles.selectionContainer}>
-          <SelectionGroupButton
-            options={FABRICS.map(fabric => ({
-              value: fabric,
-              icon: FABRIC_ICONS[fabric as keyof typeof FABRIC_ICONS],
-            }))}
-            onSelect={handleFabricSelection}
-            selected={selectedFabric}
           />
         </View>
         <View style={styles.flexGrow} />

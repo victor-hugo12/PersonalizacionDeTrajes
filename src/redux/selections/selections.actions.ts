@@ -1,8 +1,5 @@
 import { createAction } from '@reduxjs/toolkit'
 
-import { GarmentType } from '@/constants/selections'
-
-// Acciones existentes
 export const setSelectedGarment = createAction<string>('selections/setSelectedGarment')
 export const resetGarment = createAction('selections/resetGarment')
 
@@ -14,7 +11,12 @@ export const resetColor = createAction('selections/resetColor')
 
 export const setSelectedFabric = createAction<string>('selections/setSelectedFabric')
 export const resetFabric = createAction('selections/resetFabric')
+
+export const initializeCustomMeasurements = createAction<Record<string, number>>(
+  'selections/initializeCustomMeasurements',
+)
 export const updateCustomMeasurements = createAction<{
-  garmentType: GarmentType
-  measurements: Record<string, number>
+  key: string
+  value: number
 }>('selections/updateCustomMeasurements')
+export const resetCustomMeasurements = createAction('selections/resetCustomMeasurements')

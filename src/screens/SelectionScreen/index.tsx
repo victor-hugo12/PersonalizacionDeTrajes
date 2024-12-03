@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     padding: 25,
   },
   selectionContainer: {
-    marginVertical: 16,
+    marginVertical: 8,
   },
   flexGrow: {
     flexGrow: 1,

@@ -2,8 +2,28 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import Svg, { Circle, Path } from 'react-native-svg'
 
-import { CoatProps } from '@/components/Preview'
 import { WHITE } from '@/constants/colors'
+
+interface ButtonProp {
+  cx: number
+  cy: number
+  r: number
+}
+
+export interface CoatProps {
+  rightCoatPath: string
+  leftCoatPath: string
+  rightPocket: string
+  leftPocket: string
+  buttons: ButtonProp[]
+  neck: string
+  rightRoundNeck: string
+  leftRoundNeck: string
+  rightArm: string
+  leftArmMirrored: string
+  fillColor: string
+  strokeColor: string
+}
 
 export const Coat: React.FC<CoatProps> = ({
   fillColor = 'gray',

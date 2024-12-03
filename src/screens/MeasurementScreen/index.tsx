@@ -1,182 +1,99 @@
 import { useRouter } from 'expo-router'
-import { useEffect, useMemo, useState } from 'react'
-import { ScrollView, StyleSheet, TextInput, View } from 'react-native'
-import { Text, useTheme } from 'react-native-paper'
+import { useState } from 'react'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { Switch, Text } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'src/language'
-import * as yup from 'yup'
 
+import { CoatMeasurementValues, CoatMeausurement } from '@/components/CoatMeausurement'
 import { CustomAppBar } from '@/components/CustomAppBar'
+import { PantsMeasurementValues, PantsMeausurement } from '@/components/PantsMeausurement'
 import { PaperButton } from '@/components/PaperButton'
 import { Preview } from '@/components/Preview'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
-import { GARMENT_MEASUREMENTS, GarmentProps, GarmentType, MEASUREMENTS_OPTIONS } from '@/constants/selections'
-import { setSelectedMeasure, updateCustomMeasurements } from '@/redux/selections/selections.actions'
+import { VestMeasurementValues, VestMeausurement } from '@/components/VestMeausurement'
+import { CLOTHES, GARMENT_MEASUREMENTS, MEASUREMENTS, MEASUREMENTS_OPTIONS } from '@/constants/selections'
+import {
+  initializeCustomMeasurements,
+  resetCustomMeasurements,
+  setSelectedMeasure,
+} from '@/redux/selections/selections.actions'
 import { getCustomMeasurements, getSelectedGarment, getSelectedMeasure } from '@/redux/selections/selections.selectors'
-import { RootState } from '@/redux/store'
 
-import { getValidationSchema } from './schema'
+import en from './en.json'
+import es from './es.json'
 
-const convertToRecord = (props: GarmentProps): Record<string, number> => {
-  return Object.fromEntries(Object.entries(props).filter(([_, value]) => typeof value === 'number'))
-}
+i18n.store(en)
+i18n.store(es)
 
-const sanitizeMeasurements = (garmentType: GarmentType, measurements: Partial<GarmentProps>): GarmentProps => {
-  const defaultMeasurements = GARMENT_MEASUREMENTS[garmentType]?.measures.M as GarmentProps
-  return {
-    ...defaultMeasurements,
-    ...measurements,
+const getInitialMeasurements = (garmentType: CLOTHES, size: MEASUREMENTS, measurements: Record<string, number>) => {
+  if (measurements && Object.keys(measurements).length) {
+    return measurements
   }
+  return GARMENT_MEASUREMENTS[garmentType][size]
 }
 
 export const MeasurementScreen = () => {
-  const theme = useTheme()
-
   const dispatch = useDispatch()
   const router = useRouter()
+  const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
+  const size = useSelector(getSelectedMeasure) as MEASUREMENTS
+  const customMeasurements = useSelector(getCustomMeasurements)
+  const [isCustom, setIsCustom] = useState(Boolean(customMeasurements))
 
-  const selectedGarment = useSelector(getSelectedGarment) as GarmentType
-  const size = useSelector(getSelectedMeasure)
-  const customMeasurements = useSelector(state => getCustomMeasurements(state as RootState, selectedGarment))
-
-  const initialMeasurements = useMemo(() => {
-    return sanitizeMeasurements(selectedGarment, customMeasurements || {})
-  }, [selectedGarment, customMeasurements])
-
-  const [measurements, setMeasurements] = useState(initialMeasurements)
-  const [inputValues, setInputValues] = useState<Record<string, string>>(
-    Object.fromEntries(Object.entries(initialMeasurements).map(([key, value]) => [key, value.toString()])),
-  )
-  const [errors, setErrors] = useState<Record<string, string>>({})
-
-  useEffect(() => {
-    setErrors({})
-    const garmentMeasurements = customMeasurements || {}
-    setMeasurements(sanitizeMeasurements(selectedGarment, garmentMeasurements))
-    setInputValues(
-      Object.fromEntries(Object.entries(garmentMeasurements).map(([key, value]) => [key, value.toString()])),
-    )
-  }, [selectedGarment, customMeasurements])
-
-  const handleInputChange = (key: string, value: string) => {
-    const validValue = value.replace(/[^0-9.]/g, '')
-    setInputValues(prev => ({ ...prev, [key]: validValue }))
-
-    const updatedMeasurements = {
-      ...measurements,
-      [key]: parseFloat(validValue) || 0,
-    }
-
-    const schema = getValidationSchema(selectedGarment)
-
-    schema
-      .validateAt(key, updatedMeasurements)
-      .then(() => {
-        setErrors(prev => {
-          const newErrors = { ...prev }
-          delete newErrors[key]
-          return newErrors
-        })
-
-        setMeasurements(updatedMeasurements)
-      })
-      .catch((validationError: yup.ValidationError) => {
-        setErrors(prev => ({
-          ...prev,
-          [key]: validationError.message,
-        }))
-      })
-  }
-
+  const initialMeasurements = getInitialMeasurements(selectedGarment, size, customMeasurements)
   const handleSelection = (option: string) => {
     dispatch(setSelectedMeasure(option))
-
-    const rawMeasurements =
-      GARMENT_MEASUREMENTS[selectedGarment]?.measures[
-        option as keyof (typeof GARMENT_MEASUREMENTS)[GarmentType]['measures']
-      ] || {}
-
-    const sanitized = sanitizeMeasurements(selectedGarment, rawMeasurements)
-    const sanitizedRecord = convertToRecord(sanitized)
-
-    setMeasurements(sanitized)
-    const newInputValues = Object.fromEntries(Object.entries(sanitized).map(([key, value]) => [key, value.toString()]))
-    setInputValues(newInputValues)
-
-    dispatch(updateCustomMeasurements({ garmentType: selectedGarment, measurements: sanitizedRecord }))
-  }
-
-  const validateMeasurements = () => {
-    const schema = getValidationSchema(selectedGarment)
-    try {
-      schema.validateSync(measurements, { abortEarly: false })
-      return true
-    } catch (error) {
-      return false
-    }
-  }
-
-  const handleApplyChanges = () => {
-    if (validateMeasurements()) {
-      const sanitizedRecord = convertToRecord(measurements)
-      dispatch(updateCustomMeasurements({ garmentType: selectedGarment, measurements: sanitizedRecord }))
-    } else {
-      console.log('Invalid measurements, no changes applied.')
-    }
+    dispatch(resetCustomMeasurements())
   }
 
   const handleNext = () => {
-    if (validateMeasurements()) {
-      const sanitizedRecord = convertToRecord(measurements)
-      dispatch(updateCustomMeasurements({ garmentType: selectedGarment, measurements: sanitizedRecord }))
-      router.push('/(auth)/(tabs)/fabric')
-    } else {
-      console.log('Invalid measurements, cannot proceed.')
+    router.push('/(auth)/(tabs)/fabric')
+  }
+
+  const handleSetIsCustom = (value: boolean) => {
+    setIsCustom(value)
+    if (value) {
+      const defaultMeasurements = GARMENT_MEASUREMENTS[selectedGarment][size]
+      dispatch(initializeCustomMeasurements(defaultMeasurements))
     }
   }
 
   return (
     <ThemedView style={styles.container}>
       <CustomAppBar title={'Adjust Measurements'} backAction />
-      <View style={styles.body}>
+      <ScrollView style={styles.body}>
         <Preview />
         <View style={styles.selectionContainer}>
-          <SelectionGroupButton options={MEASUREMENTS_OPTIONS} onSelect={handleSelection} selected={size} />
+          <SelectionGroupButton
+            options={MEASUREMENTS_OPTIONS}
+            onSelect={handleSelection}
+            selected={size}
+            disabled={isCustom}
+          />
         </View>
-        <View style={styles.titleSelect}>
-          <Text variant="titleLarge">{i18n.t('Select your size')}</Text>
-          <PaperButton mode="contained" dark onPress={handleApplyChanges}>
-            {i18n.t('Apply')}
+        <View style={styles.customizeTitle}>
+          <Text variant="titleLarge">{i18n.t('Customize your size')}</Text>
+          <Switch value={isCustom} onValueChange={handleSetIsCustom} />
+        </View>
+        <View>
+          {selectedGarment === CLOTHES.Pants && (
+            <PantsMeausurement isEditable={isCustom} values={initialMeasurements as PantsMeasurementValues} />
+          )}
+          {selectedGarment === CLOTHES.Vest && (
+            <VestMeausurement isEditable={isCustom} values={initialMeasurements as VestMeasurementValues} />
+          )}
+          {selectedGarment === CLOTHES.Coat && (
+            <CoatMeausurement isEditable={isCustom} values={initialMeasurements as CoatMeasurementValues} />
+          )}
+        </View>
+        <View style={styles.navigationButton}>
+          <PaperButton mode="contained" dark onPress={handleNext}>
+            {i18n.t('Next')}
           </PaperButton>
         </View>
-        <ScrollView style={styles.inputsContainer}>
-          {Object.entries(measurements).map(([key]) => (
-            <View key={key} style={styles.inputWrapper}>
-              <Text style={styles.inputLabel}>{i18n.t(key)}</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  {
-                    backgroundColor: theme.colors.background,
-                    color: theme.dark ? 'white' : 'black',
-                  },
-                ]}
-                keyboardType="numeric"
-                value={inputValues[key] || ''}
-                onChangeText={val => handleInputChange(key, val)}
-              />
-              {errors[key] && <Text style={styles.errorText}>{errors[key]}</Text>}
-            </View>
-          ))}
-
-          <View style={styles.navigationButton}>
-            <PaperButton mode="contained" dark onPress={handleNext}>
-              {i18n.t('Next')}
-            </PaperButton>
-          </View>
-        </ScrollView>
-      </View>
+      </ScrollView>
     </ThemedView>
   )
 }
@@ -189,50 +106,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 25,
   },
-  previewContainer: {
-    height: 300,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-  },
   selectionContainer: {
     marginVertical: 16,
   },
-  inputsContainer: {
-    marginTop: 5,
-  },
-  inputWrapper: {
-    marginBottom: 16,
-  },
-  inputRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  inputLabel: {
-    flex: 1,
-    marginRight: 10,
-    textAlign: 'left',
-  },
-  input: {
-    flex: 2,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 8,
-    textAlign: 'right',
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 12,
-    marginTop: 5,
-  },
   navigationButton: {
     marginTop: 20,
+    marginBottom: 60,
   },
-  titleSelect: {
-    marginVertical: 8,
+  customizeTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 8,
   },
 })

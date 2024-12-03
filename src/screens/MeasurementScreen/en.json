@@ -1,7 +1,7 @@
 {
   "en": {
     "Adjust Measurements": "Adjust Measurements",
-    "Select your size": "Select your size",
+    "Customize your size": "Customize your size",
     "Apply": "Apply",
     "length": "Length",
     "shoulder": "Shoulder",
@@ -11,11 +11,6 @@
     "thigh": "Thigh",
     "waist": "Waist",
     "inseam": "Inseam",
-    "arm": "Arm",
-    "must be at least": "must be at least",
-    "must be at most": "must be at most",
-    "is required": "is required",
-    "must not be greater than Knee": "must not be greater than Knee",
-    "must not be greater than thigh": "must not be greater than thigh"
+    "arm": "Arm"
   }
 }

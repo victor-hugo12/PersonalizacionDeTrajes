@@ -1,9 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { CLOTHES_OPTIONS, COLORS, FABRICS, GarmentType, MEASUREMENTS_OPTIONS } from '@/constants/selections'
+import { CLOTHES_OPTIONS, COLORS, FABRICS, MEASUREMENTS_OPTIONS } from '@/constants/selections'
 
 import {
+  initializeCustomMeasurements,
   resetColor,
+  resetCustomMeasurements,
   resetFabric,
   resetGarment,
   resetMeasure,
@@ -19,7 +21,7 @@ interface SelectionState {
   measure: string
   color: string
   fabric: string
-  customMeasurements: Record<GarmentType, Record<string, number>>
+  customMeasurements: Record<string, number>
 }
 
 const initialState: SelectionState = {
@@ -27,11 +29,7 @@ const initialState: SelectionState = {
   measure: MEASUREMENTS_OPTIONS[0].value,
   color: COLORS[0],
   fabric: FABRICS[0],
-  customMeasurements: {
-    Pants: { hem: 18, knee: 24, thigh: 32, waist: 24, length: 92, inseam: 70 },
-    Vest: { length: 70, shoulder: 13, chest: 50 },
-    Coat: { length: 70, shoulder: 13, chest: 50, arm: 50 },
-  },
+  customMeasurements: {},
 }
 
 export const selectionsReducer = createReducer(initialState, builder => {
@@ -60,8 +58,14 @@ export const selectionsReducer = createReducer(initialState, builder => {
     .addCase(resetFabric, state => {
       state.fabric = FABRICS[0]
     })
+    .addCase(initializeCustomMeasurements, (state, action) => {
+      state.customMeasurements = { ...action.payload }
+    })
     .addCase(updateCustomMeasurements, (state, action) => {
-      const { garmentType, measurements } = action.payload
-      state.customMeasurements[garmentType] = measurements
+      const { key, value } = action.payload
+      state.customMeasurements[key] = value
+    })
+    .addCase(resetCustomMeasurements, state => {
+      state.customMeasurements = {}
     })
 })

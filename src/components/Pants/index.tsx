@@ -2,8 +2,14 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import Svg, { Path } from 'react-native-svg'
 
-import { PantsProps } from '@/components/Preview'
 import { WHITE } from '@/constants/colors'
+
+export interface PantsProps {
+  fillColor?: string
+  strokeColor?: string
+  rigthPantsPath: string
+  leftPantsPath: string
+}
 
 export const Pants: React.FC<PantsProps> = ({
   fillColor = 'gray',
