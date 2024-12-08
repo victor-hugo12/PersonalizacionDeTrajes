@@ -1,0 +1,23 @@
+{
+  "es": {
+    "Customizacion options": "Personalización",
+    "Folds": "Pliegues",
+    "clasic": "clasico",
+    "with 1": "con 1",
+    "with 2": "con 2",
+    "with 3": "con 3",
+    "Zipper": "Cierre",
+    "button with zipper": "boton con cierre",
+    "hook with zipper": "cierre con gancho",
+    "Front pockets": "Bolsillos delanteros",
+    "Diagonal": "Diagonal",
+    "Straight": "En recta",
+    "L-shaped": "Tipo L",
+    "Rounded": "Redondeado",
+    "Back pockets": "Bolsillos traseros",
+    "Piping and tab": "Ribete y pestaña",
+    "Piping, tab, and button": "Ribete, pestaña y boton",
+    "Flap": "Solapa",
+    "Flap with button": "Solapa con boton"
+  }
+}

@@ -1,5 +1,7 @@
 export const SYSTEM = 'System'
-export type LanguageType = 'English' | 'Spanish'
-export const ENGLISH: LanguageType = 'English'
+export enum LanguageType {
+  ENGLISH = 'English',
+  SPANISH = 'Spanish',
+}
 export const EN = 'en'
 export const ES = 'es'

@@ -15,9 +15,16 @@ interface Props {
   onSelect: (value: string) => void
   selected: string
   disabled?: boolean
+  multiline?: boolean
 }
 
-export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selected, disabled = false }) => {
+export const SelectionGroupButton: React.FC<Props> = ({
+  options,
+  onSelect,
+  selected,
+  disabled = false,
+  multiline = false,
+}) => {
   const [selectedOption, setSelectedOption] = useState<string>(selected)
 
   const handleSelect = (value: string) => {
@@ -26,7 +33,7 @@ export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selec
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, multiline && { flexWrap: 'wrap' }]}>
       {options.map(({ value, icon, color }) => (
         <Button
           key={value}
@@ -34,11 +41,12 @@ export const SelectionGroupButton: React.FC<Props> = ({ options, onSelect, selec
           theme={{ roundness: 1 }}
           mode={selectedOption === value ? 'contained' : 'outlined'}
           onPress={() => handleSelect(value)}
-          style={styles.button}
+          style={[styles.button, multiline && { flexBasis: '49%' }]}
           icon={icon}
           contentStyle={{ flexDirection: 'row-reverse' }}
           textColor={color}
           disabled={disabled}
+          compact
         >
           {i18n.t(value)}
         </Button>
