@@ -1,9 +1,8 @@
 import { StyleSheet, View } from 'react-native'
-import { useSelector } from 'react-redux'
 
 import { BLACK, WHITE } from '@/constants/colors'
-import { CLOTHES, GARMENT_MEASUREMENTS, MEASUREMENTS } from '@/constants/selections'
-import { COLORS_OPTIONS } from '@/constants/selections'
+import { CLOTHES, COLORS_OPTIONS, GARMENT_MEASUREMENTS, MEASUREMENTS } from '@/constants/selections'
+import { useAppSelector } from '@/redux/hooks'
 import {
   getCustomMeasurements,
   getSelectedColor,
@@ -87,10 +86,10 @@ const getMeasurements = (garmentType: CLOTHES, size: MEASUREMENTS, measurements:
 }
 
 export const Preview = () => {
-  const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
-  const size = useSelector(getSelectedMeasure) as MEASUREMENTS
-  const customMeasurements = useSelector(getCustomMeasurements)
-  const selectedColor = useSelector(getSelectedColor)
+  const selectedGarment = useAppSelector(getSelectedGarment) as CLOTHES
+  const size = useAppSelector(getSelectedMeasure) as MEASUREMENTS
+  const customMeasurements = useAppSelector(getCustomMeasurements)
+  const selectedColor = useAppSelector(getSelectedColor)
   let component: JSX.Element | null = null
 
   switch (selectedGarment) {

@@ -1,0 +1,12 @@
+{
+  "es": {
+    "Error on retrieve orders": "Error al recuperar datos",
+    "No orders found": "No hay ordenes",
+    "Status": "Estado",
+    "Pending": "Pendiente",
+    "Processed": "Procesado",
+    "Shipped": "Enviado",
+    "Delivered": "Entregado",
+    "Canceled": "Cancelado"
+  }
+}

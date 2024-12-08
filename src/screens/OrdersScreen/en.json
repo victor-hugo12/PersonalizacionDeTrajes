@@ -1,0 +1,12 @@
+{
+  "en": {
+    "Error on retrieve orders": "Error on retrieve orders",
+    "No orders found": "No orders found",
+    "Status": "Status",
+    "Pending": "Pending",
+    "Processed": "Processed",
+    "Shipped": "Shipped",
+    "Delivered": "Delivered",
+    "Canceled": "Canceled"
+  }
+}

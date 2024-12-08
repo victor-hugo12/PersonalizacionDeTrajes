@@ -1,9 +1,9 @@
 import { Formik, FormikHandlers, FormikHelpers } from 'formik'
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
 import { HelperText, TextInput } from 'react-native-paper'
-import { useDispatch } from 'react-redux'
 
 import i18n from '@/language'
+import { useAppDispatch } from '@/redux/hooks'
 import { updateCustomMeasurements } from '@/redux/selections/selections.actions'
 import { isDecimal } from '@/utils/utils'
 
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const VestMeausurement: React.FC<Props> = ({ isEditable = true, values }) => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const initialValues: VestMeasurementValues = { ...values }
 
   const handleNumericChange = (handleChange: FormikHandlers['handleChange'], fieldName: string) => (text: string) => {

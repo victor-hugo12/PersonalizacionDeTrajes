@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router'
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'src/language'
 
 import { CustomAppBar } from '@/components/CustomAppBar'
@@ -10,6 +9,7 @@ import { Preview } from '@/components/Preview'
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
 import { COLORS_OPTIONS, FABRICS_OPTIONS } from '@/constants/selections'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { resetColor, setSelectedColor, setSelectedFabric } from '@/redux/selections/selections.actions'
 import { getSelectedColor, getSelectedFabric } from '@/redux/selections/selections.selectors'
 
@@ -21,10 +21,10 @@ i18n.store(es)
 
 export const FabricScreen = () => {
   const router = useRouter()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const selectedColor = useSelector(getSelectedColor)
-  const selectedFabric = useSelector(getSelectedFabric)
+  const selectedColor = useAppSelector(getSelectedColor)
+  const selectedFabric = useAppSelector(getSelectedFabric)
 
   const handleColorSelection = (option: string) => {
     dispatch(setSelectedColor(option))

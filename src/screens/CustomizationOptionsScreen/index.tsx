@@ -1,6 +1,5 @@
 import { useRouter } from 'expo-router'
 import { ScrollView, StyleSheet, View } from 'react-native'
-import { useSelector } from 'react-redux'
 
 import { CustomAppBar } from '@/components/CustomAppBar'
 import { PantsCustomOptions } from '@/components/PantsCustomOptions'
@@ -9,6 +8,7 @@ import { Preview } from '@/components/Preview'
 import { ThemedView } from '@/components/ThemedView'
 import { CLOTHES } from '@/constants/selections'
 import i18n from '@/language'
+import { useAppSelector } from '@/redux/hooks'
 import { getSelectedGarment } from '@/redux/selections/selections.selectors'
 
 import en from './en.json'
@@ -19,7 +19,7 @@ i18n.store(es)
 
 export const CustomizationOptionsScreen = () => {
   const router = useRouter()
-  const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
+  const selectedGarment = useAppSelector(getSelectedGarment) as CLOTHES
 
   return (
     <ThemedView style={styles.container}>

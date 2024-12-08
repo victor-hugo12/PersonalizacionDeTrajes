@@ -2,7 +2,6 @@ import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Switch, Text } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'src/language'
 
 import { CoatMeasurementValues, CoatMeausurement } from '@/components/CoatMeausurement'
@@ -14,6 +13,7 @@ import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
 import { VestMeasurementValues, VestMeausurement } from '@/components/VestMeausurement'
 import { CLOTHES, GARMENT_MEASUREMENTS, MEASUREMENTS, MEASUREMENTS_OPTIONS } from '@/constants/selections'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
   initializeCustomMeasurements,
   resetCustomMeasurements,
@@ -35,11 +35,11 @@ const getInitialMeasurements = (garmentType: CLOTHES, size: MEASUREMENTS, measur
 }
 
 export const MeasurementScreen = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const router = useRouter()
-  const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
-  const size = useSelector(getSelectedMeasure) as MEASUREMENTS
-  const customMeasurements = useSelector(getCustomMeasurements)
+  const selectedGarment = useAppSelector(getSelectedGarment) as CLOTHES
+  const size = useAppSelector(getSelectedMeasure) as MEASUREMENTS
+  const customMeasurements = useAppSelector(getCustomMeasurements)
   const [isCustom, setIsCustom] = useState(Object.keys(customMeasurements).length > 0)
 
   const initialMeasurements = getInitialMeasurements(selectedGarment, size, customMeasurements)

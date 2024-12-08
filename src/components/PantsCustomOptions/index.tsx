@@ -1,17 +1,17 @@
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'src/language'
 
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { BACK_POCKETS_OPTIONS, FOLDS_OPTIONS, FRONT_POCKETS_OPTIONS, ZIPPER_OPTIONS } from '@/constants/selections'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { updateCustomOptions } from '@/redux/selections/selections.actions'
 import { getCustomOptions } from '@/redux/selections/selections.selectors'
 
 export const PantsCustomOptions = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const customOption = useSelector(getCustomOptions)
+  const customOption = useAppSelector(getCustomOptions)
 
   const handleSelection = (key: string, value: string) => {
     dispatch(updateCustomOptions({ key, value }))
