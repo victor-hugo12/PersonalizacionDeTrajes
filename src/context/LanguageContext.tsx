@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
 
-import { ENGLISH, LanguageType } from '@/constants/configurations'
+import { LanguageType } from '@/constants/configurations'
 import i18n from '@/language'
 
 const languageTypeMap = {
@@ -14,7 +14,7 @@ export interface LanguageContextValue {
 }
 
 export const LanguageContext = createContext<LanguageContextValue>({
-  language: 'Spanish',
+  language: LanguageType.SPANISH,
   setLanguage: () => {},
 })
 
@@ -25,7 +25,7 @@ export interface LanguageContextProviderProps {
 }
 
 export const LanguageContextProvider = ({ children }: LanguageContextProviderProps) => {
-  const [language, setLanguage] = useState<LanguageType>(ENGLISH)
+  const [language, setLanguage] = useState<LanguageType>(LanguageType.SPANISH)
 
   const changeSelectedLanguage = (value: LanguageType) => {
     i18n.locale = languageTypeMap[value]

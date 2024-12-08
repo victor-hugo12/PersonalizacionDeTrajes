@@ -55,6 +55,20 @@ const TabLayout = () => {
           href: null,
         }}
       />
+      <Tabs.Screen
+        name="customization"
+        options={{
+          title: 'customization',
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="summary"
+        options={{
+          title: 'summary',
+          href: null,
+        }}
+      />
     </Tabs>
   )
 }

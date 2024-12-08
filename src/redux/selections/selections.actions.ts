@@ -20,3 +20,9 @@ export const updateCustomMeasurements = createAction<{
   value: number
 }>('selections/updateCustomMeasurements')
 export const resetCustomMeasurements = createAction('selections/resetCustomMeasurements')
+
+export const updateCustomOptions = createAction<{
+  key: string
+  value: string
+}>('selections/updateCustomOptions')
+export const resetCustomOptions = createAction('selections/resetCustomOptions')

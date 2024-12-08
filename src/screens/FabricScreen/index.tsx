@@ -54,7 +54,7 @@ export const FabricScreen = () => {
         </View>
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>
-          <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/home')}>
+          <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/customization')}>
             {i18n.t('Next')}
           </PaperButton>
         </View>

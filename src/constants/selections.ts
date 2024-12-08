@@ -90,3 +90,32 @@ export const FABRICS_OPTIONS = [
     icon: 'leaf-maple',
   },
 ]
+
+export const FOLDS_OPTIONS = [{ value: 'clasic' }, { value: 'with 1' }, { value: 'with 2' }, { value: 'with 3' }]
+
+export const ZIPPER_OPTIONS = [{ value: 'button with zipper' }, { value: 'hook with zipper' }]
+
+export const FRONT_POCKETS_OPTIONS = [
+  { value: 'Diagonal' },
+  { value: 'Straight' },
+  { value: 'L-shaped' },
+  { value: 'Rounded' },
+]
+
+export const BACK_POCKETS_OPTIONS = [
+  { value: 'Piping and tab' },
+  { value: 'Piping, tab, and button' },
+  { value: 'Flap' },
+  { value: 'Flap with button' },
+]
+
+export const DEFAULT_OPTIONS_BY_GARMENT: Record<CLOTHES, Record<string, string>> = {
+  [CLOTHES.Pants]: {
+    fold: FOLDS_OPTIONS[0].value,
+    zipper: ZIPPER_OPTIONS[0].value,
+    frontPocket: FRONT_POCKETS_OPTIONS[0].value,
+    backPocket: BACK_POCKETS_OPTIONS[0].value,
+  },
+  [CLOTHES.Vest]: {},
+  [CLOTHES.Coat]: {},
+}
