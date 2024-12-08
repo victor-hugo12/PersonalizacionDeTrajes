@@ -9,6 +9,7 @@ import { PaperButton } from '@/components/PaperButton'
 import { Preview } from '@/components/Preview'
 import { ThemedView } from '@/components/ThemedView'
 import { BLACK, WHITE } from '@/constants/colors'
+import { CLOTHES } from '@/constants/selections'
 import { useTheme } from '@/context/ThemeContext'
 import {
   getCustomMeasurements,
@@ -67,10 +68,26 @@ export const SummaryScreen = () => {
           <Text style={styles.leftText}>{i18n.t('Fabric')}</Text>
           <Text style={styles.rightText}>{i18n.t(selectedFabric)}</Text>
         </View>
-        <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
-          <Text style={styles.leftText}>{i18n.t('Fold')}</Text>
-          <Text style={styles.rightText}>{i18n.t(selectedCustomOption.fold)}</Text>
-        </View>
+        {selectedGarment === CLOTHES.Pants && (
+          <View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Fold')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.fold)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Zipper')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.zipper)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Front pocket')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.frontPocket)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Back pocket')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.backPocket)}</Text>
+            </View>
+          </View>
+        )}
 
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>
