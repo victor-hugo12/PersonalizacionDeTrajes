@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router'
+import { useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Text } from 'react-native-paper'
-import { useSelector } from 'react-redux'
+import { ActivityIndicator, Text } from 'react-native-paper'
 import i18n from 'src/language'
 
 import { CustomAppBar } from '@/components/CustomAppBar'
@@ -9,7 +9,13 @@ import { PaperButton } from '@/components/PaperButton'
 import { Preview } from '@/components/Preview'
 import { ThemedView } from '@/components/ThemedView'
 import { BLACK, WHITE } from '@/constants/colors'
+import { CLOTHES, GARMENT_MEASUREMENTS, MEASUREMENTS } from '@/constants/selections'
 import { useTheme } from '@/context/ThemeContext'
+import { useAuthentication } from '@/hooks/useAuthentication'
+import { OrderData, OrderStatus } from '@/models/orderData'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { createOrder } from '@/redux/orders/orders.actions'
+import { getStateOrders } from '@/redux/orders/orders.selectors'
 import {
   getCustomMeasurements,
   getCustomOptions,
@@ -27,20 +33,43 @@ i18n.store(es)
 
 export const SummaryScreen = () => {
   const router = useRouter()
+  const dispatch = useAppDispatch()
+  const { user } = useAuthentication()
   const { isDarkTheme } = useTheme()
+  useAuthentication()
+  const selectedGarment = useAppSelector(getSelectedGarment) as CLOTHES
+  const size = useAppSelector(getSelectedMeasure) as MEASUREMENTS
+  const selectedCustomMeasurement = useAppSelector(getCustomMeasurements)
+  const measure = Object.keys(selectedCustomMeasurement).length > 0 ? 'Custom' : size
+  const selectedColor = useAppSelector(getSelectedColor)
+  const selectedFabric = useAppSelector(getSelectedFabric)
+  const selectedCustomOption = useAppSelector(getCustomOptions)
+  const { orderCreated, loading, error } = useAppSelector(getStateOrders)
 
-  const selectedGarment = useSelector(getSelectedGarment)
-  const size = useSelector(getSelectedMeasure)
-  const selectedCustom = useSelector(getCustomMeasurements)
-  const measure = Object.keys(selectedCustom).length > 0 ? 'Custom' : size
-  const selectedColor = useSelector(getSelectedColor)
-  const selectedFabric = useSelector(getSelectedFabric)
-  const selectedCustomOption = useSelector(getCustomOptions)
-
-  const createOrder = () => {
-    // dispatch order
-    router.push('/(auth)/(tabs)/orders')
+  const handleCreateOrder = () => {
+    const date = new Date()
+    const customMeasure = Object.keys(selectedCustomMeasurement).length
+      ? selectedCustomMeasurement
+      : GARMENT_MEASUREMENTS[selectedGarment][size]
+    const order: OrderData = {
+      userId: user?.id as string,
+      garment: selectedGarment,
+      measurument: customMeasure,
+      color: selectedColor,
+      fabric: selectedFabric,
+      customOptions: selectedCustomOption,
+      status: OrderStatus.Pending,
+      created: date.toISOString(),
+      updated: date.toISOString(),
+    }
+    dispatch(createOrder(order))
   }
+
+  useEffect(() => {
+    if (orderCreated && !loading && !error) {
+      router.push('/(auth)/(tabs)/orders')
+    }
+  }, [orderCreated, loading, error, router])
 
   return (
     <ThemedView style={styles.container}>
@@ -48,6 +77,11 @@ export const SummaryScreen = () => {
 
       <View style={styles.body}>
         <Preview />
+        {loading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" />
+          </View>
+        )}
         <View style={styles.titleSelect}>
           <Text variant="titleLarge">{i18n.t('Option list')}</Text>
         </View>
@@ -67,14 +101,30 @@ export const SummaryScreen = () => {
           <Text style={styles.leftText}>{i18n.t('Fabric')}</Text>
           <Text style={styles.rightText}>{i18n.t(selectedFabric)}</Text>
         </View>
-        <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
-          <Text style={styles.leftText}>{i18n.t('Fold')}</Text>
-          <Text style={styles.rightText}>{i18n.t(selectedCustomOption.fold)}</Text>
-        </View>
+        {selectedGarment === CLOTHES.Pants && (
+          <View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Fold')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.fold)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Zipper')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.zipper)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Front pocket')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.frontPocket)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Back pocket')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.backPocket)}</Text>
+            </View>
+          </View>
+        )}
 
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>
-          <PaperButton mode="contained" dark onPress={createOrder}>
+          <PaperButton mode="contained" dark onPress={handleCreateOrder}>
             {i18n.t('Create order')}
           </PaperButton>
         </View>
@@ -113,5 +163,17 @@ const styles = StyleSheet.create({
   },
   titleSelect: {
     marginVertical: 8,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    zIndex: 1,
   },
 })

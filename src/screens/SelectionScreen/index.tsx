@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router'
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'src/language'
 
 import { CustomAppBar } from '@/components/CustomAppBar'
@@ -11,6 +10,7 @@ import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
 import { ThemedView } from '@/components/ThemedView'
 import { CLOTHES, CLOTHES_OPTIONS } from '@/constants/selections'
 import { useLanguage } from '@/context/LanguageContext'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { resetCustomMeasurements, setSelectedGarment } from '@/redux/selections/selections.actions'
 import { getSelectedGarment } from '@/redux/selections/selections.selectors'
 
@@ -22,10 +22,10 @@ i18n.store(es)
 
 export const SelectionScreen = () => {
   const router = useRouter()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { language } = useLanguage()
 
-  const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
+  const selectedGarment = useAppSelector(getSelectedGarment) as CLOTHES
 
   const handleSelection = (option: string) => {
     const garmentType = option as CLOTHES

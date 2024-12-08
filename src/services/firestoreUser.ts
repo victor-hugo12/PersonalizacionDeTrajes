@@ -6,8 +6,8 @@ const db = firestoreModule()
 
 const USERS = 'users'
 
-export const getUser = async (id: string) => {
-  return await db.collection(USERS).doc(id).get()
+export const getUser = async (id: string): Promise<UserData> => {
+  return (await db.collection(USERS).doc(id).get()).data() as UserData
 }
 
 export const addUser = async (id: string, data: UserData) => {

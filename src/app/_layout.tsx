@@ -2,9 +2,11 @@ import { useFonts } from 'expo-font'
 import { Slot, useRouter } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
+import { ActivityIndicator } from 'react-native-paper'
 import 'react-native-reanimated'
 import { Provider } from 'react-redux'
 
+import { ThemedView } from '@/components/ThemedView'
 import '@/config/firebase'
 import { ThemeContextProvider } from '@/context/ThemeContext'
 import { useAuthentication } from '@/hooks/useAuthentication'
@@ -23,7 +25,7 @@ export default function RootLayout() {
     SpaceMono: require('@/assets/fonts/SpaceMono-Regular.ttf'),
   })
 
-  const { user } = useAuthentication()
+  const { user, loading } = useAuthentication()
   const router = useRouter()
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -32,14 +34,18 @@ export default function RootLayout() {
   }, [error])
 
   useEffect(() => {
-    if (loaded) {
+    if (loaded && !loading) {
       SplashScreen.hideAsync()
       router.replace(user ? '/(auth)/(tabs)/home' : '/login')
     }
-  }, [loaded, router, user])
+  }, [loaded, loading, router, user])
 
-  if (!loaded) {
-    return null
+  if (loading) {
+    return (
+      <ThemedView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </ThemedView>
+    )
   }
 
   return (
