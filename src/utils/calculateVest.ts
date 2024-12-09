@@ -1,5 +1,5 @@
-import { generateButtons } from './VestSvg.ts/ButtonsPath'
-import { generateLeftVestPath, generateRightVestPath } from './VestSvg.ts/MainBodyPath'
+import { generateButtons } from './VestSvg/ButtonsPath'
+import { generateLeftVestPath, generateRightVestPath } from './VestSvg/MainBodyPath'
 import {
   generateLeftRoundCircularNeckPath,
   generateLeftRoundNeckPath,
@@ -9,7 +9,7 @@ import {
   generateRightRoundNeckPath,
   generateRightRoundZipNeckPath,
   generateZipNeckPath,
-} from './VestSvg.ts/Neckpath'
+} from './VestSvg/Neckpath'
 import {
   generateLeftPocketWithButtonPath,
   generateLeftVestPocket,
@@ -19,13 +19,13 @@ import {
   generateRightVestPocket,
   generateRightVestTabPocket,
   generateRightVestWeltPocket,
-} from './VestSvg.ts/PocketPath'
+} from './VestSvg/PocketPath'
 import {
   generateRightTopPocketButtonPath,
   generateRightTopPocketPath,
   generateRightTopPocketweltPath,
   generateRightTopTabPocket,
-} from './VestSvg.ts/PocketTopPath'
+} from './VestSvg/PocketTopPath'
 
 export const calculateVest = (
   { length, shoulder, chest }: { length: number; shoulder: number; chest: number },

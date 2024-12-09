@@ -145,13 +145,11 @@ export function generateLeftZipPocketButtonbackPath(
   scaleX: number,
   scaleY: number,
 ): string {
-  // Calcular las coordenadas reflejadas para el bolsillo
   const reflectedX = (originalX: number) => 2 * innerWaist - originalX
 
   const middleX = reflectedX(sidepocketX - 10 * scaleX)
   const middleY = sidepocketY + 7 * scaleY
 
-  // Ruta del bolsillo reflejado
   const pocketPath = `
     M ${reflectedX(sidepocketX - 3 * scaleX)},${sidepocketY + 4 * scaleY}
     L ${reflectedX(sidepocketX - 17 * scaleX)},${sidepocketY + 4 * scaleY}
@@ -162,7 +160,6 @@ export function generateLeftZipPocketButtonbackPath(
     L ${reflectedX(sidepocketX - 10 * scaleX)},${sidepocketY}
   `
 
-  // Coordenadas y radio del botón circular
   const radius = 2
   const circlePath = `
     M ${middleX},${middleY - 2 * scaleY}L ${middleX},${middleY}
@@ -170,7 +167,5 @@ export function generateLeftZipPocketButtonbackPath(
     a ${radius},${radius} 0 1,0 ${radius * 2},0
     a ${radius},${radius} 0 1,0 -${radius * 2},0
   `
-
-  // Combinar las rutas del bolsillo y el botón
   return pocketPath + circlePath
 }
