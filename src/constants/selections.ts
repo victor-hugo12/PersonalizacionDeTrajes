@@ -156,3 +156,37 @@ export const DEFAULT_OPTIONS_BY_GARMENT: Record<CLOTHES, Record<string, string>>
     lapel: LAPEL_OPTIONS[1].value,
   },
 }
+export const imagePantsSets = {
+  hem: [require('@/assets/images/hemCoatVest2.png'), require('@/assets/images/hemCoatVest2.png')],
+  knee: [require('@/assets/images/kneePants.png'), require('@/assets/images/kneePants.png')],
+  thigh: [require('@/assets/images/thighPants.png'), require('@/assets/images/thighPants.png')],
+  waist: [require('@/assets/images/waistPants.png'), require('@/assets/images/waistPants.png')],
+  length: [require('@/assets/images/lenghtPants1.png'), require('@/assets/images/lenghtPants2.png')],
+  inseam: [require('@/assets/images/shotPants1.png'), require('@/assets/images/shotPants3.png')],
+}
+
+export const instructionPantsSets = {
+  hem: ['measure_hem_1', 'measure_hem_2'],
+  knee: ['measure_knee_1', 'measure_knee_2'],
+  thigh: ['measure_thigh_1', 'measure_thigh_2'],
+  waist: ['measure_waist_1', 'measure_waist_2'],
+  length: ['measure_length_pants1', 'measure_length_pants2'],
+  inseam: ['measure_inseam_1', 'measure_inseam_2'],
+}
+export const imageSets = {
+  length: [
+    require('@/assets/images/lenghtCoat1.png'),
+    require('@/assets/images/lenghtCoat2.png'),
+    require('@/assets/images/lenghtCoat3.png'),
+  ],
+  shoulder: [require('@/assets/images/ShoulderCoatVest1.png'), require('@/assets/images/ShoulderCoatVest2.png')],
+  chest: [require('@/assets/images/ChestCoatVest.png'), require('@/assets/images/ChestCoatVest.png')],
+  arm: [require('@/assets/images/ArmCoatVest1.png'), require('@/assets/images/ArmCoatVest2.png')],
+}
+
+export const instructionSets = {
+  length: ['measure_length_1', 'measure_length_2', 'measure_length_2'],
+  shoulder: ['measure_shoulder_1', 'measure_shoulder_2'],
+  chest: ['measure_chest_1', 'measure_chest_2'],
+  arm: ['measure_arm_1', 'measure_arm_2'],
+}

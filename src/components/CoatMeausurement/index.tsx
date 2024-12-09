@@ -1,8 +1,9 @@
 import { Formik, FormikHandlers, FormikHelpers } from 'formik'
 import { useState } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
 import { HelperText, IconButton, TextInput } from 'react-native-paper'
 
+import { imageSets, instructionSets } from '@/constants/selections'
 import i18n from '@/language'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateCustomMeasurements } from '@/redux/selections/selections.actions'
@@ -31,23 +32,6 @@ export const CoatMeausurement: React.FC<Props> = ({ isEditable = true, values })
   const [modalImages, setModalImages] = useState<number[]>([])
   const [modalInstructions, setModalInstructions] = useState<string[]>([])
 
-  const imageSets = {
-    length: [
-      require('@/assets/images/lenghtCoat1.png'),
-      require('@/assets/images/lenghtCoat2.png'),
-      require('@/assets/images/lenghtCoat3.png'),
-    ],
-    shoulder: [require('@/assets/images/ShoulderCoatVest1.png'), require('@/assets/images/ShoulderCoatVest2.png')],
-    chest: [require('@/assets/images/ChestCoatVest.png'), require('@/assets/images/ChestCoatVest.png')],
-    arm: [require('@/assets/images/ArmCoatVest1.png'), require('@/assets/images/ArmCoatVest2.png')],
-  }
-
-  const instructionSets = {
-    length: ['measure_length_1', 'measure_length_2', 'measure_length_2'],
-    shoulder: ['measure_shoulder_1', 'measure_shoulder_2'],
-    chest: ['measure_chest_1', 'measure_chest_2'],
-    arm: ['measure_arm_1', 'measure_arm_2'],
-  }
   const handleOpenModal = (field: keyof typeof imageSets) => {
     setModalImages(imageSets[field])
     setModalInstructions(instructionSets[field])
@@ -98,10 +82,7 @@ export const CoatMeausurement: React.FC<Props> = ({ isEditable = true, values })
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <TouchableOpacity onPress={() => handleOpenModal('length')} style={styles.buttonContainer}>
-                    <IconButton icon="image" size={20} style={styles.buttonContent} />
-                  </TouchableOpacity>
-
+                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('length')} />
                   {errors.length && (
                     <HelperText type="error" visible={Boolean(errors.length)}>
                       {errors.length}
@@ -118,10 +99,12 @@ export const CoatMeausurement: React.FC<Props> = ({ isEditable = true, values })
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <TouchableOpacity onPress={() => handleOpenModal('shoulder')} style={styles.buttonContainer}>
-                    <IconButton icon="image" size={20} style={styles.buttonContent} />
-                  </TouchableOpacity>
-
+                  <IconButton
+                    icon="image"
+                    size={20}
+                    style={styles.button}
+                    onPress={() => handleOpenModal('shoulder')}
+                  />
                   {errors.shoulder && (
                     <HelperText type="error" visible={Boolean(errors.shoulder)}>
                       {errors.shoulder}
@@ -140,10 +123,7 @@ export const CoatMeausurement: React.FC<Props> = ({ isEditable = true, values })
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <TouchableOpacity onPress={() => handleOpenModal('chest')} style={styles.buttonContainer}>
-                    <IconButton icon="image" size={20} style={styles.buttonContent} />
-                  </TouchableOpacity>
-
+                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('chest')} />
                   {errors.chest && (
                     <HelperText type="error" visible={Boolean(errors.chest)}>
                       {errors.chest}
@@ -160,10 +140,7 @@ export const CoatMeausurement: React.FC<Props> = ({ isEditable = true, values })
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <TouchableOpacity onPress={() => handleOpenModal('arm')} style={styles.buttonContainer}>
-                    <IconButton icon="image" size={20} style={styles.buttonContent} />
-                  </TouchableOpacity>
-
+                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('arm')} />
                   {errors.arm && (
                     <HelperText type="error" visible={Boolean(errors.arm)}>
                       {errors.arm}
@@ -195,21 +172,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
   },
-  inputWithButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  buttonContainer: {
+  button: {
     position: 'absolute',
     right: 5,
     top: '50%',
     transform: [{ translateY: -15 }],
-  },
-  buttonContent: {
-    width: 30,
-    height: 30,
-    borderRadius: 5,
-    padding: 0,
   },
 })

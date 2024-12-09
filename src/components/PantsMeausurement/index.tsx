@@ -1,8 +1,9 @@
 import { Formik, FormikHandlers, FormikHelpers } from 'formik'
 import { useState } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
 import { HelperText, IconButton, TextInput } from 'react-native-paper'
 
+import { imagePantsSets, instructionPantsSets } from '@/constants/selections'
 import i18n from '@/language'
 import { useAppDispatch } from '@/redux/hooks'
 import { updateCustomMeasurements } from '@/redux/selections/selections.actions'
@@ -38,27 +39,9 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
   const [modalImages, setModalImages] = useState<number[]>([])
   const [modalInstructions, setModalInstructions] = useState<string[]>([])
 
-  const imageSets = {
-    hem: [require('@/assets/images/hemCoatVest2.png'), require('@/assets/images/hemCoatVest2.png')],
-    knee: [require('@/assets/images/kneePants.png'), require('@/assets/images/kneePants.png')],
-    thigh: [require('@/assets/images/thighPants.png'), require('@/assets/images/thighPants.png')],
-    waist: [require('@/assets/images/waistPants.png'), require('@/assets/images/waistPants.png')],
-    length: [require('@/assets/images/lenghtPants1.png'), require('@/assets/images/lenghtPants2.png')],
-    inseam: [require('@/assets/images/shotPants1.png'), require('@/assets/images/shotPants3.png')],
-  }
-
-  const instructionSets = {
-    hem: ['measure_hem_1', 'measure_hem_2'],
-    knee: ['measure_knee_1', 'measure_knee_2'],
-    thigh: ['measure_thigh_1', 'measure_thigh_2'],
-    waist: ['measure_waist_1', 'measure_waist_2'],
-    length: ['measure_length_pants1', 'measure_length_pants2'],
-    inseam: ['measure_inseam_1', 'measure_inseam_2'],
-  }
-
-  const handleOpenModal = (field: keyof typeof imageSets) => {
-    setModalImages(imageSets[field])
-    setModalInstructions(instructionSets[field])
+  const handleOpenModal = (field: keyof typeof imagePantsSets) => {
+    setModalImages(imagePantsSets[field])
+    setModalInstructions(instructionPantsSets[field])
     setModalVisible(true)
   }
 
@@ -106,9 +89,7 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <TouchableOpacity onPress={() => handleOpenModal('hem')} style={styles.buttonContainer}>
-                    <IconButton icon="image" size={20} style={styles.buttonContent} />
-                  </TouchableOpacity>
+                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('hem')} />
                   {errors.hem && errors.hem && (
                     <HelperText type="error" visible={Boolean(errors.hem)}>
                       {errors.hem}
@@ -125,9 +106,7 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <TouchableOpacity onPress={() => handleOpenModal('knee')} style={styles.buttonContainer}>
-                    <IconButton icon="image" size={20} style={styles.buttonContent} />
-                  </TouchableOpacity>
+                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('knee')} />
                   {errors.knee && errors.knee && (
                     <HelperText type="error" visible={Boolean(errors.knee)}>
                       {errors.knee}
@@ -146,9 +125,7 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <TouchableOpacity onPress={() => handleOpenModal('thigh')} style={styles.buttonContainer}>
-                    <IconButton icon="image" size={20} style={styles.buttonContent} />
-                  </TouchableOpacity>
+                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('thigh')} />
                   {errors.thigh && (
                     <HelperText type="error" visible={Boolean(errors.thigh)}>
                       {errors.thigh}
@@ -165,9 +142,7 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <TouchableOpacity onPress={() => handleOpenModal('waist')} style={styles.buttonContainer}>
-                    <IconButton icon="image" size={20} style={styles.buttonContent} />
-                  </TouchableOpacity>
+                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('waist')} />
                   {errors.waist && (
                     <HelperText type="error" visible={Boolean(errors.waist)}>
                       {errors.waist}
@@ -186,9 +161,7 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <TouchableOpacity onPress={() => handleOpenModal('length')} style={styles.buttonContainer}>
-                    <IconButton icon="image" size={20} style={styles.buttonContent} />
-                  </TouchableOpacity>
+                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('length')} />
                   {errors.length && (
                     <HelperText type="error" visible={Boolean(errors.length)}>
                       {errors.length}
@@ -205,9 +178,7 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <TouchableOpacity onPress={() => handleOpenModal('inseam')} style={styles.buttonContainer}>
-                    <IconButton icon="image" size={20} style={styles.buttonContent} />
-                  </TouchableOpacity>
+                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('inseam')} />
                   {errors.inseam && (
                     <HelperText type="error" visible={Boolean(errors.inseam)}>
                       {errors.inseam}
@@ -239,21 +210,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
   },
-  inputWithButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  buttonContainer: {
+  button: {
     position: 'absolute',
     right: 5,
     top: '50%',
     transform: [{ translateY: -15 }],
-  },
-  buttonContent: {
-    width: 30,
-    height: 30,
-    borderRadius: 5,
-    padding: 0,
   },
 })
