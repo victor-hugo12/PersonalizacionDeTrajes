@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     padding: 25,
+    marginBottom: 10,
   },
   selectionContainer: {
     marginVertical: 16,

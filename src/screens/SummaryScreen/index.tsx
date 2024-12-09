@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router'
 import { useEffect } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { ActivityIndicator, Text } from 'react-native-paper'
 import i18n from 'src/language'
 
@@ -74,8 +74,7 @@ export const SummaryScreen = () => {
   return (
     <ThemedView style={styles.container}>
       <CustomAppBar title={'Summary order'} />
-
-      <View style={styles.body}>
+      <ScrollView style={styles.body}>
         <Preview />
         {loading && (
           <View style={styles.loadingContainer}>
@@ -128,7 +127,7 @@ export const SummaryScreen = () => {
             {i18n.t('Create order')}
           </PaperButton>
         </View>
-      </View>
+      </ScrollView>
     </ThemedView>
   )
 }
@@ -160,6 +159,7 @@ const styles = StyleSheet.create({
   },
   navigationButton: {
     marginTop: 20,
+    marginBottom: 60,
   },
   titleSelect: {
     marginVertical: 8,

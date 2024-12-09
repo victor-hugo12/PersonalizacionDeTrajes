@@ -10,12 +10,7 @@
     "strictNullChecks": true,
     "noImplicitAny": true,
     "jsx": "react-jsx",
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts", "src/utils/VestSvg",
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }
