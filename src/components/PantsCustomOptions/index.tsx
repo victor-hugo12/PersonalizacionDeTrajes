@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Switch, Text } from 'react-native-paper'
 import i18n from 'src/language'
 
 import { SelectionGroupButton } from '@/components/SelecctionGroupButton'
@@ -10,12 +10,18 @@ import { getCustomOptions } from '@/redux/selections/selections.selectors'
 
 export const PantsCustomOptions = () => {
   const dispatch = useAppDispatch()
-
   const customOption = useAppSelector(getCustomOptions)
 
   const handleSelection = (key: string, value: string) => {
     dispatch(updateCustomOptions({ key, value }))
   }
+
+  const toggleBackPocketsEnable = () => {
+    const newValue = customOption.backPocketEnable === 'on' ? 'off' : 'on'
+    dispatch(updateCustomOptions({ key: 'backPocketEnable', value: newValue }))
+  }
+
+  const isBackPocketsOnly = customOption.backPocketEnable === 'on'
 
   return (
     <View style={styles.container}>
@@ -27,6 +33,7 @@ export const PantsCustomOptions = () => {
           options={FOLDS_OPTIONS}
           onSelect={value => handleSelection('fold', value)}
           selected={customOption.fold}
+          disabled={isBackPocketsOnly}
         />
       </View>
       <View style={styles.titleSelect}>
@@ -37,6 +44,7 @@ export const PantsCustomOptions = () => {
           options={ZIPPER_OPTIONS}
           onSelect={value => handleSelection('zipper', value)}
           selected={customOption.zipper}
+          disabled={isBackPocketsOnly}
         />
       </View>
       <View style={styles.titleSelect}>
@@ -48,7 +56,12 @@ export const PantsCustomOptions = () => {
           onSelect={value => handleSelection('frontPocket', value)}
           selected={customOption.frontPocket}
           multiline={true}
+          disabled={isBackPocketsOnly}
         />
+      </View>
+      <View style={styles.switchContainer}>
+        <Text variant="titleMedium">{i18n.t('Back View')}</Text>
+        <Switch value={isBackPocketsOnly} onValueChange={toggleBackPocketsEnable} />
       </View>
       <View style={styles.titleSelect}>
         <Text variant="titleMedium">{i18n.t('Back pockets')}</Text>
@@ -59,6 +72,7 @@ export const PantsCustomOptions = () => {
           onSelect={value => handleSelection('backPocket', value)}
           selected={customOption.backPocket}
           multiline={true}
+          disabled={!isBackPocketsOnly}
         />
       </View>
     </View>
@@ -68,6 +82,13 @@ export const PantsCustomOptions = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+    paddingHorizontal: 16,
   },
   selectionContainer: {
     marginBottom: 5,

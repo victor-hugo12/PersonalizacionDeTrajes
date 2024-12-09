@@ -1,10 +1,11 @@
 import { StyleSheet, View } from 'react-native'
+import { useSelector } from 'react-redux'
 
 import { BLACK, WHITE } from '@/constants/colors'
 import { CLOTHES, COLORS_OPTIONS, GARMENT_MEASUREMENTS, MEASUREMENTS } from '@/constants/selections'
-import { useAppSelector } from '@/redux/hooks'
 import {
   getCustomMeasurements,
+  getCustomOptions,
   getSelectedColor,
   getSelectedGarment,
   getSelectedMeasure,
@@ -28,7 +29,11 @@ const getColors = (selectedColor: string) => {
   }
 }
 
-const getDataCoat = (measurements: CoatMeasurementValues, selectedColor: string): CoatProps => {
+const getDataCoat = (
+  measurements: CoatMeasurementValues,
+  selectedColor: string,
+  customOptions: Record<string, string>,
+): CoatProps => {
   const { fillColor, strokeColor } = getColors(selectedColor)
   const {
     rightCoatPath,
@@ -40,8 +45,9 @@ const getDataCoat = (measurements: CoatMeasurementValues, selectedColor: string)
     rightRoundNeck,
     leftRoundNeck,
     rightArm,
-    leftArmMirrored,
-  } = calculateCoat(measurements, 300, 300)
+    leftArm,
+    rightTopPocket,
+  } = calculateCoat(measurements, 300, 300, customOptions)
 
   return {
     fillColor,
@@ -55,29 +61,73 @@ const getDataCoat = (measurements: CoatMeasurementValues, selectedColor: string)
     rightRoundNeck,
     leftRoundNeck,
     rightArm,
-    leftArmMirrored,
+    leftArm,
+    rightTopPocket,
   }
 }
-
-const getDataPants = (measurements: PantsMeasurementValues, selectedColor: string): PantsProps => {
+const getDataPants = (
+  measurements: PantsMeasurementValues,
+  selectedColor: string,
+  customOptions: Record<string, string>,
+): PantsProps => {
   const { fillColor, strokeColor } = getColors(selectedColor)
-  const { rigthPantsPath, leftPantsPath } = calculatePants(measurements, 300, 300)
-  return { fillColor, strokeColor, rigthPantsPath, leftPantsPath }
+  const {
+    rightPantsPath,
+    leftPantsPath,
+    rightPocketPath,
+    leftPocketPath,
+    closure,
+    rightWaist,
+    leftWaist,
+    rightCrease,
+    leftCrease,
+  } = calculatePants(measurements, 300, 300, customOptions)
+  return {
+    fillColor,
+    strokeColor,
+    rightPantsPath,
+    leftPantsPath,
+    rightPocketPath,
+    leftPocketPath,
+    closure,
+    rightWaist,
+    leftWaist,
+    rightCrease,
+    leftCrease,
+  }
 }
 
 const getDataVest = (
   measurements: { length: number; shoulder: number; chest: number },
   selectedColor: string,
+  customOptions: Record<string, string>,
 ): VestProps => {
   const { fillColor, strokeColor } = getColors(selectedColor)
-  const { rightVestPath, leftVestPath, rightVestPocket, leftVestPocket, buttons, neck } = calculateVest(
-    measurements,
-    300,
-    300,
-  )
-  return { fillColor, strokeColor, rightVestPath, leftVestPath, rightVestPocket, leftVestPocket, buttons, neck }
+  const {
+    rightVestPath,
+    leftVestPath,
+    rightVestPocket,
+    leftVestPocket,
+    buttons,
+    neck,
+    rightTopPocket,
+    rightRoundNeck,
+    leftRoundNeck,
+  } = calculateVest(measurements, 300, 300, customOptions)
+  return {
+    fillColor,
+    strokeColor,
+    rightVestPath,
+    leftVestPath,
+    rightVestPocket,
+    leftVestPocket,
+    buttons,
+    neck,
+    rightTopPocket,
+    rightRoundNeck,
+    leftRoundNeck,
+  }
 }
-
 const getMeasurements = (garmentType: CLOTHES, size: MEASUREMENTS, measurements: Record<string, number>) => {
   if (Object.keys(measurements).length) {
     return measurements
@@ -86,28 +136,30 @@ const getMeasurements = (garmentType: CLOTHES, size: MEASUREMENTS, measurements:
 }
 
 export const Preview = () => {
-  const selectedGarment = useAppSelector(getSelectedGarment) as CLOTHES
-  const size = useAppSelector(getSelectedMeasure) as MEASUREMENTS
-  const customMeasurements = useAppSelector(getCustomMeasurements)
-  const selectedColor = useAppSelector(getSelectedColor)
+  const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
+  const size = useSelector(getSelectedMeasure) as MEASUREMENTS
+  const customMeasurements = useSelector(getCustomMeasurements)
+  const selectedColor = useSelector(getSelectedColor)
+  const customOptions = useSelector(getCustomOptions)
   let component: JSX.Element | null = null
 
   switch (selectedGarment) {
     case CLOTHES.Coat: {
       const measurementsCoat = getMeasurements(selectedGarment, size, customMeasurements)
-      const componentProps = getDataCoat(measurementsCoat as CoatMeasurementValues, selectedColor)
+      const componentProps = getDataCoat(measurementsCoat as CoatMeasurementValues, selectedColor, customOptions)
       component = <Coat {...componentProps} />
       break
     }
     case CLOTHES.Pants: {
       const measurementsPants = getMeasurements(selectedGarment, size, customMeasurements)
-      const componentProps = getDataPants(measurementsPants as PantsMeasurementValues, selectedColor)
+      const componentProps = getDataPants(measurementsPants as PantsMeasurementValues, selectedColor, customOptions)
       component = <Pants {...componentProps} />
       break
     }
+
     case CLOTHES.Vest: {
       const measurementsVest = getMeasurements(selectedGarment, size, customMeasurements)
-      const componentProps = getDataVest(measurementsVest as VestMeasurementValues, selectedColor)
+      const componentProps = getDataVest(measurementsVest as VestMeasurementValues, selectedColor, customOptions)
       component = <Vest {...componentProps} />
       break
     }

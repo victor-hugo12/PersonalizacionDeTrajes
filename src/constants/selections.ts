@@ -94,6 +94,7 @@ export const FABRICS_OPTIONS = [
 export const FOLDS_OPTIONS = [{ value: 'clasic' }, { value: 'with 1' }, { value: 'with 2' }, { value: 'with 3' }]
 
 export const ZIPPER_OPTIONS = [{ value: 'button with zipper' }, { value: 'hook with zipper' }]
+export const BACK_POCKETS_ENABLE = [{ value: 'on' }, { value: 'off' }]
 
 export const FRONT_POCKETS_OPTIONS = [
   { value: 'Diagonal' },
@@ -108,14 +109,50 @@ export const BACK_POCKETS_OPTIONS = [
   { value: 'Flap' },
   { value: 'Flap with button' },
 ]
+export const BUTTON_OPTIONS_VEST = [{ value: '3 buttons' }, { value: '4 buttons' }, { value: '5 buttons' }]
+
+export const BUTTON_OPTIONS_COAT = [{ value: '1 button' }, { value: '2 buttons' }, { value: '3 buttons' }]
+
+export const POCKET_OPTIONS = [
+  { value: 'Piping and tab' },
+  { value: 'Piping, tab, and button' },
+  { value: 'Flap' },
+  { value: 'Flap with button' },
+]
+
+export const LAPEL_OPTIONS = [
+  { value: 'No lapel' },
+  { value: 'Classic lapel' },
+  { value: 'Peak lapel' },
+  { value: 'Rounded lapel' },
+]
+
+export const LAPEL_WIDTH_OPTIONS = [{ value: 'Narrow' }, { value: 'Wide' }]
+
+export const THIRD_POCKET_OPTIONS = [{ value: 'Chest pocket' }, { value: 'No chest pocket' }]
+
+export const RIBBON_COLOR_OPTIONS = [{ value: 'Same fabric color' }, { value: 'Different fabric color' }]
 
 export const DEFAULT_OPTIONS_BY_GARMENT: Record<CLOTHES, Record<string, string>> = {
   [CLOTHES.Pants]: {
     fold: FOLDS_OPTIONS[0].value,
     zipper: ZIPPER_OPTIONS[0].value,
     frontPocket: FRONT_POCKETS_OPTIONS[0].value,
+    backPocketEnable: BACK_POCKETS_ENABLE[0].value,
     backPocket: BACK_POCKETS_OPTIONS[0].value,
   },
-  [CLOTHES.Vest]: {},
-  [CLOTHES.Coat]: {},
+  [CLOTHES.Vest]: {
+    buttons: BUTTON_OPTIONS_VEST[0].value,
+    pocketCount: THIRD_POCKET_OPTIONS[0].value,
+    pocketType: POCKET_OPTIONS[0].value,
+    pocketTopType: POCKET_OPTIONS[0].value,
+    lapel: LAPEL_OPTIONS[0].value,
+  },
+  [CLOTHES.Coat]: {
+    buttons: BUTTON_OPTIONS_COAT[0].value,
+    pocketCount: THIRD_POCKET_OPTIONS[1].value,
+    pocketType: POCKET_OPTIONS[0].value,
+    pocketTopType: POCKET_OPTIONS[0].value,
+    lapel: LAPEL_OPTIONS[1].value,
+  },
 }

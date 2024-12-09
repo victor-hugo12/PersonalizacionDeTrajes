@@ -17,10 +17,11 @@ export interface CoatProps {
   leftPocket: string
   buttons: ButtonProp[]
   neck: string
-  rightRoundNeck: string
-  leftRoundNeck: string
+  rightRoundNeck?: string
+  leftRoundNeck?: string
   rightArm: string
-  leftArmMirrored: string
+  leftArm: string
+  rightTopPocket?: string
   fillColor: string
   strokeColor: string
 }
@@ -37,18 +38,20 @@ export const Coat: React.FC<CoatProps> = ({
   rightRoundNeck,
   leftRoundNeck,
   rightArm,
-  leftArmMirrored,
+  leftArm,
+  rightTopPocket,
 }) => {
   return (
     <View style={styles.imageWrapper}>
-      <Svg width={300} height={300} viewBox={`0 0 350 350`}>
+      <Svg width={300} height={300} viewBox="0 0 350 350">
         <Path d={rightArm} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
-        <Path d={leftArmMirrored} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
+        <Path d={leftArm} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
         <Path d={neck} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
         <Path d={leftCoatPath} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
-        <Path d={leftRoundNeck} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
+        {leftRoundNeck && <Path d={leftRoundNeck} fill={fillColor} stroke={strokeColor} strokeWidth="2" />}
         <Path d={rightCoatPath} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
-        <Path d={rightRoundNeck} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
+        {rightTopPocket && <Path d={rightTopPocket} fill={fillColor} stroke={strokeColor} strokeWidth="2" />}
+        {rightRoundNeck && <Path d={rightRoundNeck} fill={fillColor} stroke={strokeColor} strokeWidth="2" />}
         <Path d={rightPocket} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
         <Path d={leftPocket} fill={fillColor} stroke={strokeColor} strokeWidth="2" />
 

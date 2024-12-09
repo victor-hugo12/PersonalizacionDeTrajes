@@ -1,3 +1,25 @@
+import {
+  generateLeftPocketbackPath,
+  generateLeftTabPocketbackPath,
+  generateLeftZipPocketbackPath,
+  generateLeftZipPocketButtonbackPath,
+  generateRightPocketbackPath,
+  generateRightTabPocketbackPath,
+  generateRightZipPocketbackPath,
+  generateRightZipPocketButtonbackPath,
+} from './PantsSvg/BackPocket'
+import { generateClosureButtonPath, generateClosurePath } from './PantsSvg/ClosurePath'
+import { generateLeftCreasePath, generateRightCreasePath } from './PantsSvg/CreasePath'
+import { generateLeftPantsPath, generateRightPantsPath } from './PantsSvg/MainBodyPath'
+import {
+  generateLeftPocketCircularPath,
+  generateLeftPocketLPath,
+  generateLeftPocketPath,
+  generateRightPocketCircularPath,
+  generateRightPocketLPath,
+  generateRightPocketPath,
+} from './PantsSvg/PocketPath'
+import { generateWaistbandPaths } from './PantsSvg/WaistbandPath'
 import { calculateDistance } from './utils'
 
 export const calculatePants = (
@@ -18,6 +40,7 @@ export const calculatePants = (
   },
   containerWidth: number,
   containerHeight: number,
+  customOptions: Record<string, string>,
 ) => {
   const scaleX = containerWidth / 120
   const scaleY = containerHeight / 120
@@ -27,9 +50,8 @@ export const calculatePants = (
   } else {
     pocket = length * scaleY - inseam * scaleY - 4 * scaleY
   }
-
-  const startX = 90 * scaleX
-  const innerWaist = startX - waist * scaleX
+  const innerWaist = 70 * scaleX
+  const startX = innerWaist + waist * scaleX
   const startY = 20 * scaleY
   const innerThigh = innerWaist - 1 * scaleX
   const sideThigh = innerThigh + thigh * scaleX
@@ -41,7 +63,7 @@ export const calculatePants = (
   const innerHem = innerknee + ((knee - hem) / 2) * scaleX
   const hemY = kneeY + (inseam / 2 + 5) * scaleY
 
-  const x9 = startX - 4 * scaleX
+  const pocketstart = startX - 4 * scaleX
   let t = 0.0
   let pocketX, pocketY
   const precision = 0.001
@@ -58,34 +80,140 @@ export const calculatePants = (
       3 * (1 - t) * t ** 2 * (thighY - (thighY - startY) / 2.75) +
       t ** 3 * thighY
     t += precision
-  } while (calculateDistance(x9, startY, pocketX, pocketY) < pocket && t <= 1.0)
+  } while (calculateDistance(pocketstart, startY, pocketX, pocketY) < pocket && t <= 1.0)
 
-  const rigthPantsPath = `M ${startX},${startY}
-      C ${sideThigh - (sideThigh - startX) / 2.5},${thighY - (thighY - startY) / 1.25} ${sideThigh},${thighY - (thighY - startY) / 2.75} ${sideThigh},${thighY}
-      C ${sideknee + (sideThigh - sideknee) / 1.15},${thighY - (thighY - kneeY) / 5} ${sideknee + (sideThigh - sideknee) / 2.2},${thighY - (thighY - kneeY) / 2.5} ${sideknee},${kneeY}
-      L ${sideHem},${hemY}
-      L ${innerHem},${hemY}
-      L ${innerknee},${kneeY}
-      C ${innerknee - (innerknee - innerThigh) / 1.15},${thighY - (thighY - kneeY) / 5} ${innerknee - (innerknee - innerThigh) / 2.2},${thighY - (thighY - kneeY) / 2.5} ${innerThigh},${thighY}
-      L ${innerWaist},${startY}
-      M ${x9},${startY}  ${pocketX},${pocketY}
-            M ${startX},${startY} L${innerWaist},${startY} L${innerWaist},${startY - 4 * scaleX} L${startX},${startY - 4 * scaleX} z
-            M ${startX - 1 * scaleX},${startY} L${startX - 2.5 * scaleX},${startY} L${startX - 2.5 * scaleX},${startY - 4 * scaleX} L${startX - 1 * scaleX},${startY - 4 * scaleX} z
-            M ${startX - 11 * scaleX},${startY} L${startX - 12.5 * scaleX},${startY} L${startX - 12.5 * scaleX},${startY - 4 * scaleX} L${startX - 11 * scaleX},${startY - 4 * scaleX} z
-            `
+  const rightPantsPath = generateRightPantsPath(
+    startX,
+    startY,
+    sideThigh,
+    thighY,
+    sideknee,
+    kneeY,
+    sideHem,
+    hemY,
+    innerHem,
+    innerknee,
+    innerThigh,
+    innerWaist,
+    scaleX,
+    scaleY,
+  )
 
-  const leftPantsPath = `M ${2 * innerWaist - startX},${startY}
-            C ${2 * innerWaist - (sideThigh - (sideThigh - startX) / 2.5)},${thighY - (thighY - startY) / 1.25} ${2 * innerWaist - sideThigh},${thighY - (thighY - startY) / 2.75} ${2 * innerWaist - sideThigh},${thighY}
-            C ${2 * innerWaist - (sideknee + (sideThigh - sideknee) / 1.15)},${thighY - (thighY - kneeY) / 5} ${2 * innerWaist - (sideknee + (sideThigh - sideknee) / 2.2)},${thighY - (thighY - kneeY) / 2.5} ${2 * innerWaist - sideknee},${kneeY}
-            L ${2 * innerWaist - sideHem},${hemY}
-            L ${2 * innerWaist - innerHem},${hemY}
-            L ${2 * innerWaist - innerknee},${kneeY}
-            C ${2 * innerWaist - (innerknee - (innerknee - innerThigh) / 1.15)},${thighY - (thighY - kneeY) / 5} ${2 * innerWaist - (innerknee - (innerknee - innerThigh) / 2.2)},${thighY - (thighY - kneeY) / 2.5} ${2 * innerWaist - innerThigh},${thighY}
-            L ${2 * innerWaist - innerWaist},${startY}
-            M ${2 * innerWaist - x9},${startY} ${2 * innerWaist - pocketX},${pocketY}
-                  M ${2 * innerWaist - startX},${startY} L${2 * innerWaist - innerWaist},${startY} L${2 * innerWaist - innerWaist},${startY - 4 * scaleX} L${2 * innerWaist - startX},${startY - 4 * scaleX} z
-                  M ${2 * innerWaist - (startX - 1 * scaleX)},${startY} L${2 * innerWaist - (startX - 2.5 * scaleX)},${startY} L${2 * innerWaist - (startX - 2.5 * scaleX)},${startY - 4 * scaleX} L${2 * innerWaist - (startX - 1 * scaleX)},${startY - 4 * scaleX} z
-                  M ${2 * innerWaist - (startX - 11 * scaleX)},${startY} L${2 * innerWaist - (startX - 12.5 * scaleX)},${startY} L${2 * innerWaist - (startX - 12.5 * scaleX)},${startY - 4 * scaleX} L${2 * innerWaist - (startX - 11 * scaleX)},${startY - 4 * scaleX} z`
+  const leftPantsPath = generateLeftPantsPath(
+    startX,
+    startY,
+    sideThigh,
+    thighY,
+    sideknee,
+    kneeY,
+    sideHem,
+    hemY,
+    innerHem,
+    innerknee,
+    innerThigh,
+    innerWaist,
+    scaleX,
+    scaleY,
+  )
+  const { rightWaist, leftWaist } = generateWaistbandPaths(startX, startY, innerWaist, scaleX, scaleY)
+  let rightPocketPath: string
+  let leftPocketPath: string
+  let closure = ''
+  if (customOptions.zipper === 'button with zipper') {
+    closure = generateClosureButtonPath(innerWaist, startY, innerThigh, thighY, scaleX, scaleY)
+  } else {
+    closure = generateClosurePath(innerWaist, startY, innerThigh, thighY, scaleX, scaleY)
+  }
 
-  return { rigthPantsPath, leftPantsPath }
+  const foldOption = customOptions.fold
+  let foldValue = 0
+
+  switch (foldOption) {
+    case 'clasic':
+      foldValue = 0
+      break
+    case 'with 1':
+      foldValue = 1
+      break
+    case 'with 2':
+      foldValue = 2
+      break
+    case 'with 3':
+      foldValue = 3
+      break
+    default:
+      foldValue = 0
+  }
+  let rightCrease = generateRightCreasePath(innerWaist, startY, innerThigh, thighY, scaleX, scaleY, foldValue)
+  let leftCrease = generateLeftCreasePath(innerWaist, startY, innerThigh, thighY, scaleX, scaleY, foldValue)
+
+  const pocketOption2 = customOptions.frontPocket
+  switch (pocketOption2) {
+    case 'L-shaped':
+      rightPocketPath = generateRightPocketLPath(pocketstart, startY, pocketX, pocketY, scaleX, scaleY)
+      leftPocketPath = generateLeftPocketLPath(innerWaist, pocketstart, startY, pocketX, pocketY, scaleX, scaleY)
+      break
+
+    case 'Diagonal':
+      rightPocketPath = generateRightPocketPath(pocketstart, startY, pocketX, pocketY)
+      leftPocketPath = generateLeftPocketPath(innerWaist, pocketstart, startY, pocketX, pocketY)
+      break
+
+    case 'Rounded':
+      rightPocketPath = generateRightPocketCircularPath(pocketstart, startY, pocketX, pocketY)
+      leftPocketPath = generateLeftPocketCircularPath(innerWaist, pocketstart, startY, pocketX, pocketY)
+      break
+
+    case 'Straight':
+      rightPocketPath = generateRightPocketPath(startX, startY, pocketX, pocketY)
+      leftPocketPath = generateLeftPocketPath(innerWaist, startX, startY, pocketX, pocketY)
+      break
+
+    default:
+      rightPocketPath = generateRightPocketPath(pocketstart, startY, pocketX, pocketY)
+      leftPocketPath = generateLeftPocketPath(innerWaist, pocketstart, startY, pocketX, pocketY)
+      break
+  }
+  const pocketBackOption = customOptions.backPocket
+  if (customOptions.backPocketEnable === 'on') {
+    rightCrease = ''
+    leftCrease = ''
+    closure = ''
+    switch (pocketBackOption) {
+      case 'Piping and tab':
+        rightPocketPath = generateRightPocketbackPath(startX, startY, scaleX, scaleY)
+        leftPocketPath = generateLeftPocketbackPath(innerWaist, startX, startY, scaleX, scaleY)
+        break
+      case 'Flap with button':
+        rightPocketPath = generateRightZipPocketButtonbackPath(startX, startY, scaleX, scaleY)
+        leftPocketPath = generateLeftZipPocketButtonbackPath(innerWaist, startX, startY, scaleX, scaleY)
+        break
+
+      case 'Piping, tab, and button':
+        rightPocketPath = generateRightTabPocketbackPath(startX, startY, scaleX, scaleY)
+        leftPocketPath = generateLeftTabPocketbackPath(innerWaist, startX, startY, scaleX, scaleY)
+        break
+
+      case 'Flap':
+        rightPocketPath = generateRightZipPocketbackPath(startX, startY, scaleX, scaleY)
+        leftPocketPath = generateLeftZipPocketbackPath(innerWaist, startX, startY, scaleX, scaleY)
+        break
+
+      default:
+        rightPocketPath = generateRightPocketbackPath(startX, startY, scaleX, scaleY)
+        leftPocketPath = generateLeftPocketbackPath(innerWaist, startX, startY, scaleX, scaleY)
+        break
+    }
+  }
+  return {
+    rightPantsPath,
+    leftPantsPath,
+    rightPocketPath,
+    leftPocketPath,
+    closure,
+    rightWaist,
+    leftWaist,
+    rightCrease,
+    leftCrease,
+  }
 }

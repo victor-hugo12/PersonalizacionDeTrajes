@@ -1,0 +1,28 @@
+{
+  "es": {
+    "measure_hem_1": "Mide desde la parte inferior de la pierna del pantalón, de lado a lado, justo encima del dobladillo. Asegúrate de que la cinta métrica esté plana y nivelada.",
+    "measure_hem_2": "Para una medición más precisa, asegúrate de que los pantalones estén extendidos y sin pliegues.",
+    "measure_knee_1": "Mide de 1 a 2 pulgadas (2-5 cm) por encima de la rodilla, de lado a lado, en la parte más ancha del muslo.",
+    "measure_knee_2": "Asegúrate de que los pantalones estén planos y que la cinta métrica esté paralela al suelo para una lectura uniforme.",
+    "measure_thigh_1": "Mide alrededor de la parte más ancha del muslo, justo debajo de la entrepierna, de un lado al otro.",
+    "measure_thigh_2": "Asegúrate de que la cinta esté ajustada pero no apretada alrededor del muslo para evitar mediciones inexactas.",
+    "measure_waist_1": "Mide alrededor de la parte más estrecha de la cintura, generalmente por encima del ombligo.",
+    "measure_waist_2": "Asegúrate de que la cinta no esté demasiado apretada; debe ajustarse lo suficiente para mantenerse en su lugar pero permitir comodidad.",
+    "measure_length_pants1": "Mide desde la parte superior de la pretina hasta el dobladillo inferior de la pierna del pantalón, a lo largo de la costura lateral.",
+    "measure_length_pants2": "Mantén la cinta métrica recta, siguiendo la línea natural del pantalón, sin estirarla.",
+    "measure_inseam_1": "Mide a lo largo de la parte interior de la pierna, desde la costura de la entrepierna hasta el dobladillo inferior del pantalón.",
+    "measure_inseam_2": "Asegúrate de que los pantalones estén planos y que la cinta siga la costura natural del pantalón para una medición precisa de la entrepierna.",
+    "measure_length_1": "Mide desde la parte superior del hombro hacia abajo por la espalda para obtener la longitud correcta.",
+    "measure_length_2": "Asegúrate de que la medida incluya cualquier longitud adicional que prefieras en la parte inferior.",
+    "measure_shoulder_1": "Mide de una costura del hombro a la otra a través de la espalda.",
+    "measure_shoulder_2": "Asegúrate de que la cinta no esté apretada para medidas precisas de los hombros.",
+    "measure_chest_1": "Mide alrededor de la parte más ancha del pecho, justo debajo de las axilas.",
+    "measure_chest_2": "Mantén la cinta cómodamente alrededor del pecho sin apretarla demasiado.",
+    "measure_arm_1": "Mide desde la costura del hombro hasta el hueso de la muñeca.",
+    "measure_arm_2": "Mantén el brazo ligeramente doblado para una medición natural.",
+    "measure_pants_flat": "Para una medición más precisa, asegúrate de que los pantalones estén extendidos y sin pliegues.",
+    "close": "Cerrar",
+    "Previous": "Anterior",
+    "Next": "Siguiente"
+  }
+}
