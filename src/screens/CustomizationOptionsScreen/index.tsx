@@ -1,11 +1,13 @@
 import { useRouter } from 'expo-router'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
+import { CoatCustomOptions } from '@/components/CoatCustomOptions'
 import { CustomAppBar } from '@/components/CustomAppBar'
 import { PantsCustomOptions } from '@/components/PantsCustomOptions'
 import { PaperButton } from '@/components/PaperButton'
 import { Preview } from '@/components/Preview'
 import { ThemedView } from '@/components/ThemedView'
+import { VestCustomOptions } from '@/components/VestCustomOptions'
 import { CLOTHES } from '@/constants/selections'
 import i18n from '@/language'
 import { useAppSelector } from '@/redux/hooks'
@@ -27,6 +29,8 @@ export const CustomizationOptionsScreen = () => {
       <ScrollView style={styles.body}>
         <Preview />
         {selectedGarment === CLOTHES.Pants && <PantsCustomOptions />}
+        {selectedGarment === CLOTHES.Vest && <VestCustomOptions />}
+        {selectedGarment === CLOTHES.Coat && <CoatCustomOptions />}
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>
           <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/summary')}>

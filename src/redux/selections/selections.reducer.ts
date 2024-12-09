@@ -47,9 +47,11 @@ export const selectionsReducer = createReducer(initialState, builder => {
   builder
     .addCase(setSelectedGarment, (state, action) => {
       state.garment = action.payload
+      state.customOptions = DEFAULT_OPTIONS_BY_GARMENT[action.payload as CLOTHES]
     })
     .addCase(resetGarment, state => {
       state.garment = CLOTHES_OPTIONS[0].value
+      state.customOptions = DEFAULT_OPTIONS_BY_GARMENT[CLOTHES_OPTIONS[0].value as CLOTHES]
     })
     .addCase(setSelectedMeasure, (state, action) => {
       state.measure = action.payload
