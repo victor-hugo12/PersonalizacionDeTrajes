@@ -7,6 +7,8 @@
     "Processed": "Processed",
     "Shipped": "Shipped",
     "Delivered": "Delivered",
-    "Canceled": "Canceled"
+    "Canceled": "Canceled",
+    "Color": "Color",
+    "Fabric": "Fabric"
   }
 }
