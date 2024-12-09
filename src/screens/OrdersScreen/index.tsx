@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 import { ActivityIndicator, Card, Paragraph, Text } from 'react-native-paper'
 import Toast from 'react-native-toast-message'
@@ -18,8 +18,11 @@ i18n.store(en)
 i18n.store(es)
 
 export const OrdersScreen = () => {
+  const [initialLoad, setInitialLoad] = useState(true)
+
   const dispatch = useAppDispatch()
-  const { orders, loading, error = 'something' } = useAppSelector(getStateOrders)
+  const { orders, loading, error } = useAppSelector(getStateOrders)
+  const isLoading = initialLoad || loading
 
   const renderOrderItem = ({ item }: { item: Order }) => (
     <Card style={styles.card}>
@@ -39,6 +42,7 @@ export const OrdersScreen = () => {
   )
   useEffect(() => {
     dispatch(getOrders())
+    setInitialLoad(false)
   }, [dispatch])
 
   if (error) {
@@ -49,11 +53,12 @@ export const OrdersScreen = () => {
       visibilityTime: 5000,
     })
   }
+
   return (
     <ThemedView style={styles.container}>
       <CustomAppBar title="Orders" icon="clipboard-list" />
       <View style={styles.body}>
-        {loading ? (
+        {isLoading ? (
           <ActivityIndicator animating={true} size="large" />
         ) : orders.length === 0 ? (
           <Text variant="displayLarge" style={{ textAlign: 'center' }}>
