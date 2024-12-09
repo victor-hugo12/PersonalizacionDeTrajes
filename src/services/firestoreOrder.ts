@@ -26,7 +26,7 @@ const transformOrderData = (data: FirestoreOrderData): OrderData => {
 }
 
 export const getOrders = async (): Promise<Order[]> => {
-  const snapshot = await db.collection(ORDERS).get()
+  const snapshot = await db.collection(ORDERS).orderBy('updated', 'desc').get()
   return snapshot.docs.map(doc => {
     const data = doc.data() as FirestoreOrderData
     return {
