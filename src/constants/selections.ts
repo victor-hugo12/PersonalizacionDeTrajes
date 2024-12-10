@@ -138,7 +138,7 @@ export const DEFAULT_OPTIONS_BY_GARMENT: Record<CLOTHES, Record<string, string>>
     fold: FOLDS_OPTIONS[0].value,
     zipper: ZIPPER_OPTIONS[0].value,
     frontPocket: FRONT_POCKETS_OPTIONS[0].value,
-    backPocketEnable: BACK_POCKETS_ENABLE[0].value,
+    backPocketEnable: BACK_POCKETS_ENABLE[1].value,
     backPocket: BACK_POCKETS_OPTIONS[0].value,
   },
   [CLOTHES.Vest]: {

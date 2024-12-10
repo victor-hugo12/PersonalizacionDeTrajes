@@ -1,6 +1,6 @@
 import React from 'react'
-import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Button, useTheme } from 'react-native-paper'
+import { GestureResponderEvent, Image, Modal, StyleSheet, View } from 'react-native'
+import { Button, IconButton, Text, useTheme } from 'react-native-paper'
 
 import i18n from '@/language'
 
@@ -29,38 +29,62 @@ export const Instructions: React.FC<InstructionsProps> = ({ images, instructions
   }, [visible])
 
   const currentInstructionKey = instructions[currentImageIndex]
+  const handleBackgroundPress = () => {
+    closeModal()
+  }
+
+  const handleModalPress = (event: GestureResponderEvent) => {
+    event.stopPropagation()
+    return true
+  }
 
   return (
     <Modal visible={visible} transparent animationType="slide">
-      <View
-        style={[styles.modalContainer, { backgroundColor: theme.colors.background, borderColor: theme.colors.outline }]}
-      >
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-            <Button icon="close" mode="contained" buttonColor={theme.colors.primary}>
-              {i18n.t('close')}
-            </Button>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.content}>
-          <Image source={images[currentImageIndex]} style={styles.image} resizeMode="contain" />
-          <Text style={[styles.instructionText, { color: theme.colors.onBackground }]}>
-            {i18n.t(currentInstructionKey)}
-          </Text>
-          <View style={styles.navigationButtons}>
-            <Button onPress={prevImage} disabled={currentImageIndex === 0} buttonColor={theme.colors.secondary}>
-              {i18n.t('Previous')}
-            </Button>
-            <Text style={[styles.imageCounter, { color: theme.colors.onBackground }]}>
-              {`${currentImageIndex + 1} / ${images.length}`}
+      <View style={styles.overlay} onStartShouldSetResponder={() => true} onResponderRelease={handleBackgroundPress}>
+        <View
+          style={[
+            styles.modalContainer,
+            { backgroundColor: theme.colors.background, borderColor: theme.colors.outline },
+          ]}
+          onStartShouldSetResponder={handleModalPress}
+        >
+          <View style={styles.header}>
+            <IconButton
+              icon="close"
+              size={24}
+              onPress={closeModal}
+              style={styles.closeButton}
+              iconColor={theme.colors.primary}
+            />
+          </View>
+          <View style={styles.content}>
+            <Image source={images[currentImageIndex]} style={styles.image} resizeMode="contain" />
+            <Text style={[styles.instructionText, { color: theme.colors.onBackground }]}>
+              {i18n.t(currentInstructionKey)}
             </Text>
-            <Button
-              onPress={nextImage}
-              disabled={currentImageIndex === images.length - 1}
-              buttonColor={theme.colors.secondary}
-            >
-              {i18n.t('Next')}
-            </Button>
+            <View style={styles.navigationButtons}>
+              <Button
+                onPress={prevImage}
+                disabled={currentImageIndex === 0}
+                mode="outlined"
+                style={styles.navButton}
+                textColor={theme.colors.secondary}
+              >
+                {i18n.t('Previous')}
+              </Button>
+              <Text style={[styles.imageCounter, { color: theme.colors.onBackground }]}>
+                {`${currentImageIndex + 1} / ${images.length}`}
+              </Text>
+              <Button
+                onPress={nextImage}
+                disabled={currentImageIndex === images.length - 1}
+                mode="outlined"
+                style={styles.navButton}
+                textColor={theme.colors.secondary}
+              >
+                {i18n.t('Next')}
+              </Button>
+            </View>
           </View>
         </View>
       </View>
@@ -69,6 +93,12 @@ export const Instructions: React.FC<InstructionsProps> = ({ images, instructions
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   modalContainer: {
     flex: 0.6,
     justifyContent: 'space-between',
@@ -108,5 +138,8 @@ const styles = StyleSheet.create({
   },
   imageCounter: {
     fontSize: 16,
+  },
+  navButton: {
+    marginHorizontal: 5,
   },
 })
