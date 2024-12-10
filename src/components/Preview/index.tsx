@@ -1,9 +1,10 @@
 import { StyleSheet, View } from 'react-native'
 import { IconButton } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { BLACK, WHITE } from '@/constants/colors'
 import { CLOTHES, COLORS_OPTIONS, GARMENT_MEASUREMENTS, MEASUREMENTS } from '@/constants/selections'
+import { useAppDispatch } from '@/redux/hooks'
 import { updateCustomOptions } from '@/redux/selections/selections.actions'
 import {
   getCustomMeasurements,
@@ -138,7 +139,7 @@ const getMeasurements = (garmentType: CLOTHES, size: MEASUREMENTS, measurements:
 }
 
 export const Preview = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
   const size = useSelector(getSelectedMeasure) as MEASUREMENTS
   const customMeasurements = useSelector(getCustomMeasurements)
