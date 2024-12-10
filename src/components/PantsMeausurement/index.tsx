@@ -89,7 +89,12 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('hem')} />
+                  <IconButton
+                    icon="information"
+                    size={20}
+                    style={styles.button}
+                    onPress={() => handleOpenModal('hem')}
+                  />
                   {errors.hem && errors.hem && (
                     <HelperText type="error" visible={Boolean(errors.hem)}>
                       {errors.hem}
@@ -106,7 +111,12 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('knee')} />
+                  <IconButton
+                    icon="information"
+                    size={20}
+                    style={styles.button}
+                    onPress={() => handleOpenModal('knee')}
+                  />
                   {errors.knee && errors.knee && (
                     <HelperText type="error" visible={Boolean(errors.knee)}>
                       {errors.knee}
@@ -125,7 +135,12 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('thigh')} />
+                  <IconButton
+                    icon="information"
+                    size={20}
+                    style={styles.button}
+                    onPress={() => handleOpenModal('thigh')}
+                  />
                   {errors.thigh && (
                     <HelperText type="error" visible={Boolean(errors.thigh)}>
                       {errors.thigh}
@@ -142,7 +157,12 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('waist')} />
+                  <IconButton
+                    icon="information"
+                    size={20}
+                    style={styles.button}
+                    onPress={() => handleOpenModal('waist')}
+                  />
                   {errors.waist && (
                     <HelperText type="error" visible={Boolean(errors.waist)}>
                       {errors.waist}
@@ -161,7 +181,12 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('length')} />
+                  <IconButton
+                    icon="information"
+                    size={20}
+                    style={styles.button}
+                    onPress={() => handleOpenModal('length')}
+                  />
                   {errors.length && (
                     <HelperText type="error" visible={Boolean(errors.length)}>
                       {errors.length}
@@ -178,7 +203,12 @@ export const PantsMeausurement: React.FC<Props> = ({ isEditable = true, values }
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('inseam')} />
+                  <IconButton
+                    icon="information"
+                    size={20}
+                    style={styles.button}
+                    onPress={() => handleOpenModal('inseam')}
+                  />
                   {errors.inseam && (
                     <HelperText type="error" visible={Boolean(errors.inseam)}>
                       {errors.inseam}

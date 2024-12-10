@@ -80,7 +80,12 @@ export const VestMeausurement: React.FC<Props> = ({ isEditable = true, values })
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('length')} />
+                  <IconButton
+                    icon="information"
+                    size={20}
+                    style={styles.button}
+                    onPress={() => handleOpenModal('length')}
+                  />
 
                   {errors.length && errors.length && (
                     <HelperText type="error" visible={Boolean(errors.length)}>
@@ -99,7 +104,7 @@ export const VestMeausurement: React.FC<Props> = ({ isEditable = true, values })
                     keyboardType="decimal-pad"
                   />
                   <IconButton
-                    icon="image"
+                    icon="information"
                     size={20}
                     style={styles.button}
                     onPress={() => handleOpenModal('shoulder')}
@@ -123,7 +128,12 @@ export const VestMeausurement: React.FC<Props> = ({ isEditable = true, values })
                     editable={isEditable}
                     keyboardType="decimal-pad"
                   />
-                  <IconButton icon="image" size={20} style={styles.button} onPress={() => handleOpenModal('chest')} />
+                  <IconButton
+                    icon="information"
+                    size={20}
+                    style={styles.button}
+                    onPress={() => handleOpenModal('chest')}
+                  />
                   {errors.chest && (
                     <HelperText type="error" visible={Boolean(errors.chest)}>
                       {errors.chest}
