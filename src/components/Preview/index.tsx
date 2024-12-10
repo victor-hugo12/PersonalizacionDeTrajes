@@ -1,8 +1,10 @@
 import { StyleSheet, View } from 'react-native'
-import { useSelector } from 'react-redux'
+import { IconButton } from 'react-native-paper'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { BLACK, WHITE } from '@/constants/colors'
 import { CLOTHES, COLORS_OPTIONS, GARMENT_MEASUREMENTS, MEASUREMENTS } from '@/constants/selections'
+import { updateCustomOptions } from '@/redux/selections/selections.actions'
 import {
   getCustomMeasurements,
   getCustomOptions,
@@ -136,12 +138,17 @@ const getMeasurements = (garmentType: CLOTHES, size: MEASUREMENTS, measurements:
 }
 
 export const Preview = () => {
+  const dispatch = useDispatch()
   const selectedGarment = useSelector(getSelectedGarment) as CLOTHES
   const size = useSelector(getSelectedMeasure) as MEASUREMENTS
   const customMeasurements = useSelector(getCustomMeasurements)
   const selectedColor = useSelector(getSelectedColor)
   const customOptions = useSelector(getCustomOptions)
   let component: JSX.Element | null = null
+  const toggleBackPocketEnable = () => {
+    const newValue = customOptions.backPocketEnable === 'on' ? 'off' : 'on'
+    dispatch(updateCustomOptions({ key: 'backPocketEnable', value: newValue }))
+  }
 
   switch (selectedGarment) {
     case CLOTHES.Coat: {
@@ -164,7 +171,19 @@ export const Preview = () => {
       break
     }
   }
-  return <View style={styles.container}>{component}</View>
+  return (
+    <View style={styles.container}>
+      {selectedGarment === CLOTHES.Pants && (
+        <IconButton
+          icon={customOptions.backPocketEnable === 'on' ? 'account-arrow-left' : 'account-arrow-right'}
+          size={24}
+          onPress={toggleBackPocketEnable}
+          style={styles.iconButton}
+        />
+      )}
+      {component}
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -173,5 +192,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
+  },
+  iconButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 10,
   },
 })

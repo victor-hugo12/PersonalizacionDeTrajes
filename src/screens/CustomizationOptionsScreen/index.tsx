@@ -26,18 +26,20 @@ export const CustomizationOptionsScreen = () => {
   return (
     <ThemedView style={styles.container}>
       <CustomAppBar title={'Customizacion options'} />
-      <ScrollView style={styles.body}>
+      <View style={styles.body}>
         <Preview />
-        {selectedGarment === CLOTHES.Pants && <PantsCustomOptions />}
-        {selectedGarment === CLOTHES.Vest && <VestCustomOptions />}
-        {selectedGarment === CLOTHES.Coat && <CoatCustomOptions />}
-        <View style={styles.flexGrow} />
-        <View style={styles.navigationButton}>
-          <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/summary')}>
-            {i18n.t('Next')}
-          </PaperButton>
-        </View>
-      </ScrollView>
+        <ScrollView style={styles.options}>
+          {selectedGarment === CLOTHES.Pants && <PantsCustomOptions />}
+          {selectedGarment === CLOTHES.Vest && <VestCustomOptions />}
+          {selectedGarment === CLOTHES.Coat && <CoatCustomOptions />}
+          <View style={styles.flexGrow} />
+          <View style={styles.navigationButton}>
+            <PaperButton mode="contained" dark onPress={() => router.push('/(auth)/(tabs)/summary')}>
+              {i18n.t('Next')}
+            </PaperButton>
+          </View>
+        </ScrollView>
+      </View>
     </ThemedView>
   )
 }
@@ -49,6 +51,9 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     padding: 25,
+  },
+  options: {
+    flex: 1,
   },
   selectionContainer: {
     marginBottom: 5,

@@ -120,6 +120,47 @@ export const SummaryScreen = () => {
             </View>
           </View>
         )}
+        {selectedGarment === CLOTHES.Vest && (
+          <View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Buttons')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.buttons)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Pocket count')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.pocketCount)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Pocket type')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.pocketType)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Lapel')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.lapel)}</Text>
+            </View>
+          </View>
+        )}
+
+        {selectedGarment === CLOTHES.Coat && (
+          <View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Buttons')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.buttons)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Pocket count')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.pocketCount)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Pocket type')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.pocketType)}</Text>
+            </View>
+            <View style={[styles.option, { borderBottomColor: isDarkTheme ? WHITE : BLACK }]}>
+              <Text style={styles.leftText}>{i18n.t('Lapel')}</Text>
+              <Text style={styles.rightText}>{i18n.t(selectedCustomOption.lapel)}</Text>
+            </View>
+          </View>
+        )}
 
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>

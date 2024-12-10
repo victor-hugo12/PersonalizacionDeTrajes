@@ -9,6 +9,8 @@
     "Create order": "Create order",
     "Fold": "Fold",
     "Front pocket": "Front Pocket",
-    "Back pocket": "Back pocket"
+    "Back pocket": "Back pocket",
+    "pocket": "Back pocket",
+    "Pocket count": "Pocket count"
   }
 }
