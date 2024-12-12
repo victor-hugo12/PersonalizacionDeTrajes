@@ -3,12 +3,17 @@
     "Error on retrieve orders": "Error on retrieve orders",
     "No orders found": "No orders found",
     "Status": "Status",
+    "Created": "Created",
     "Pending": "Pending",
     "Processed": "Processed",
     "Shipped": "Shipped",
     "Delivered": "Delivered",
     "Canceled": "Canceled",
     "Color": "Color",
-    "Fabric": "Fabric"
+    "Fabric": "Fabric",
+    "Updated": "Updated",
+    "Cancel Order": "Cancel Order",
+    "Reactivate Order": "Reactivate Order",
+    "Delete Order": "Delete Order"
   }
 }

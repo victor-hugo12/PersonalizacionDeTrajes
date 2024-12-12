@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   forgotButton: {
-    width: 180,
-    marginTop: -5,
+    width: '100%',
   },
 })

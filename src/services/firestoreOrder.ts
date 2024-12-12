@@ -25,8 +25,8 @@ const transformOrderData = (data: FirestoreOrderData): OrderData => {
   }
 }
 
-export const getOrders = async (): Promise<Order[]> => {
-  const snapshot = await db.collection(ORDERS).orderBy('updated', 'desc').get()
+export const getOrders = async (userId: string): Promise<Order[]> => {
+  const snapshot = await db.collection(ORDERS).where('userId', '==', userId).orderBy('updated', 'desc').get()
   return snapshot.docs.map(doc => {
     const data = doc.data() as FirestoreOrderData
     return {
@@ -51,7 +51,7 @@ export const addOrder = async (data: OrderData) => {
   return await getOrder(docRef.id)
 }
 
-export const updateOrder = async (id: string, data: OrderData) => {
+export const updateOrder = async (id: string, data: Partial<OrderData>) => {
   await db.collection(ORDERS).doc(id).update(data)
   return await getOrder(id)
 }

@@ -176,10 +176,11 @@ export const Preview = () => {
     <View style={styles.container}>
       {selectedGarment === CLOTHES.Pants && (
         <IconButton
-          icon={customOptions.backPocketEnable === 'on' ? 'account-arrow-left' : 'account-arrow-right'}
+          icon="rotate-3d-variant"
           size={24}
           onPress={toggleBackPocketEnable}
           style={styles.iconButton}
+          iconColor="black"
         />
       )}
       {component}
@@ -197,8 +198,8 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    bottom: 2,
+    right: 20,
     zIndex: 10,
   },
 })

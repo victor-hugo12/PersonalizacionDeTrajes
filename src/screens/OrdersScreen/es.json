@@ -3,12 +3,17 @@
     "Error on retrieve orders": "Error al recuperar datos",
     "No orders found": "No hay ordenes",
     "Status": "Estado",
+    "Created": "Creado",
     "Pending": "Pendiente",
     "Processed": "Procesado",
     "Shipped": "Enviado",
     "Delivered": "Entregado",
     "Canceled": "Cancelado",
     "Color": "Color",
-    "Fabric": "Tipo de tela"
+    "Fabric": "Tipo de tela",
+    "Updated": "Actualizado",
+    "Cancel Order": "Cancelar Pedido",
+    "Reactivate Order": "Reactivar Pedido",
+    "Delete Order": "Borrar Pedido"
   }
 }

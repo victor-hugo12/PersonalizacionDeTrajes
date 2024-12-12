@@ -1,6 +1,8 @@
 export enum OrderStatus {
-  Pending = 'Pending',
-  Processed = 'Processed',
+  Created = 'Created',
+  AssignedToTailor = 'AssignedToTailor',
+  Processing = 'Processing',
+  Completed = 'Completed',
   Shipped = 'Shipped',
   Delivered = 'Delivered',
   Canceled = 'Canceled',
@@ -14,6 +16,7 @@ export interface OrderData {
   measurument: Record<string, number>
   customOptions: Record<string, string>
   status: OrderStatus
+  tailorId?: string | null
   created: string
   updated: string
 }

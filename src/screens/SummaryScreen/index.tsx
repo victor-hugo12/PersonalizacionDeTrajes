@@ -13,8 +13,9 @@ import { CLOTHES, GARMENT_MEASUREMENTS, MEASUREMENTS } from '@/constants/selecti
 import { useTheme } from '@/context/ThemeContext'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import { OrderData, OrderStatus } from '@/models/orderData'
+import { RequestStatus } from '@/models/requestStatus'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { createOrder } from '@/redux/orders/orders.actions'
+import { createOrder, resetCreateOrderStatus } from '@/redux/orders/orders.actions'
 import { getStateOrders } from '@/redux/orders/orders.selectors'
 import {
   getCustomMeasurements,
@@ -36,7 +37,6 @@ export const SummaryScreen = () => {
   const dispatch = useAppDispatch()
   const { user } = useAuthentication()
   const { isDarkTheme } = useTheme()
-  useAuthentication()
   const selectedGarment = useAppSelector(getSelectedGarment) as CLOTHES
   const size = useAppSelector(getSelectedMeasure) as MEASUREMENTS
   const selectedCustomMeasurement = useAppSelector(getCustomMeasurements)
@@ -44,7 +44,7 @@ export const SummaryScreen = () => {
   const selectedColor = useAppSelector(getSelectedColor)
   const selectedFabric = useAppSelector(getSelectedFabric)
   const selectedCustomOption = useAppSelector(getCustomOptions)
-  const { orderCreated, loading, error } = useAppSelector(getStateOrders)
+  const { createOrderStatus, error } = useAppSelector(getStateOrders)
 
   const handleCreateOrder = () => {
     const date = new Date()
@@ -58,7 +58,7 @@ export const SummaryScreen = () => {
       color: selectedColor,
       fabric: selectedFabric,
       customOptions: selectedCustomOption,
-      status: OrderStatus.Pending,
+      status: OrderStatus.Created,
       created: date.toISOString(),
       updated: date.toISOString(),
     }
@@ -66,21 +66,22 @@ export const SummaryScreen = () => {
   }
 
   useEffect(() => {
-    if (orderCreated && !loading && !error) {
+    if (createOrderStatus === RequestStatus.SUCCESS && !error) {
       router.push('/(auth)/(tabs)/orders')
+      dispatch(resetCreateOrderStatus())
     }
-  }, [orderCreated, loading, error, router])
+  }, [createOrderStatus, dispatch, error, router])
 
   return (
     <ThemedView style={styles.container}>
       <CustomAppBar title={'Summary order'} />
+      {createOrderStatus === RequestStatus.PENDING && (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" />
+        </View>
+      )}
       <ScrollView style={styles.body}>
         <Preview />
-        {loading && (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" />
-          </View>
-        )}
         <View style={styles.titleSelect}>
           <Text variant="titleLarge">{i18n.t('Option list')}</Text>
         </View>
