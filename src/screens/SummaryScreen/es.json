@@ -10,6 +10,7 @@
     "Fold": "Pliegue",
     "Front pocket": "Bolsillero delanteros",
     "Back pocket": "Bolsillero traseros",
-    "Pocket count": "tercer bolsillo"
+    "Pocket count": "tercer bolsillo",
+    "Error on create order": "Error al crear pedido"
   }
 }

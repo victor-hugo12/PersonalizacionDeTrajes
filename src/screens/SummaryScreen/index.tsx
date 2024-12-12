@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router'
 import { useEffect } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { ActivityIndicator, Text } from 'react-native-paper'
+import Toast from 'react-native-toast-message'
 import i18n from 'src/language'
 
 import { CustomAppBar } from '@/components/CustomAppBar'
@@ -71,6 +72,17 @@ export const SummaryScreen = () => {
       dispatch(resetCreateOrderStatus())
     }
   }, [createOrderStatus, dispatch, error, router])
+
+  useEffect(() => {
+    if (error) {
+      Toast.show({
+        text1: i18n.t('Error'),
+        text2: i18n.t('Error on create order'),
+        type: 'error',
+        visibilityTime: 5000,
+      })
+    }
+  }, [error])
 
   return (
     <ThemedView style={styles.container}>
