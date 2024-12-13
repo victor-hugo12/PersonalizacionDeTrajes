@@ -1,7 +1,7 @@
 import { Formik, FormikHandlers, FormikHelpers } from 'formik'
 import { useState } from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
-import { HelperText, IconButton, TextInput } from 'react-native-paper'
+import { HelperText, IconButton } from 'react-native-paper'
 
 import { imageSets, instructionSets } from '@/constants/selections'
 import i18n from '@/language'
@@ -9,6 +9,7 @@ import { useAppDispatch } from '@/redux/hooks'
 import { updateCustomMeasurements } from '@/redux/selections/selections.actions'
 import { isDecimal } from '@/utils/utils'
 
+import CustomTextInput from '../CustomTextInput'
 import { Instructions } from '../Instructions'
 import { PantsSchema } from './schema'
 
@@ -73,13 +74,14 @@ export const CoatMeausurement: React.FC<Props> = ({ isEditable = true, values })
             <>
               <View style={styles.container}>
                 <View style={styles.inputView}>
-                  <TextInput
+                  <CustomTextInput
                     label={i18n.t('length')}
                     mode="outlined"
                     onChangeText={handleNumericChange(handleChange, 'length')}
                     onBlur={handleBlurReset('length', values, errors, setFieldValue)}
                     value={String(values.length)}
                     editable={isEditable}
+                    disabled={!isEditable}
                     keyboardType="decimal-pad"
                   />
                   <IconButton
@@ -95,13 +97,14 @@ export const CoatMeausurement: React.FC<Props> = ({ isEditable = true, values })
                   )}
                 </View>
                 <View style={styles.inputView}>
-                  <TextInput
+                  <CustomTextInput
                     label={i18n.t('shoulder')}
                     mode="outlined"
                     onChangeText={handleNumericChange(handleChange, 'shoulder')}
                     onBlur={handleBlurReset('shoulder', values, errors, setFieldValue)}
                     value={String(values.shoulder)}
                     editable={isEditable}
+                    disabled={!isEditable}
                     keyboardType="decimal-pad"
                   />
                   <IconButton
@@ -119,13 +122,14 @@ export const CoatMeausurement: React.FC<Props> = ({ isEditable = true, values })
               </View>
               <View style={styles.container}>
                 <View style={styles.inputView}>
-                  <TextInput
+                  <CustomTextInput
                     label={i18n.t('chest')}
                     mode="outlined"
                     onChangeText={handleNumericChange(handleChange, 'chest')}
                     onBlur={handleBlurReset('chest', values, errors, setFieldValue)}
                     value={String(values.chest)}
                     editable={isEditable}
+                    disabled={!isEditable}
                     keyboardType="decimal-pad"
                   />
                   <IconButton
@@ -141,13 +145,14 @@ export const CoatMeausurement: React.FC<Props> = ({ isEditable = true, values })
                   )}
                 </View>
                 <View style={styles.inputView}>
-                  <TextInput
+                  <CustomTextInput
                     label={i18n.t('arm')}
                     mode="outlined"
                     onChangeText={handleNumericChange(handleChange, 'arm')}
                     onBlur={handleBlurReset('arm', values, errors, setFieldValue)}
                     value={String(values.arm)}
                     editable={isEditable}
+                    disabled={!isEditable}
                     keyboardType="decimal-pad"
                   />
                   <IconButton
