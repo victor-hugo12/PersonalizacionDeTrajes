@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Button } from 'react-native-paper'
+import { Button, IconButton } from 'react-native-paper'
 
 import i18n from '@/language'
 
@@ -42,9 +42,8 @@ export const SelectionGroupButton: React.FC<Props> = ({
           mode={selectedOption === value ? 'contained' : 'outlined'}
           onPress={() => handleSelect(value)}
           style={[styles.button, multiline && { flexBasis: '49%' }]}
-          icon={icon}
+          icon={icon ? props => <IconButton icon={icon} size={props.size} iconColor={color} /> : undefined}
           contentStyle={{ flexDirection: 'row-reverse' }}
-          textColor={color}
           disabled={disabled}
           compact
         >
