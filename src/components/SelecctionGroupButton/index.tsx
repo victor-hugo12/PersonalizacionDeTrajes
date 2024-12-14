@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, IconButton } from 'react-native-paper'
 
@@ -25,10 +25,7 @@ export const SelectionGroupButton: React.FC<Props> = ({
   disabled = false,
   multiline = false,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<string>(selected)
-
   const handleSelect = (value: string) => {
-    setSelectedOption(value)
     onSelect(value)
   }
 
@@ -39,7 +36,7 @@ export const SelectionGroupButton: React.FC<Props> = ({
           key={value}
           dark
           theme={{ roundness: 1 }}
-          mode={selectedOption === value ? 'contained' : 'outlined'}
+          mode={selected === value ? 'contained' : 'outlined'}
           onPress={() => handleSelect(value)}
           style={[styles.button, multiline && { flexBasis: '49%' }]}
           icon={icon ? props => <IconButton icon={icon} size={props.size} iconColor={color} /> : undefined}
