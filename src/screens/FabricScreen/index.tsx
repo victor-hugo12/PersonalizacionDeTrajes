@@ -50,7 +50,12 @@ export const FabricScreen = () => {
           <Text variant="titleLarge">{i18n.t('Select your color')}</Text>
         </View>
         <View style={styles.selectionContainer}>
-          <SelectionGroupButton options={COLORS_OPTIONS} onSelect={handleColorSelection} selected={selectedColor} />
+          <SelectionGroupButton
+            key={`fabric-${selectedFabric}`}
+            options={COLORS_OPTIONS}
+            onSelect={handleColorSelection}
+            selected={selectedColor}
+          />
         </View>
         <View style={styles.flexGrow} />
         <View style={styles.navigationButton}>
